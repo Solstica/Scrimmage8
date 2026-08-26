@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q1-THERMAL",
+  "model_version": "3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\check_q1.py",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\validation_run_20260826_v2"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q1",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-26T15:54:15.656408+00:00",
+  "finished_at": "2026-08-26T15:55:19.341722+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\check_q1.py",
+      "size": 6933,
+      "sha256": "d59bd2c86451b7dd14ed46363074b0f9359001751ff20a34063bf69fc6f7f907"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\q1.py",
+      "size": 11141,
+      "sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2\\q1_results.csv",
+      "size": 430,
+      "sha256": "54d836d53aa3c45232c0b921f27905f4e37767a6ef3df52c10bcc65c937edb48"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\validation_run_20260826_v2\\q1_validation.csv",
+      "size": 1037,
+      "sha256": "618f38089d99448c7a1b0194ecbf322c738b84e172c9627cc3df6c4ba26c0a2b"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\validation_run_20260826_v2\\q1_fvm_checks.csv",
+      "size": 545,
+      "sha256": "24c6d606c40dc3ea3cca01652c783f2cdd65fe3bf56ec9570ded620489f523cf"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\validation_run_20260826_v2\\q1_fvm_history.csv",
+      "size": 711730,
+      "sha256": "19c8b29bce1d919f9fc0a8462dc3dd4d961fc942edc542897b7064534be57079"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "有限体积 dt=0.05 s, n=24/layer: v=2, t15=526.053 s, t10=563.488 s\n有限体积 dt=0.05 s, n=24/layer: v=5, t15=276.423 s, t10=313.868 s\n有限体积 dt=0.05 s, n=24/layer: v=10, t15=193.277 s, t10=230.721 s\n模态法 dt=0.125 s, M=40: v=5, t15=273.914 s, t10=311.161 s\n模态法 dt=0.25 s, M=60: v=5, t15=274.706 s, t10=312.039 s\n有限体积 dt=0.025 s, n=24/layer: v=5, t15=276.415 s, t10=313.856 s\n有限体积 dt=0.05 s, n=36/layer: v=5, t15=276.423 s, t10=313.868 s\n",
+  "stderr_tail": ""
+}

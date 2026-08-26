@@ -1,1 +1,2 @@
 result_id,status,review_state,value,unit,source_file,used_in_paper,notes
+Q1-3a1982f-20260826,FROZEN,CHECKED,"v=2: t15=520.903,t10=558.207; v=5: t15=273.908,t10=311.158; v=10: t15=191.642,t10=228.864",s,modules/20_q1/results/Q1_FINAL/01_正式结果.csv,yes,"端点线性DSC基线；v=5 K/min为基准假设，必须同时报告v=2和10 K/min敏感性"

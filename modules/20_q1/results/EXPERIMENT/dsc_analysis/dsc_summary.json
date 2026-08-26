@@ -1,0 +1,40 @@
+{
+  "rows": 357,
+  "temperature_range_C": [
+    14.05,
+    26.018
+  ],
+  "baseline_rule": "straight line through the two endpoints; operational baseline approved at model version 3a1982f",
+  "endpoint_power_W_per_kg": [
+    403.86,
+    400.42
+  ],
+  "raw_peak_temperature_C": 20.622,
+  "corrected_peak_temperature_C": 20.622,
+  "corrected_peak_power_W_per_kg": 3380.599010695187,
+  "corrected_half_peak_interval_C": [
+    16.94,
+    23.263
+  ],
+  "raw_area_W_K_per_kg": 25198.26952,
+  "corrected_area_W_K_per_kg": 20385.458,
+  "baseline_area_fraction": 0.19099769990871984,
+  "progress_temperature_C": {
+    "xi_0.1": 23.081685670652618,
+    "xi_0.5": 20.286544403844832,
+    "xi_0.9": 16.978860347718673
+  },
+  "raw_progress_temperature_C": {
+    "xi_0.1": 23.409241448357616,
+    "xi_0.5": 20.25802323228408,
+    "xi_0.9": 16.630978147862965
+  },
+  "progress_temperature_shift_C": {
+    "xi_0.1": -0.32755577770499755,
+    "xi_0.5": 0.028521171560750957,
+    "xi_0.9": 0.34788219985570734
+  },
+  "max_abs_progress_difference": 0.02779355352074797,
+  "latent_heat_relation": "L_pcm[J/kg] = corrected_area * 60 / scan_rate[K/min]",
+  "latent_heat_numerator_J_K_per_kg_min": 1223127.48
+}

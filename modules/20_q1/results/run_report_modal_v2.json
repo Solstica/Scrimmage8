@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q1-THERMAL",
+  "model_version": "3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\q1.py",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q1",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-26T15:53:17.478377+00:00",
+  "finished_at": "2026-08-26T15:53:52.256453+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\q1.py",
+      "size": 11141,
+      "sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2\\q1_results.csv",
+      "size": 430,
+      "sha256": "54d836d53aa3c45232c0b921f27905f4e37767a6ef3df52c10bcc65c937edb48"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2\\q1_temperature_history.csv",
+      "size": 592226,
+      "sha256": "d278bf4a8ea5e4cc41c567831df9384ebe625a62ef0c2550a36d34914aa9e82d"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2\\q1_temperature_profiles.csv",
+      "size": 130999,
+      "sha256": "49fd7a7a48a5d40c8a9ed9f54f1bd269a1435266cf33af3a7f7c9ed9ccbb60a7"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "v=2 K/min, L=611.564 kJ/kg, t15=520.903 s, t10=558.207 s\nv=5 K/min, L=244.625 kJ/kg, t15=273.908 s, t10=311.158 s\nv=10 K/min, L=122.313 kJ/kg, t15=191.642 s, t10=228.864 s\n",
+  "stderr_tail": ""
+}

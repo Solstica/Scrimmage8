@@ -1,75 +1,37 @@
 {
   "question": "Q1",
   "model_id": "WHUT13-Q1-THERMAL",
-  "model_version": "4438986",
-  "model_interface": "model_interface.json",
-  "implementation_style": "simple_direct",
-  "solver": {
-    "name": "short-time modal propagation with a 3x3 slope solve",
-    "reason": "This directly implements the modeler's Robin-Dirichlet, Dirichlet-Dirichlet, and Dirichlet-Robin expansions."
-  },
-  "numerical_decisions": [
-    {
-      "name": "initial_time_step",
-      "value": "1 s; halve for convergence",
-      "source_type": "numerical",
-      "source_ref": "PDE time-step convergence check",
-      "affects_feasible_region": false,
-      "reason": "Controls interface linearization and frozen q_pcm/h_e errors."
-    },
-    {
-      "name": "initial_modal_count",
-      "value": "30; increase for convergence",
-      "source_type": "numerical",
-      "source_ref": "modal truncation convergence check",
-      "affects_feasible_region": false,
-      "reason": "Resolves millimetre-scale layer temperature profiles."
-    },
-    {
-      "name": "projection_quadrature",
-      "value": "128 point Gauss-Legendre",
-      "source_type": "numerical",
-      "source_ref": "deterministic modal projection",
-      "affects_feasible_region": false,
-      "reason": "Provides stable projections for changing outer Robin eigenfunctions."
-    },
-    {
-      "name": "maximum_simulation_time",
-      "value": "72 h",
-      "source_type": "budget",
-      "source_ref": "run budget only; reaching it is reported as not crossed",
-      "affects_feasible_region": false,
-      "reason": "Prevents an unbounded run without asserting convergence or a threshold crossing."
-    }
+  "model_version": "3a1982f",
+  "final_method": "Short-time modal propagation with a 2x2 interface-slope solve",
+  "core_implementation": "A flat q1.py reads the fixed DSC attachment, applies the approved endpoint-linear baseline, advances the three modal layer fields with fixed T_b=37 degC, updates scalar irreversible PCM progress from the layer-average temperature, detects T_in crossings, and saves only the requested result tables. check_q1.py independently uses fixed-step implicit finite volumes with cell-level irreversible progress.",
+  "key_parameters": [
+    {"name": "DSC baseline rule", "value": "straight line through the two measured endpoints", "source_type": "modeler", "source_ref": "q1_algorithm.tex and work/tasks/q1.md at 3a1982f", "affects_feasible_region": false},
+    {"name": "DSC scan-rate cases", "value": "2, 5, 10 K/min; 5 K/min is baseline", "source_type": "modeler", "source_ref": "q1_algorithm.tex and solve_issue_report.md at 3a1982f", "affects_feasible_region": false},
+    {"name": "formal time step", "value": "0.25 s; compare with 0.125 s", "source_type": "numerical", "source_ref": "controls interface linearization and frozen c_eff/h_e", "affects_feasible_region": false},
+    {"name": "formal modal count", "value": "40; compare with 60", "source_type": "numerical", "source_ref": "modal truncation check", "affects_feasible_region": false},
+    {"name": "finite-volume discretization", "value": "fixed-step implicit enthalpy update; compare dt and cells per layer", "source_type": "numerical", "source_ref": "avoids mutable history in rejected adaptive trial steps", "affects_feasible_region": false}
   ],
   "approximations": [
-    {"name": "linear Th,T12,T23 within each time step", "approved": true, "source": "modeler q1.tex"},
-    {"name": "freeze q_pcm and h_e within each time step", "approved": true, "source": "modeler q1.tex"},
-    {"name": "truncate the modal expansions", "approved": true, "source": "modeler q1.tex; controlled by convergence"}
+    {"name": "linear T_12 and T_23 within each time step", "approved": true, "source_type": "modeler", "source": "q1.tex and q1_algorithm.tex at 3a1982f"},
+    {"name": "freeze layer-average c_eff and external h_e within each time step", "approved": true, "source_type": "modeler", "source": "q1.tex and q1_algorithm.tex at 3a1982f"},
+    {"name": "scalar layer-average PCM history in the modal method", "approved": true, "source_type": "modeler", "source": "q1_algorithm.tex and work/tasks/q1.md at 3a1982f"},
+    {"name": "truncate the modal expansions", "approved": true, "source_type": "modeler", "source": "q1.tex; controlled by convergence"}
   ],
   "search_space_changes": [],
   "added_methods": [
-    {
-      "name": "implicit finite-volume baseline",
-      "approved": true,
-      "source_type": "modeler",
-      "description": "Independent check of the same ODE-PDE model, not a replacement formal model."
-    }
+    {"name": "implicit finite-volume baseline", "approved": true, "source_type": "modeler", "description": "Independent verification of the same finite-latent-heat PDE model with cell-level irreversible progress"}
   ],
   "model_semantic_changes": [],
-  "expected_outputs": [
-    "T_h(t)",
-    "T_i(x,t)",
-    "t15",
-    "t10",
-    "time-step and modal convergence evidence",
+  "outputs": [
+    "v, L_pcm, t15 and t10 result table",
+    "baseline T_in(t) and temperature profiles",
+    "time-step and modal-count convergence evidence",
     "finite-volume comparison"
   ],
   "known_risks": [
-    "initial outer boundary incompatibility creates a sharp early transient",
-    "DSC heat generation is strongly temperature dependent",
-    "outer Robin eigenfunctions change as h_e changes",
-    "threshold time must not be reported when the run only reaches its budget"
-  ],
-  "review_note": "No objective, boundary, parameter source, data scope, or output definition is changed."
+    "the v=5 K/min baseline is an explicit assumption and must remain labeled as such",
+    "latent capacity must be active only on irreversible solidification advance",
+    "initial outer-boundary incompatibility creates a sharp early transient",
+    "modal layer-average PCM history must be checked against cell-level finite volumes"
+  ]
 }

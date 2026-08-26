@@ -1,0 +1,66 @@
+{
+  "results": [
+    {
+      "result_id": "Q1-3a1982f-20260826",
+      "question": "Q1",
+      "model_id": "WHUT13-Q1-THERMAL",
+      "model_version": "3a1982f",
+      "value": "v=2: t15=520.903,t10=558.207; v=5: t15=273.908,t10=311.158; v=10: t15=191.642,t10=228.864",
+      "unit": "s",
+      "claim_level": "verified conditional estimates under the stated DSC scan-rate assumptions",
+      "status": "FROZEN",
+      "dependencies": [
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\model_interface.json",
+          "sha256": "baba6ad8b139139b7035c084f9c6185c9d59c5767b76fa6ee1b30469fdb2c70b",
+          "size": 4488
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\run_report_modal_v2.json",
+          "sha256": "80308ec661aedb98eccd37b8e8578fb36a86f7f0fc1cfa8055bd742e335c7648",
+          "size": 2098
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\implementation_plan.json",
+          "sha256": "678726e723b1bb6ca40ce743196227e4249f64e07800ae1bd83c69d3215d22f2",
+          "size": 3239
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\q1.py",
+          "sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f",
+          "size": 11141
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\data\\raw\\附件1 放热能力数据.xlsx",
+          "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2",
+          "size": 17180
+        }
+      ],
+      "evidence": [
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2\\q1_results.csv",
+          "sha256": "54d836d53aa3c45232c0b921f27905f4e37767a6ef3df52c10bcc65c937edb48",
+          "size": 430
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\validation_run_20260826_v2\\q1_validation.csv",
+          "sha256": "618f38089d99448c7a1b0194ecbf322c738b84e172c9627cc3df6c4ba26c0a2b",
+          "size": 1037
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\validation_run_20260826_v2\\q1_fvm_checks.csv",
+          "sha256": "24c6d606c40dc3ea3cca01652c783f2cdd65fe3bf56ec9570ded620489f523cf",
+          "size": 545
+        }
+      ],
+      "created_at": "2026-08-26T15:55:52.898841+00:00",
+      "verification_report": {
+        "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\run_report_validation_v2.json",
+        "sha256": "61172ec04a545bebfe335e7438ae17191ab8db6b90b92735991e1654b40f7d17",
+        "size": 2962
+      },
+      "verified_at": "2026-08-26T15:55:52.991664+00:00",
+      "frozen_at": "2026-08-26T15:55:53.089850+00:00"
+    }
+  ]
+}

@@ -1,10 +1,13 @@
 {
   "status": "PASS",
   "model_id": "WHUT13-Q1-THERMAL",
-  "model_version": "4438986",
-  "model_sha256": "0638cb8e041bf1b1afca93c85dd0126ce6235bc93a59da9a6fe212dc82c01d87",
-  "plan_sha256": "25910f9bfc4fb63962b334bf2529543a0a0d064d19141ebf12b7abe4d681c1b0",
+  "model_version": "3a1982f",
+  "model_sha256": "baba6ad8b139139b7035c084f9c6185c9d59c5767b76fa6ee1b30469fdb2c70b",
+  "plan_sha256": "678726e723b1bb6ca40ce743196227e4249f64e07800ae1bd83c69d3215d22f2",
+  "code_sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f",
   "blocks": [],
   "warnings": [],
-  "scope_note": "This gate checks declared decisions and high-confidence code hints only; it does not prove mathematical semantic equivalence."
+  "gate_role": "external_read_only_model_drift_audit",
+  "participant_code_modified": false,
+  "scope_note": "This gate only reports declared model changes and high-confidence code hints. It never rewrites, wraps, or injects protection into participant code, and it does not prove mathematical semantic equivalence."
 }
