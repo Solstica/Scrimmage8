@@ -2,117 +2,311 @@
 
 \subsection{问题一的描述与分析}
 
-问题一给定静止、无风、$-40\,^{\circ}\mathrm C$的低温环境，目标是描述三层复合防护材料中的瞬态传热，并由人体侧表面温度确定可持续暴露时间。三层材料厚度远小于人体表面尺度，且题目将衣料面积与人体表面积按同一量级处理，因此先忽略面内温差，将防护服等效为沿厚度方向串联的三层等面积平板。设$x=0$位于人体侧，$x=L$位于环境侧，$L=d_1+d_2+d_3$，温度场记为$T_i(x,t)$。
+问题一要求在静止、无风、环境温度$-40\,^{\circ}\mathrm C$条件下描述人体--防护服--环境之间的瞬态传热，并由人体表面温度首次降至工作困难阈值的时刻确定可持续暴露时间。三层衣料厚度均为毫米量级，远小于人体表面尺度，因此忽略衣料面内温差，将人体表面及三层衣料等效为沿厚度方向串联的等面积平板。取$x=0$为人体侧，$x=L$为环境侧，三层由内向外依次为织物层、功能层和隔热层。
 
-功能层位于第二层。题目给出的放热能力随温度变化，但未给出相变前后导热系数、密度或比热的变化关系，因此各层热物性暂按附件常数处理，仅将功能层放热写入能量方程。这样可以保留附件给出的温度--放热曲线，同时避免引入题目没有提供的相界面位置、潜热和两相热物性参数。
+题目明确给出两个空气换热界面：人体表面与内层织物之间采用人体状态对应的对流换热系数，服装外表面与环境之间采用温差相关的自然对流换热系数。因此人体温度不能再与织物内表面温度直接等同，服装外表面也不能直接固定为环境温度。人体部分采用单节点等效热容模型；三层衣料仍保留完整的一维温度场。
 
-\subsection{三层瞬态导热模型}
+\subsection{几何、材料与人体热容参数}
 
-\subsubsection{控制方程}
+令三层厚度分别为$d_1,d_2,d_3$，并定义
+\begin{equation}
+x_1=d_1,\qquad x_2=d_1+d_2,\qquad L=d_1+d_2+d_3.
+\end{equation}
+附件给出的初始厚度为
+\begin{equation}
+d_1=0.7\ \mathrm{mm},\qquad d_2=0.4\ \mathrm{mm},\qquad d_3=0.3\ \mathrm{mm}.
+\end{equation}
+三层的密度、比热容和导热系数分别记为$\rho_i,c_i,k_i$，均按附件常数取值。
 
-对第$i$层应用能量守恒和Fourier导热定律，有
+人体有效表面积按附件给出的Stevenson公式计算：
+\begin{equation}
+A_b=0.0061h+0.0128w-0.1529.
+\end{equation}
+代入身高$h=170\ \mathrm{cm}$、体重$w=60\ \mathrm{kg}$，得到
+\begin{equation}
+A_b=1.6521\ \mathrm{m^2}.
+\label{eq:q1-body-area}
+\end{equation}
+本问取防护服有效传热面积$A=A_b$。
+
+人体热储存采用GB/T 42841--2023《热环境的人类工效学 人体冷热应激评估与管理》所覆盖的人体冷热应激热平衡框架。该标准现行，并非等效采用ISO 7933:2004等人体热应激评价标准\cite{gbt42841}；对应PHS热平衡模型常用人体比热$c_h=3470\ \mathrm{J/(kg\cdot K)}$\cite{hao2016phs}。在本题缺少皮肤、脂肪和核心组织分层参数的条件下，将人体等效为单一热容节点，因此
+\begin{equation}
+C_h=m_hc_h=60\times3470=2.082\times10^5\ \mathrm{J/K}.
+\label{eq:q1-body-capacity}
+\end{equation}
+该节点温度$T_h(t)$用来表征题目给出的等效人体表面温度，初值为$37\,^{\circ}\mathrm C$。
+
+\subsection{人体--三层防护服耦合传热模型}
+
+\subsubsection{三层瞬态导热控制方程}
+
+对第$i$层取厚度为$\mathrm dx$的微元，储热率等于两端导热净流入与内部产热之和。结合Fourier定律$q_i=-k_i\partial T_i/\partial x$，得到
 \begin{equation}
 \rho_i c_i\frac{\partial T_i}{\partial t}
 =k_i\frac{\partial^2T_i}{\partial x^2}+Q_i(T_i),
-\qquad i=1,2,3,
+\qquad i=1,2,3.
 \label{eq:q1-governing}
 \end{equation}
-其中$\rho_i,c_i,k_i$分别为密度、比热容和导热系数。织物层与隔热层不含内部放热，故
+织物层和隔热层无内部放热，故
 \begin{equation}
 Q_1=Q_3=0.
 \end{equation}
 
-第二层的实验数据给出单位质量放热能力随温度的变化。记由附件数据插值得到的单位质量放热函数为$q_{\rm pcm}(T)$，则功能层体积热源写为
+功能层的附件数据给出单位质量放热能力随温度的变化。记预处理后的单位质量放热函数为$q_{\rm pcm}(T)$，则第二层体积热源为
 \begin{equation}
-Q_2(T)=\rho_2 q_{\rm pcm}(T).
+Q_2(T)=\rho_2q_{\rm pcm}(T).
 \label{eq:q1-pcm-source}
 \end{equation}
-若附件采用放热为负的DSC符号约定，则在数据预处理中统一取放热方向为正。由于题目第四问明确规定各温度下放热能力同比例变化，式\eqref{eq:q1-pcm-source}也便于后续直接写成$Q_2^{(4)}=\eta Q_2$。
+若附件DSC数据以放热为负，则先按$1\ \mathrm{mW/mg}=10^3\ \mathrm{W/kg}$完成单位换算并统一取放热方向为正。附件实测温区外不外推放热曲线，取$q_{\rm pcm}(T)=0$。
 
-\subsubsection{初始条件与层间连续条件}
+\subsubsection{初始条件与层间条件}
 
-实验者进入低温环境的瞬间，将人体侧及三层衣料统一初始化为
+实验者进入低温环境瞬间，人体与三层衣料统一初始化为
 \begin{equation}
-T_i(x,0)=37\,^{\circ}\mathrm C,
-\qquad i=1,2,3.
+T_h(0)=37\,^{\circ}\mathrm C,
+\qquad
+T_i(x,0)=37\,^{\circ}\mathrm C,\quad i=1,2,3.
 \label{eq:q1-initial}
 \end{equation}
 
-忽略层间接触热阻，在两个材料界面$x_1=d_1$和$x_2=d_1+d_2$处满足温度连续与热流连续：
+忽略层间接触热阻，在$x=x_1,x_2$处分别满足温度连续和热流连续：
 \begin{equation}
 \left\{
 \begin{aligned}
-&T_j(x_j^{-},t)=T_{j+1}(x_j^{+},t),\\
-&k_j\frac{\partial T_j}{\partial x}(x_j^{-},t)
-=k_{j+1}\frac{\partial T_{j+1}}{\partial x}(x_j^{+},t),
+&T_1(x_1^-,t)=T_2(x_1^+,t),\\
+&k_1T_{1,x}(x_1^-,t)=k_2T_{2,x}(x_1^+,t),\\
+&T_2(x_2^-,t)=T_3(x_2^+,t),\\
+&k_2T_{2,x}(x_2^-,t)=k_3T_{3,x}(x_2^+,t).
 \end{aligned}
 \right.
-\qquad j=1,2.
 \label{eq:q1-interface}
 \end{equation}
 
-问题一先按基础模型忽略外表面对流边界层热阻，将外界视为恒温冷源，因此环境侧取
-\begin{equation}
-T_3(L,t)=-40\,^{\circ}\mathrm C.
-\label{eq:q1-outer-boundary}
-\end{equation}
-人体侧温度不固定为$37\,^{\circ}\mathrm C$；$37\,^{\circ}\mathrm C$仅作为初值。人体侧表面温度定义为
-\begin{equation}
-T_s(t)=T_1(0,t),
-\label{eq:q1-skin-temperature}
-\end{equation}
-并作为本问的主要输出。人体侧能量边界仍需结合题目允许的生理简化闭合，在数值计算前单独确定；不在此处把未知的$T_s(t)$重新指定为恒温边界。
+\subsubsection{人体侧对流与人体能量平衡}
 
-\subsection{微小时间段分离变量求解}
+附件给出静止站立时人体表面与内层织物之间的对流换热系数
+\begin{equation}
+h_b=3.0\ \mathrm{W/(m^2\cdot K)}.
+\end{equation}
+因此人体向织物传递的热流密度为
+\begin{equation}
+q_b''=h_b\bigl[T_h(t)-T_1(0,t)\bigr],
+\end{equation}
+并与织物内的Fourier热流相等：
+\begin{equation}
+-k_1T_{1,x}(0,t)
+=h_b\bigl[T_h(t)-T_1(0,t)\bigr].
+\label{eq:q1-inner-robin}
+\end{equation}
 
-多层材料的热物性不同，直接对全域采用常规分离变量会受到层间未知温度的限制。参考层合材料瞬态传热的拓展分离变量方法\cite{li2018extended}及其在热防护服--空气--皮肤模型中的应用\cite{li2021protective}，将时间轴划分为$[t_n,t_{n+1}]$。在足够小的$\Delta t=t_{n+1}-t_n$内，将两个界面温度作局部线性近似：
+人体单节点的热量减少等于通过该界面流向衣物的热量，因此
+\begin{equation}
+C_h\frac{\mathrm dT_h}{\mathrm dt}
+=-A_bh_b\bigl[T_h(t)-T_1(0,t)\bigr].
+\label{eq:q1-body-ode}
+\end{equation}
+问题一为静止状态，题目没有另外给出代谢产热参数，故基础模型不再额外引入未给定的代谢热源。
+
+\subsubsection{服装外表面自然对流}
+
+令环境温度
+\begin{equation}
+T_\infty=-40\,^{\circ}\mathrm C.
+\end{equation}
+附件给出的服装表面--外部环境自然对流系数为
+\begin{equation}
+h_e(t)=2.38\bigl[T_3(L,t)-T_\infty\bigr]^{0.25}.
+\label{eq:q1-hout}
+\end{equation}
+于是外侧Robin边界为
+\begin{equation}
+-k_3T_{3,x}(L,t)
+=h_e(t)\bigl[T_3(L,t)-T_\infty\bigr]
+=2.38\bigl[T_3(L,t)+40\bigr]^{1.25}.
+\label{eq:q1-outer-robin}
+\end{equation}
+至此，人体ODE、三层PDE、两个材料界面条件和两侧对流边界共同构成闭合的瞬态传热模型。
+
+\subsection{微小时间段拓展分离变量求解}
+
+三层材料参数分段常数，但第二层放热$q_{\rm pcm}(T)$和外侧自然对流系数$h_e(T)$均随温度变化。为保留解析结构，将时间轴划分为$t_n\le t\le t_{n+1}$，令局部时间$\tau=t-t_n$、$\Delta t=t_{n+1}-t_n$。在一个足够小的时间段内，将人体温度和两个材料界面温度分别近似为
 \begin{equation}
 \begin{aligned}
-T_{12}(t)&\approx T_{12}^{n}+\beta_{12}^{n}(t-t_n),\\
-T_{23}(t)&\approx T_{23}^{n}+\beta_{23}^{n}(t-t_n).
+T_h(\tau)&\approx T_h^n+\beta_h^n\tau,\\
+T_{12}(\tau)&\approx T_{12}^n+\beta_{12}^n\tau,\\
+T_{23}(\tau)&\approx T_{23}^n+\beta_{23}^n\tau.
 \end{aligned}
 \label{eq:q1-interface-linear}
 \end{equation}
-其中$\beta_{12}^{n},\beta_{23}^{n}$由界面热流连续条件确定。
+其中$\beta_h^n,\beta_{12}^n,\beta_{23}^n$为当前时间段待求斜率。
 
-功能层的$q_{\rm pcm}(T)$使方程含温度相关源项。为保持每个微小时间段内的线性解析结构，先按该时间段起点的功能层代表温度$\bar T_2^n$冻结热源：
+功能层以时间段起点的层平均温度
 \begin{equation}
-q_{\rm pcm}(T_2)\approx q_{\rm pcm}(\bar T_2^n),
-\qquad t\in[t_n,t_{n+1}].
+\bar T_2^n=\frac{1}{d_2}\int_{x_1}^{x_2}T_2(x,t_n)\,\mathrm dx
+\end{equation}
+更新放热，并在当前时间段内冻结：
+\begin{equation}
+q_{\rm pcm}(T_2)\approx q_{\rm pcm}(\bar T_2^n).
 \label{eq:q1-source-freeze}
 \end{equation}
-该近似只作用于单个微小时间段，随后随温度更新。最终通过减小$\Delta t$检验坚持时间是否收敛；若放热峰附近对时间步敏感，再改用局部一阶线性化。
+同理，以当前服装外表面温度更新自然对流系数
+\begin{equation}
+h_e^n=2.38\bigl[T_3(L,t_n)-T_\infty\bigr]^{0.25},
+\label{eq:q1-hout-freeze}
+\end{equation}
+并在$[t_n,t_{n+1}]$内视为常数。时间步减半检验用于控制这两个局部冻结近似的误差。
 
-对第$i$层写成
+\subsubsection{第一层：Robin--Dirichlet边界}
+
+对第一层取局部坐标$0\le y\le d_1$。当前时间段内边界为
 \begin{equation}
-T_i(x,t)=w_i(x,t)+u_i(x,t),
+-k_1T_{1,y}(0,\tau)=h_b[T_h(\tau)-T_1(0,\tau)],
+\qquad
+T_1(d_1,\tau)=T_{12}(\tau).
 \end{equation}
-其中$w_i$承担该时间段内的非齐次边界，$u_i$满足齐次边界。展开为
+构造一次函数$w_1=a_1+b_1y$承担非齐次边界，可由上述两式直接得到
 \begin{equation}
-u_i(x,t)=\sum_{m=1}^{\infty}B_{i,m}(t)\phi_{i,m}(x),
+b_1(\tau)=\frac{h_b[T_{12}(\tau)-T_h(\tau)]}{k_1+h_bd_1},
 \end{equation}
-即可将每层PDE化为模态系数的一阶方程
 \begin{equation}
-\frac{\mathrm dB_{i,m}}{\mathrm dt}
-+\alpha_i\lambda_{i,m}^{2}B_{i,m}
-=F_{i,m}^{n}(t),
-\qquad \alpha_i=\frac{k_i}{\rho_i c_i},
-\label{eq:q1-mode-ode}
+a_1(\tau)=\frac{k_1T_{12}(\tau)+h_bd_1T_h(\tau)}{k_1+h_bd_1}.
 \end{equation}
-其中$F_{i,m}^{n}$包含边界齐次化项以及第二层冻结后的放热源。式\eqref{eq:q1-mode-ode}在每个时间段内可直接积分。利用式\eqref{eq:q1-interface}求得界面温度斜率后，将$t_{n+1}$时刻的温度场作为下一时间段初值，循环推进至人体侧表面温度达到给定阈值。
+令$T_1=w_1+u_1$，则$u_1$满足
+\begin{equation}
+-k_1u_{1,y}(0,\tau)+h_bu_1(0,\tau)=0,
+\qquad
+u_1(d_1,\tau)=0.
+\end{equation}
+取$u_1=X(y)G(\tau)$，空间函数满足$X''+\lambda^2X=0$。由两端齐次边界得到本征值方程
+\begin{equation}
+\tan(\lambda_{1,m}d_1)=-\frac{k_1\lambda_{1,m}}{h_b},
+\label{eq:q1-eigen1}
+\end{equation}
+对应本征函数可取
+\begin{equation}
+\phi_{1,m}(y)=\cos(\lambda_{1,m}y)
++\frac{h_b}{k_1\lambda_{1,m}}\sin(\lambda_{1,m}y).
+\end{equation}
+因此
+\begin{equation}
+u_1(y,\tau)=\sum_{m=1}^{M}B_{1,m}(\tau)\phi_{1,m}(y),
+\end{equation}
+模态系数均满足一阶线性方程
+\begin{equation}
+B'_{1,m}+\alpha_1\lambda_{1,m}^2B_{1,m}=F_{1,m}^n,
+\qquad \alpha_1=\frac{k_1}{\rho_1c_1},
+\end{equation}
+其中$F_{1,m}^n$由$-\partial w_1/\partial\tau$在本征函数上的投影得到。
+
+\subsubsection{第二层：Dirichlet--Dirichlet边界与PCM热源}
+
+第二层局部坐标$0\le y\le d_2$，两端温度分别为$T_{12}(\tau)$和$T_{23}(\tau)$。取线性函数
+\begin{equation}
+w_2(y,\tau)=\left(1-\frac{y}{d_2}\right)T_{12}(\tau)
++\frac{y}{d_2}T_{23}(\tau),
+\end{equation}
+令$T_2=w_2+u_2$，则$u_2(0,\tau)=u_2(d_2,\tau)=0$。本征函数为
+\begin{equation}
+\phi_{2,m}(y)=\sin\frac{m\pi y}{d_2},
+\qquad
+\lambda_{2,m}=\frac{m\pi}{d_2}.
+\end{equation}
+当前时间段内第二层方程可写为
+\begin{equation}
+\frac{\partial T_2}{\partial\tau}
+=\alpha_2\frac{\partial^2T_2}{\partial y^2}
++s_2^n,
+\qquad
+s_2^n=\frac{q_{\rm pcm}(\bar T_2^n)}{c_2},
+\end{equation}
+故模态系数满足
+\begin{equation}
+B'_{2,m}+\alpha_2\lambda_{2,m}^2B_{2,m}=F_{2,m}^n,
+\end{equation}
+其中$F_{2,m}^n$由$s_2^n-\partial w_2/\partial\tau$投影得到。
+
+\subsubsection{第三层：Dirichlet--Robin边界}
+
+第三层局部坐标$0\le y\le d_3$，当前时间段内
+\begin{equation}
+T_3(0,\tau)=T_{23}(\tau),
+\end{equation}
+\begin{equation}
+-k_3T_{3,y}(d_3,\tau)=h_e^n[T_3(d_3,\tau)-T_\infty].
+\end{equation}
+取$w_3=a_3+b_3y$，由$a_3=T_{23}(\tau)$及右端Robin边界可得
+\begin{equation}
+b_3(\tau)=\frac{h_e^n[T_\infty-T_{23}(\tau)]}{k_3+h_e^nd_3}.
+\end{equation}
+令$T_3=w_3+u_3$，则
+\begin{equation}
+u_3(0,\tau)=0,
+\qquad
+-k_3u_{3,y}(d_3,\tau)-h_e^nu_3(d_3,\tau)=0.
+\end{equation}
+取$\phi_{3,m}(y)=\sin(\lambda_{3,m}y)$，本征值满足
+\begin{equation}
+\tan(\lambda_{3,m}d_3)=-\frac{k_3\lambda_{3,m}}{h_e^n}.
+\label{eq:q1-eigen3}
+\end{equation}
+其模态系数同样满足
+\begin{equation}
+B'_{3,m}+\alpha_3\lambda_{3,m}^2B_{3,m}=F_{3,m}^n.
+\end{equation}
+
+上述三层模态方程统一具有
+\begin{equation}
+B'_{i,m}+\gamma_{i,m}B_{i,m}=F_{i,m}^n,
+\qquad
+\gamma_{i,m}=\alpha_i\lambda_{i,m}^2,
+\end{equation}
+其当前时间段解析解为
+\begin{equation}
+B_{i,m}(\tau)
+=B_{i,m}(0)e^{-\gamma_{i,m}\tau}
++\frac{F_{i,m}^n}{\gamma_{i,m}}
+\left(1-e^{-\gamma_{i,m}\tau}\right).
+\label{eq:q1-mode-solution}
+\end{equation}
+时间段起点的$B_{i,m}(0)$由上一时间段末温度场投影得到。
+
+\subsubsection{三个斜率参数的闭合}
+
+每个时间段的未知量为
+\begin{equation}
+\boldsymbol\beta^n=(\beta_h^n,\beta_{12}^n,\beta_{23}^n)^\mathsf T.
+\end{equation}
+两个材料界面的热流连续提供两个方程：
+\begin{equation}
+k_1T_{1,x}(x_1,t)=k_2T_{2,x}(x_1,t),
+\qquad
+k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t).
+\end{equation}
+数值实现中在当前时间段末端$\tau=\Delta t$配点满足上述两式。
+
+人体能量平衡在整个时间段上积分，得到第三个方程
+\begin{equation}
+C_h\beta_h^n\Delta t
++A_bh_b\int_0^{\Delta t}
+\bigl[T_h(\tau)-T_1(0,\tau)\bigr]\,\mathrm d\tau=0.
+\label{eq:q1-body-step}
+\end{equation}
+三式联立即可求出$\beta_h^n,\beta_{12}^n,\beta_{23}^n$，随后由式\eqref{eq:q1-mode-solution}推进完整温度场至$t_{n+1}$。该过程循环执行，直至人体温度达到阈值。
 
 \input{\ProjectRoot/modules/20_q1/paper/q1_algorithm.tex}
 
-\subsection{坚持时间定义与模型输出}
+\subsection{坚持时间与模型检验}
 
-题目给出人体表面温度低于$15\,^{\circ}\mathrm C$时工作困难，低于$10\,^{\circ}\mathrm C$时存在生命危险。故将可持续正常户外工作的时间定义为首次达到$15\,^{\circ}\mathrm C$的时刻
+题目规定人体表面温度低于$15\,^{\circ}\mathrm C$时工作困难，低于$10\,^{\circ}\mathrm C$时存在生命危险。因此定义
 \begin{equation}
-t_{15}=\inf\{t>0:T_s(t)\le15\,^{\circ}\mathrm C\},
+t_{15}=\inf\{t>0:T_h(t)\le15\,^{\circ}\mathrm C\},
 \label{eq:q1-t15}
 \end{equation}
-同时计算
+并以$t_{15}$作为问题一的可持续正常户外工作时间；同时计算
 \begin{equation}
-t_{10}=\inf\{t>0:T_s(t)\le10\,^{\circ}\mathrm C\}
+t_{10}=\inf\{t>0:T_h(t)\le10\,^{\circ}\mathrm C\}
 \label{eq:q1-t10}
 \end{equation}
-作为危险暴露时间。问题一最终输出完整厚度方向温度场$T(x,t)$、人体侧温度曲线$T_s(t)$以及$t_{15},t_{10}$。在获得数值结果前，不预先填写坚持时间。
+作为危险暴露时间。
+
+模型求解后分别减小时间步$\Delta t$和模态截断数$M$，比较$t_{15},t_{10}$及人体温度曲线的变化；同时使用隐式有限体积或有限差分解作为独立基准，以检查短时间线性化、PCM热源冻结和外侧换热系数冻结所产生的误差。在获得通过收敛检查的数值结果前，不预先填写坚持时间。
