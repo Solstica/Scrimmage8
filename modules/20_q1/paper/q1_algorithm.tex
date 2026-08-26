@@ -1,0 +1,27 @@
+\begin{algorithm}[H]
+\SetAlgoLined
+\setstretch{0.92}
+\SetAlFnt{\normalsize}
+\SetArgSty{textnormal}
+\SetKwInput{KwIn}{输入}
+\SetKwInput{KwInit}{初始化}
+\SetKwInput{KwOut}{输出}
+\SetKwFor{For}{for}{do}{end for}
+\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
+\SetKw{KwRet}{return}
+\caption{问题一通用参数求解流程示例}
+\label{alg:q1-demo}
+\KwIn{观测数据$\mathcal D=\{(x_i,y_i)\}_{i=1}^{n}$，参数边界$\Omega$，候选初值集合$\mathcal S$}
+\KwInit{$J_{\min}\leftarrow+\infty$，$\boldsymbol\theta^{*}\leftarrow\varnothing$}
+\For{$\boldsymbol\theta^{(0)}\in\mathcal S$}{
+    在$\Omega$内由$\boldsymbol\theta^{(0)}$求解当前模型\;
+    得到$\widehat{\boldsymbol\theta}$并计算$J(\widehat{\boldsymbol\theta})$\;
+    \If{$J(\widehat{\boldsymbol\theta})<J_{\min}$}{
+        $J_{\min}\leftarrow J(\widehat{\boldsymbol\theta})$\;
+        $\boldsymbol\theta^{*}\leftarrow\widehat{\boldsymbol\theta}$\;
+    }
+}
+计算与本问不确定性对应的误差、稳健性或独立验证指标\;
+\KwRet $\boldsymbol\theta^{*}$及评价指标\;
+\KwOut{最终参数、关键结果与检验量}
+\end{algorithm}

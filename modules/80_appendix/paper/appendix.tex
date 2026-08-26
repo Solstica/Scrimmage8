@@ -1,0 +1,30 @@
+\section*{附录：程序及结果文件说明}
+\addcontentsline{toc}{section}{附录：程序及结果文件说明}
+
+\textbf{附录模式按当年提交规则选择。}
+
+\noindent\textbf{模式 A：另交程序文件。}\quad 正文附录列出实际使用的程序入口、功能和关键输出，不重复粘贴整套工程代码。
+
+\begingroup\small\sloppy
+\begin{longtable}{p{.38\textwidth}p{.52\textwidth}}
+\toprule
+文件 & 功能\\\midrule
+\endfirsthead
+\toprule 文件 & 功能\\\midrule\endhead
+\path{modules/20_q1/code/solve_q1.py} & 问题一模型求解与主要结果导出。\\
+\path{modules/20_q1/results/registry.csv} & 问题一结果状态、来源与复核记录。\\
+\path{scripts/final_preflight.py} & 终稿引用、结果状态与 LaTeX 日志检查。\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+\noindent\textbf{模式 B：只提交 PDF，且代码附录不计正文页数。}\quad 将每问最终实际运行的核心程序直接收入附录。优先使用 \verb|\lstinputlisting| 从模块唯一代码源读取，避免手工复制后与正式代码不一致。例如：
+
+\begin{lstlisting}[language=TeX,caption={只交PDF时的完整代码附录写法}]
+\lstinputlisting[
+  language=Python,
+  caption={问题一核心求解程序}
+]{\ProjectRoot/modules/20_q1/code/solve_q1.py}
+\end{lstlisting}
+
+正式比赛只能二选一：若采用模式 B，应补齐各问最终求解、场景分析和约束检验所需的核心程序；不要放废弃版本、调试日志或与正文结果无关的脚本。
