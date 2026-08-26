@@ -1,0 +1,27 @@
+{
+  "question": "Q3",
+  "model_id": "WHUT13-Q3-DISCRETE-THICKNESS",
+  "model_version": "1.0",
+  "final_method": "Complete enumeration of four coating thicknesses with the frozen Q1 modal thermal solver",
+  "core_implementation": "Parameterize the Q1 outer-layer thickness, solve all 12 combinations of d3 and scan rate, calculate clothing mass, material cost, weight-limit time and effective time, then select one best candidate for each scan rate.",
+  "key_parameters": [
+    {"name": "candidate layer counts", "value": [0, 1, 2, 3], "source_type": "derived", "source_ref": "0.3 mm fixed coating increment and 50 percent budget constraint", "affects_feasible_region": true},
+    {"name": "material area", "value": 1.6521, "source_type": "modeler", "source_ref": "current user confirmation A=A_b", "affects_feasible_region": false},
+    {"name": "body mass included", "value": true, "source_type": "modeler", "source_ref": "current user confirmation", "affects_feasible_region": false},
+    {"name": "scan-rate cases", "value": [2.0, 5.0, 10.0], "source_type": "modeler", "source_ref": "frozen Q1 interface and current user confirmation", "affects_feasible_region": false},
+    {"name": "formal modal settings", "value": "dt=0.25 s, M=40, nq=160", "source_type": "numerical", "source_ref": "frozen Q1 checked run", "affects_feasible_region": false}
+  ],
+  "approximations": [
+    {"name": "frozen Q1 short-time modal propagation and layer-average irreversible PCM progress", "approved": true, "source_type": "approved_approximation", "source": "Q1 model version 3a1982f"}
+  ],
+  "search_space_changes": [
+    {"name": "budget reduction to n=0..3", "approved": true, "source_type": "derived", "source": "exact algebraic reduction of C(n)<=1.5*C0"}
+  ],
+  "added_methods": [],
+  "model_semantic_changes": [],
+  "outputs": [
+    "modules/40_q3/results/问题三候选方案.csv",
+    "modules/40_q3/results/问题三最优方案.csv",
+    "modules/40_q3/results/问题三数值检查.csv"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q3-DISCRETE-THICKNESS",
+  "model_version": "1.0",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\code\\q3.py",
+    "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\正式运行_20260827"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q3",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-26T16:45:19.559277+00:00",
+  "finished_at": "2026-08-26T16:46:14.562713+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\code\\q3.py",
+      "size": 10968,
+      "sha256": "38ece8afd39a87fe85fcf5ede2cd06bf77b9fa98e674b360bf2cd0127ac1d7ec"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\model_interface.json",
+      "size": 3046,
+      "sha256": "1484f357f2d862240b56ad5b1959c837825f284b51e845243216a031cfaddc82"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q3\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\正式运行_20260827\\问题三候选方案.csv",
+      "size": 2233,
+      "sha256": "f19cb47898cd1c059e3e0c206aab02a9b36e8e22dbe54316736ed06b16cd7e2b"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\正式运行_20260827\\问题三最优方案.csv",
+      "size": 717,
+      "sha256": "d4d5a530c3120809eafaefea9aff5446bd80f77203f9d848a4c68df770ad979f"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "v=2 K/min, d3=0.3 mm, tT=520.903 s, tW=784.916 s, t_eff=520.903 s\nv=2 K/min, d3=0.6 mm, tT=578.286 s, tW=781.942 s, t_eff=578.286 s\nv=2 K/min, d3=0.9 mm, tT=638.334 s, tW=778.968 s, t_eff=638.334 s\nv=2 K/min, d3=1.2 mm, tT=701.195 s, tW=775.994 s, t_eff=701.195 s\nv=5 K/min, d3=0.3 mm, tT=273.908 s, tW=784.916 s, t_eff=273.908 s\nv=5 K/min, d3=0.6 mm, tT=318.756 s, tW=781.942 s, t_eff=318.756 s\nv=5 K/min, d3=0.9 mm, tT=366.087 s, tW=778.968 s, t_eff=366.087 s\nv=5 K/min, d3=1.2 mm, tT=416.038 s, tW=775.994 s, t_eff=416.038 s\nv=10 K/min, d3=0.3 mm, tT=191.642 s, tW=784.916 s, t_eff=191.642 s\nv=10 K/min, d3=0.6 mm, tT=232.326 s, tW=781.942 s, t_eff=232.326 s\nv=10 K/min, d3=0.9 mm, tT=275.429 s, tW=778.968 s, t_eff=275.429 s\nv=10 K/min, d3=1.2 mm, tT=321.060 s, tW=775.994 s, t_eff=321.060 s\n\n各扫描速率最优方案\nv=2 K/min: n=3, d3=1.2 mm, t_eff=701.195 s, 限制因素=热安全\nv=5 K/min: n=3, d3=1.2 mm, t_eff=416.038 s, 限制因素=热安全\nv=10 K/min: n=3, d3=1.2 mm, t_eff=321.060 s, 限制因素=热安全\n",
+  "stderr_tail": ""
+}

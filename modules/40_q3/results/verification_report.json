@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "question": "Q3",
+  "model_id": "WHUT13-Q3-DISCRETE-THICKNESS",
+  "model_version": "1.0",
+  "checks": [
+    {
+      "name": "Q1 inheritance",
+      "result": "The d3=0.3 mm t15 values for v=2,5,10 K/min exactly equal the frozen Q1 values."
+    },
+    {
+      "name": "candidate completeness",
+      "result": "All 12 combinations of four budget-feasible thicknesses and three scan rates were solved."
+    },
+    {
+      "name": "hard constraints",
+      "result": "Every candidate satisfies the 50 percent budget bound and the body-mass-inclusive weight constraint."
+    },
+    {
+      "name": "time-step convergence",
+      "result": "For the three selected d3=1.2 mm cases, halving dt from 0.25 s to 0.125 s changes t15 by at most 0.003409 percent."
+    },
+    {
+      "name": "modal convergence",
+      "result": "For the three selected d3=1.2 mm cases, increasing M from 40 to 60 changes t15 by at most 0.294009 percent."
+    },
+    {
+      "name": "numerical residual",
+      "result": "Across the formal candidate table, the maximum interface heat-flux residual is 1.211e-12 W/m2 and the maximum 2x2 condition number is 1.0664."
+    },
+    {
+      "name": "optimum stability across DSC assumptions",
+      "result": "All three scan-rate cases select n=3 and d3=1.2 mm; the active limitation is thermal safety in every case."
+    }
+  ],
+  "evidence": [
+    "正式运行_20260827/问题三候选方案.csv",
+    "正式运行_20260827/问题三最优方案.csv",
+    "问题三数值检查.csv",
+    "run_report_q3.json",
+    "fidelity_code.json"
+  ],
+  "remaining_limit": "The Q3 paper text still needs to be synchronized from the old dynamic-body/unlimited-source equations to the frozen Q1 semantics before the result is frozen for paper use."
+}

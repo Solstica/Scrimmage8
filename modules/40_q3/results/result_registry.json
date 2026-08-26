@@ -1,0 +1,70 @@
+{
+  "results": [
+    {
+      "result_id": "Q3-1.0-20260827",
+      "question": "Q3",
+      "model_id": "WHUT13-Q3-DISCRETE-THICKNESS",
+      "model_version": "1.0",
+      "value": "v=2: n=3,t_eff=701.195; v=5: n=3,t_eff=416.038; v=10: n=3,t_eff=321.060",
+      "unit": "s",
+      "claim_level": "validated discrete optimum for each scan-rate case",
+      "status": "VERIFIED",
+      "dependencies": [
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\model_interface.json",
+          "sha256": "1484f357f2d862240b56ad5b1959c837825f284b51e845243216a031cfaddc82",
+          "size": 3046
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\run_report_q3.json",
+          "sha256": "cc59c28d1f2897eece279de3266610f5058abf219a0677ec9a4debd41e7e0d3d",
+          "size": 2946
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\implementation_plan.json",
+          "sha256": "f3142782e77fab8d1247530820ed109a9eb288dff010ba1127a3e47678455374",
+          "size": 1992
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\code\\q3.py",
+          "sha256": "38ece8afd39a87fe85fcf5ede2cd06bf77b9fa98e674b360bf2cd0127ac1d7ec",
+          "size": 10968
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\data\\raw\\附件1 放热能力数据.xlsx",
+          "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2",
+          "size": 17180
+        }
+      ],
+      "evidence": [
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\正式运行_20260827\\问题三候选方案.csv",
+          "sha256": "f19cb47898cd1c059e3e0c206aab02a9b36e8e22dbe54316736ed06b16cd7e2b",
+          "size": 2233
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\正式运行_20260827\\问题三最优方案.csv",
+          "sha256": "d4d5a530c3120809eafaefea9aff5446bd80f77203f9d848a4c68df770ad979f",
+          "size": 717
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\问题三数值检查.csv",
+          "sha256": "b4831c564c39977ddb81729165e2ec8ef7d65785eee21e6d41e364ba689cb2f3",
+          "size": 700
+        },
+        {
+          "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\fidelity_code.json",
+          "sha256": "a011a8db53cd003c56b35e4242201130360d58dfc3765207a821eec06aaa5455",
+          "size": 714
+        }
+      ],
+      "created_at": "2026-08-26T16:49:31.143425+00:00",
+      "verification_report": {
+        "path": "D:\\最后一次练习赛-worktrees\\q3\\modules\\40_q3\\results\\verification_report.json",
+        "sha256": "e3b8c36a76cca4769fb4dfe07d3ba6534a0edcaa2020900e7051877a66ee6fc1",
+        "size": 1778
+      },
+      "verified_at": "2026-08-26T16:49:31.221532+00:00"
+    }
+  ]
+}

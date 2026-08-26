@@ -1,0 +1,61 @@
+{
+  "question": "Q3",
+  "model_id": "WHUT13-Q3-DISCRETE-THICKNESS",
+  "model_version": "1.0",
+  "status": "APPROVED",
+  "objective_or_outputs": [
+    "For each DSC scan-rate case v=2,5,10 K/min, maximize effective standing time over the four allowed outer-layer thicknesses",
+    "Report thermal limit t_T, weight limit t_W and t_eff=min(t_T,t_W) for every candidate"
+  ],
+  "variables": [
+    {"name": "n", "unit": "1", "meaning": "number of added 0.3 mm outer coating layers"},
+    {"name": "d3", "unit": "m", "meaning": "outer insulation thickness d3=0.0003(1+n)"},
+    {"name": "t_T", "unit": "s", "meaning": "first time the Q1 body-side temperature T_in reaches 15 degC"},
+    {"name": "t_W", "unit": "s", "meaning": "standing-time limit from decreasing weight capacity"}
+  ],
+  "parameters": [
+    {"name": "A", "value": 1.6521, "unit": "m2", "source": "modeler confirmation: use A=A_b"},
+    {"name": "m_h", "value": 60.0, "unit": "kg", "source": "problem and modeler confirmation that body mass is included"},
+    {"name": "v", "value": [2.0, 5.0, 10.0], "unit": "K/min", "source": "frozen Q1 model and modeler confirmation to calculate all cases"},
+    {"name": "d3 candidates", "value": [0.0003, 0.0006, 0.0009, 0.0012], "unit": "m", "source": "problem coating increment and derived 50 percent budget bound"}
+  ],
+  "equations_or_objective": [
+    "d3(n)=0.0003(1+n), n in {0,1,2,3}",
+    "m_c=A(rho1*d1+rho2*d2+rho3*d3)",
+    "t_W=(100-m_h-m_c)/0.05",
+    "t_eff=min(t_T,t_W)",
+    "n_star(v)=argmax_n t_eff(n,v)"
+  ],
+  "constraints": [
+    "C(n)<=1.5*C0",
+    "m_h+m_c(n)<=100-0.05*t_eff",
+    "n is an integer in {0,1,2,3}",
+    "Q1 fixed-body, T_in threshold and finite irreversible latent-heat semantics are unchanged"
+  ],
+  "initial_or_boundary_conditions": [
+    "Exactly inherit frozen Q1 model WHUT13-Q1-THERMAL version 3a1982f",
+    "Only outer-layer thickness d3 changes between candidates"
+  ],
+  "data_scope": [
+    "data/raw/附件1 放热能力数据.xlsx Sheet1 A1:B358",
+    "attachment 2 material parameters and prices",
+    "Q1 endpoint-linear DSC baseline"
+  ],
+  "required_outputs": [
+    "One 12-row candidate table for four thicknesses and three scan rates",
+    "One best-candidate table with a separate optimum for each scan rate"
+  ],
+  "allowed_numerical_freedom": [
+    "Use the frozen Q1 modal method and its dt=0.25 s, M=40, quadrature=160 settings",
+    "Repeat selected candidates with tighter numerical settings for convergence"
+  ],
+  "forbidden_silent_changes": [
+    "exclude body mass from the weight constraint",
+    "replace A=A_b",
+    "drop any of the v=2,5,10 K/min cases",
+    "add thickness candidates outside the problem-derived budget set",
+    "reintroduce dynamic T_h or unlimited q_pcm(T)",
+    "modify frozen Q1 outputs"
+  ],
+  "modeler_notes": "The modeler confirmed that weight includes body mass, material area uses A=A_b, and all three scan-rate cases must be solved. If their optimal candidates differ, report each separately without inventing an additional robust objective."
+}

@@ -1,1 +1,2 @@
 result_id,status,review_state,value,unit,source_file,used_in_paper,notes
+Q3-1.0-20260827,VALIDATED,CHECKED,"v=2: n=3,t_eff=701.195; v=5: n=3,t_eff=416.038; v=10: n=3,t_eff=321.060",s,modules/40_q3/results/正式运行_20260827/问题三最优方案.csv,no,"三种扫描速率均选 d3=1.2mm 且由热安全限制；正文同步冻结 Q1 语义后再转 FROZEN"

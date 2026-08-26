@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q3-DISCRETE-THICKNESS",
+  "model_version": "1.0",
+  "model_sha256": "1484f357f2d862240b56ad5b1959c837825f284b51e845243216a031cfaddc82",
+  "plan_sha256": "f3142782e77fab8d1247530820ed109a9eb288dff010ba1127a3e47678455374",
+  "code_sha256": "38ece8afd39a87fe85fcf5ede2cd06bf77b9fa98e674b360bf2cd0127ac1d7ec",
+  "blocks": [],
+  "warnings": [],
+  "gate_role": "external_read_only_model_drift_audit",
+  "participant_code_modified": false,
+  "scope_note": "This gate only reports declared model changes and high-confidence code hints. It never rewrites, wraps, or injects protection into participant code, and it does not prove mathematical semantic equivalence."
+}
