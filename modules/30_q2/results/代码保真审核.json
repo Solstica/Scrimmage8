@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-THERMAL",
+  "model_version": "d50852b+Q1-3a1982f",
+  "model_sha256": "339fc05f35f01dd00e1e5f85a3b22d58880013bb9b8c722d572857a85809e703",
+  "plan_sha256": "69b0afc66e7c0935714592994775c1a1289320c4c2df1bc74b97489166e97e5b",
+  "code_sha256": "6c895d900fc5ad2870cb7b050be36e874481e09a7ee0287b33f087a4ad2d3ca4",
+  "blocks": [],
+  "warnings": [],
+  "gate_role": "external_read_only_model_drift_audit",
+  "participant_code_modified": false,
+  "scope_note": "This gate only reports declared model changes and high-confidence code hints. It never rewrites, wraps, or injects protection into participant code, and it does not prove mathematical semantic equivalence."
+}

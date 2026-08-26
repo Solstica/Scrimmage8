@@ -1,1 +1,2 @@
 result_id,status,review_state,value,unit,source_file,used_in_paper,notes
+Q2-d50852b-Q1-3a1982f-20260827,FROZEN,CHECKED,"2K/min:t15=171.403;t10=182.234 | 5K/min:t15=92.670;t10=103.439 | 10K/min:t15=66.481;t10=77.207",s,modules/30_q2/results/计算结果.csv,no,"run_gate PASS; numerical validation completed; q2.tex synchronization pending"

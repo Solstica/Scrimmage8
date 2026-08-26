@@ -1,0 +1,24 @@
+{
+  "question": "Q2",
+  "model_id": "WHUT13-Q2-THERMAL",
+  "model_version": "d50852b+Q1-3a1982f",
+  "final_method": "Short-time modal propagation with a 2x2 interface-slope solve",
+  "core_implementation": "A flat q2.py reuses the frozen Q1 finite-latent modal equations, changes h_b to 4.0 and uses the derived forced-convection coefficient 12.1*sqrt(3). It runs the same 2,5,10 K/min DSC scan-rate cases, detects T_in crossings, and saves only result, history and profile tables.",
+  "key_parameters": [
+    {"name": "formal time step", "value": "0.25 s; compare with 0.125 s", "source_type": "numerical", "source_ref": "Q1 convergence-tested setting and Q2 recheck", "affects_feasible_region": false},
+    {"name": "formal modal count", "value": "40; compare with 60", "source_type": "numerical", "source_ref": "Q1 convergence-tested setting and Q2 recheck", "affects_feasible_region": false},
+    {"name": "external coefficient", "value": "12.1*sqrt(3)=20.9578 W/(m2 K)", "source_type": "derived", "source_ref": "Q2 model proves forced branch exceeds natural branch over the modeled range", "affects_feasible_region": false},
+    {"name": "DSC scan-rate cases", "value": "2,5,10 K/min", "source_type": "modeler", "source_ref": "Q1 frozen model 3a1982f", "affects_feasible_region": false}
+  ],
+  "approximations": [
+    {"name": "linear T_12 and T_23 within each time step", "approved": true, "source_type": "modeler", "source": "Q1 frozen model inherited by Q2"},
+    {"name": "freeze layer-average c_eff within each time step", "approved": true, "source_type": "modeler", "source": "Q1 frozen model inherited by Q2"},
+    {"name": "fixed forced branch h_e=12.1*sqrt(3)", "approved": true, "source_type": "derived", "source": "Q2 d50852b; separately compare against the full max relation"},
+    {"name": "scalar layer-average PCM history in modal method", "approved": true, "source_type": "modeler", "source": "Q1 frozen model inherited by Q2"}
+  ],
+  "search_space_changes": [],
+  "outputs": [
+    "scan rate, latent heat, t15 and t10 table",
+    "baseline T_in history and temperature profiles"
+  ]
+}

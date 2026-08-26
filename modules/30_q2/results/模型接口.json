@@ -1,0 +1,76 @@
+{
+  "question": "Q2",
+  "model_id": "WHUT13-Q2-THERMAL",
+  "model_version": "d50852b+Q1-3a1982f",
+  "status": "APPROVED",
+  "objective_or_outputs": [
+    "Compute the three-layer temperature fields under 3 m/s wind and light activity",
+    "Compute the body-side clothing temperature T_in(t)=T_1(0,t)",
+    "Find t15 and t10 for DSC scan-rate assumptions 2, 5 and 10 K/min"
+  ],
+  "variables": [
+    {"name": "T_i", "unit": "degC", "meaning": "temperature field in clothing layer i"},
+    {"name": "T_in", "unit": "degC", "meaning": "body-side clothing temperature used as the threshold proxy"},
+    {"name": "T_12,T_23", "unit": "degC", "meaning": "continuous material-interface temperatures"},
+    {"name": "xi", "unit": "1", "meaning": "irreversible PCM solidification progress"}
+  ],
+  "parameters": [
+    {"name": "d", "value": [0.0007, 0.0004, 0.0003], "unit": "m", "source": "attachment 2"},
+    {"name": "rho", "value": [208.0, 552.3, 300.0], "unit": "kg/m3", "source": "attachment 2"},
+    {"name": "c", "value": [4803.8, 2400.0, 5463.2], "unit": "J/(kg K)", "source": "attachment 2"},
+    {"name": "k", "value": [0.068, 0.06, 0.0527], "unit": "W/(m K)", "source": "attachment 2"},
+    {"name": "T_b", "value": 37.0, "unit": "degC", "source": "Q1 frozen model and attachment 2 fixed-body test condition"},
+    {"name": "T_inf", "value": -40.0, "unit": "degC", "source": "problem"},
+    {"name": "h_b", "value": 4.0, "unit": "W/(m2 K)", "source": "attachment 2 light activity"},
+    {"name": "wind_speed", "value": 3.0, "unit": "m/s", "source": "problem Q2"},
+    {"name": "h_e", "value": "max(2.38*abs(T_cl-T_inf)^0.25,12.1*sqrt(3)); forced branch 20.9578", "unit": "W/(m2 K)", "source": "Q2 model d50852b"},
+    {"name": "p(T)", "unit": "W/kg", "source": "attachment 1 with Q1 endpoint-linear operational baseline"},
+    {"name": "scan_rate", "value": [2.0, 5.0, 10.0], "unit": "K/min", "source": "Q1 frozen model sensitivity cases"},
+    {"name": "L_pcm", "value": [611563.74, 244625.50, 122312.75], "unit": "J/kg", "source": "Q1 frozen model, L_pcm=60*20385.458/scan_rate"}
+  ],
+  "equations_or_objective": [
+    "rho_i c_i dT_i/dt=k_i d2T_i/dx2 for i=1,3",
+    "rho_2 c_eff dT_2/dt=k_2 d2T_2/dx2",
+    "xi(t)=max_{tau<=t} xi_DSC(T_2(tau))",
+    "c_eff=c_2-L_pcm dxi_DSC/dT only while xi advances; otherwise c_eff=c_2",
+    "h_e=max(2.38*abs(T_cl-T_inf)^0.25,12.1*sqrt(wind_speed))"
+  ],
+  "constraints": [
+    "temperature and heat flux are continuous at both material interfaces",
+    "-k_1 T_1x(0,t)=4.0*(T_b-T_1(0,t))",
+    "-k_3 T_3x(L,t)=h_e*(T_3(L,t)-T_inf)",
+    "0<=xi<=1 and xi is nondecreasing",
+    "total PCM latent release is bounded by PCM mass times L_pcm"
+  ],
+  "initial_or_boundary_conditions": [
+    "T_i(x,0)=37 degC for all layers",
+    "T_b=37 degC is a fixed Robin-boundary source",
+    "the external Robin coefficient uses the natural/forced maximum"
+  ],
+  "data_scope": [
+    "data/raw/附件1 放热能力数据.xlsx Sheet1 A1:B358",
+    "endpoint-linear DSC baseline inherited from Q1 frozen result",
+    "scan-rate cases 2,5,10 K/min inherited from Q1"
+  ],
+  "required_outputs": [
+    "t15 and t10 for scan rates 2,5,10 K/min",
+    "baseline T_in(t) and three-layer temperature profiles",
+    "time-step/modal convergence and finite-volume comparison",
+    "full max convection versus fixed forced-branch comparison"
+  ],
+  "allowed_numerical_freedom": [
+    "time step, modal truncation and quadrature selected by convergence",
+    "fixed-step implicit finite-volume discretization for verification",
+    "output sampling interval"
+  ],
+  "forbidden_silent_changes": [
+    "reintroduce a dynamic body heat-capacity node",
+    "apply thresholds to the fixed 37 degC body source",
+    "treat DSC heat flow as an unlimited power source",
+    "change the endpoint-linear DSC baseline or omit scan-rate sensitivity cases",
+    "activate latent capacity when solidification progress does not advance",
+    "replace the windy Robin boundary with the Q1 natural-convection-only boundary",
+    "drop interface temperature or heat-flux continuity"
+  ],
+  "modeler_notes": "Q2 inherits the frozen Q1 finite-latent model and changes only h_b and the external windy convection relation. The current q2.tex still contains stale pre-Q1 wording and must be synchronized before paper use."
+}

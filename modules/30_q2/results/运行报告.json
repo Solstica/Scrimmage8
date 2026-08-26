@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-THERMAL",
+  "model_version": "d50852b+Q1-3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\q2.py",
+    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\第二问正式运行"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q2",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-26T16:34:38.745755+00:00",
+  "finished_at": "2026-08-26T16:34:39.664772+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\q2.py",
+      "size": 10659,
+      "sha256": "6c895d900fc5ad2870cb7b050be36e874481e09a7ee0287b33f087a4ad2d3ca4"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\第二问正式运行\\计算结果.csv",
+      "size": 436,
+      "sha256": "83ba81535f26c87eac92ded62e6fcb5e701e99c44c6fe1d6f45a304b4429324e"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\第二问正式运行\\温度历程.csv",
+      "size": 194287,
+      "sha256": "412c2aaf4bb24024645abedfdf7d3dacf0c76c7d2013a5cfcc5c70073b80ef95"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\第二问正式运行\\温度剖面.csv",
+      "size": 46388,
+      "sha256": "18d2a5ff9beffd0b4c5a460c416a652bf011938653f28b38c527e9030a1b7ed5"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "scan=2 K/min, L=611.564 kJ/kg, t15=171.403 s, t10=182.234 s\nscan=5 K/min, L=244.625 kJ/kg, t15=92.670 s, t10=103.439 s\nscan=10 K/min, L=122.313 kJ/kg, t15=66.481 s, t10=77.207 s\n",
+  "stderr_tail": ""
+}
