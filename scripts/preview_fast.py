@@ -3,10 +3,12 @@ from __future__ import annotations
 
 """Fast paper-preview mode.
 
-Only paper-relevant files are overlaid into the temporary detached worktree.
+Only paper-relevant files are overlaid into the isolated preview worktree.
 Heavy result archives, editable plotting projects and logs are skipped, while
 source code is kept because some competitions require complete code in the PDF appendix.
-The responsibility branches themselves are never modified.
+The preview worktree is backed by a disposable local integration branch created by
+preview_merge.py; that branch is detached and deleted immediately after the run.
+Responsibility branches themselves are never modified.
 """
 
 from pathlib import Path
@@ -31,6 +33,28 @@ def preview_excluded(path: str | None) -> bool:
     if p.lower().endswith((".log", ".log.err", ".tmp")):
         return True
     return False
+
+
+def assert_preview_target(preview: Path) -> None:
+    """提交前确认 Git 当前确实指向独立 preview worktree/临时分支。"""
+    top = pm.run(
+        ["git", "rev-parse", "--show-toplevel"],
+        cwd=preview,
+        capture=True,
+    ).stdout.strip()
+    branch = pm.run(
+        ["git", "symbolic-ref", "--quiet", "--short", "HEAD"],
+        cwd=preview,
+        check=False,
+        capture=True,
+    ).stdout.strip()
+    if Path(top).resolve() != preview.resolve() or not branch.startswith(pm.TEMP_BRANCH_PREFIX):
+        raise RuntimeError(
+            "fast preview 提交目标校验失败，拒绝执行 git add/commit。\n"
+            f"expected worktree: {preview}\n"
+            f"actual worktree:   {top}\n"
+            f"actual branch:     {branch or '(detached)'}"
+        )
 
 
 def fast_overlay_branch(module: dict, audit_base_ref: str, preview: Path) -> None:
@@ -80,6 +104,7 @@ def _strip_trailing_ws_bytes(data: bytes) -> bytes:
 
 
 def fast_compose_commit(preview: Path) -> None:
+    assert_preview_target(preview)
     pm.run(["git", "add", "-A"], cwd=preview)
     changed = pm.run(
         ["git", "diff", "--cached", "--name-only", "-z", "HEAD"],
@@ -104,11 +129,19 @@ def fast_compose_commit(preview: Path) -> None:
         print(f"[FAST CLEAN] 临时清理 {cleaned} 个文本文件的行尾空白")
         pm.run(["git", "add", "-A"], cwd=preview)
 
-    if pm.run(["git", "diff", "--cached", "--quiet"], cwd=preview, check=False).returncode:
-        pm.run([
-            "git", "-c", "user.name=CUMCM Preview", "-c", "user.email=preview@local.invalid",
-            "commit", "-m", "preview: compose owned module snapshots"
-        ], cwd=preview)
+    if not pm.run(["git", "diff", "--cached", "--quiet"], cwd=preview, check=False).returncode:
+        print("[INFO] fast overlay 与 compose base 无文件差异，无需创建临时提交。")
+        return
+
+    if pm.run(["git", "diff", "--cached", "--check"], cwd=preview, check=False).returncode:
+        raise RuntimeError("git diff --cached --check 发现空白错误。")
+
+    # 再校验一次，确保清理/暂存期间没有离开临时 preview 分支。
+    assert_preview_target(preview)
+    pm.run([
+        "git", "-c", "user.name=CUMCM Preview", "-c", "user.email=preview@local.invalid",
+        "commit", "-m", "preview: compose owned module snapshots"
+    ], cwd=preview)
 
 
 def main() -> None:
