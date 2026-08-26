@@ -1,0 +1,33 @@
+{
+  "status": "BUDGET_REACHED",
+  "method": "finite_volume",
+  "model_id": "WHUT13-Q1-THERMAL",
+  "model_version": "4438986",
+  "cells_per_layer": 24,
+  "node_count": 73,
+  "rtol": 1e-08,
+  "atol": 1e-09,
+  "maximum_step_s": 60.0,
+  "solver_steps": 31119,
+  "function_evaluations": 64114,
+  "simulated_time_s": 1800000.0,
+  "simulated_time_h": 500.0,
+  "t15_s": null,
+  "t15_h": null,
+  "t10_s": null,
+  "t10_h": null,
+  "final_body_temperature_C": 23.99269830849231,
+  "cumulative_pcm_energy_J": 1188506833.691022,
+  "cumulative_environment_loss_J": 1191254345.1182802,
+  "global_energy_residual_J": -5.158688873052597e-05,
+  "global_energy_relative_residual": -2.1677338545516206e-14,
+  "pcm_data": {
+    "rows": 357,
+    "temperature_min_C": 14.05,
+    "temperature_max_C": 26.018,
+    "specific_power_min_W_per_kg": 400.42,
+    "specific_power_max_W_per_kg": 3782.57,
+    "peak_temperature_C": 20.622,
+    "input_sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+  }
+}

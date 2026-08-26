@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q1-THERMAL",
+  "model_version": "4438986",
+  "model_sha256": "0638cb8e041bf1b1afca93c85dd0126ce6235bc93a59da9a6fe212dc82c01d87",
+  "plan_sha256": "25910f9bfc4fb63962b334bf2529543a0a0d064d19141ebf12b7abe4d681c1b0",
+  "blocks": [],
+  "warnings": [],
+  "scope_note": "This gate checks declared decisions and high-confidence code hints only; it does not prove mathematical semantic equivalence."
+}

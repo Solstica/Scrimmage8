@@ -1,0 +1,75 @@
+{
+  "status": "FAIL",
+  "model_id": "WHUT13-Q1-THERMAL",
+  "model_version": "4438986",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛\\modules\\20_q1\\code\\q1_solve.py",
+    "--method",
+    "fvm",
+    "--output-dir",
+    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q1_gate_fvm_500h_latest\\run",
+    "--max-hours",
+    "500",
+    "--output-interval",
+    "3600",
+    "--profile-interval",
+    "36000",
+    "--fvm-cells",
+    "24",
+    "--fvm-rtol",
+    "1e-8",
+    "--fvm-atol",
+    "1e-9",
+    "--fvm-max-step",
+    "60"
+  ],
+  "cwd": "D:\\最后一次练习赛",
+  "returncode": 2,
+  "started_at": "2026-08-26T14:03:29.967473+00:00",
+  "finished_at": "2026-08-26T14:03:37.598941+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛\\modules\\20_q1\\code\\q1_solve.py",
+      "size": 36280,
+      "sha256": "8875c03adc5abc2539b25121be28719ff8c2f0f7350d7a418fa5cb6f9027b4f4"
+    },
+    {
+      "path": "D:\\最后一次练习赛\\modules\\20_q1\\paper\\q1.tex",
+      "size": 12459,
+      "sha256": "6ffa9460c9b804c8e4aa96b9877347cafc9c4fac22422fefbd3a8d42675362c2"
+    },
+    {
+      "path": "D:\\最后一次练习赛\\modules\\20_q1\\results\\model_interface.json",
+      "size": 3478,
+      "sha256": "0638cb8e041bf1b1afca93c85dd0126ce6235bc93a59da9a6fe212dc82c01d87"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q1_gate_fvm_500h_latest\\run\\summary.json",
+      "size": 1030,
+      "sha256": "8d45ca064272d6fd0cd3e00ebbc430c4a55ccf8317944e8b390ad6af858ce774"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q1_gate_fvm_500h_latest\\run\\body_temperature.csv",
+      "size": 111392,
+      "sha256": "a5ae83e749b5cff3926f56998f1b0f81a6c24569d7edb43e9b243fbf765c47c0"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q1_gate_fvm_500h_latest\\run\\temperature_profiles.csv",
+      "size": 194171,
+      "sha256": "4402ad11b87c3324ffbefc87849ae49c812a1288e8624f26088032d6b1165678"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "{\n  \"status\": \"BUDGET_REACHED\",\n  \"method\": \"finite_volume\",\n  \"model_id\": \"WHUT13-Q1-THERMAL\",\n  \"model_version\": \"4438986\",\n  \"cells_per_layer\": 24,\n  \"node_count\": 73,\n  \"rtol\": 1e-08,\n  \"atol\": 1e-09,\n  \"maximum_step_s\": 60.0,\n  \"solver_steps\": 31119,\n  \"function_evaluations\": 64114,\n  \"simulated_time_s\": 1800000.0,\n  \"simulated_time_h\": 500.0,\n  \"t15_s\": null,\n  \"t15_h\": null,\n  \"t10_s\": null,\n  \"t10_h\": null,\n  \"final_body_temperature_C\": 23.99269830849231,\n  \"cumulative_pcm_energy_J\": 1188506833.691022,\n  \"cumulative_environment_loss_J\": 1191254345.1182802,\n  \"global_energy_residual_J\": -5.158688873052597e-05,\n  \"global_energy_relative_residual\": -2.1677338545516206e-14,\n  \"pcm_data\": {\n    \"rows\": 357,\n    \"temperature_min_C\": 14.05,\n    \"temperature_max_C\": 26.018,\n    \"specific_power_min_W_per_kg\": 400.42,\n    \"specific_power_max_W_per_kg\": 3782.57,\n    \"peak_temperature_C\": 20.622,\n    \"input_sha256\": \"739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2\"\n  }\n}\n",
+  "stderr_tail": ""
+}
