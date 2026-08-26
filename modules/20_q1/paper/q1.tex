@@ -118,6 +118,8 @@ T_\infty=-40\,^{\circ}\mathrm C.
 h_e(t)=2.38\bigl[T_3(L,t)-T_\infty\bigr]^{0.25}.
 \label{eq:q1-hout}
 \end{equation}
+这里$2.38$仅为无风自然对流经验关系中的系数，真正的表面对流换热系数是式\eqref{eq:q1-hout}所定义的完整$h_e(t)$。问题一没有外加风速，空气运动由衣表与环境之间的温差产生，故该经验式不显式含风速$v$，自然对流强弱通过$T_3(L,t)-T_\infty$体现。若后续问题给定有限外部风速，则外表面对流转为强制或混合对流，不能继续原样沿用式\eqref{eq:q1-hout}，应根据风速重新确定外侧换热系数。
+
 于是外侧Robin边界为
 \begin{equation}
 -k_3T_{3,x}(L,t)
