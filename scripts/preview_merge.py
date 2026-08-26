@@ -8,11 +8,13 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CFG = json.loads((ROOT / "config/project.json").read_text(encoding="utf-8"))
 MARKER = ".cumcm-preview-worktree"
+TEMP_BRANCH_PREFIX = "preview/tmp-"
 
 
 def run(args, cwd=ROOT, check=True, capture=False):
@@ -22,18 +24,90 @@ def run(args, cwd=ROOT, check=True, capture=False):
     return subprocess.run(args, **kwargs)
 
 
+def _norm(path: Path | str) -> str:
+    return str(Path(path).resolve()).replace("\\", "/").lower()
+
+
 def registered(path: Path) -> bool:
     p = run(["git", "worktree", "list", "--porcelain"], capture=True).stdout
-    return str(path).replace("\\", "/") in p.replace("\\", "/")
+    needle = _norm(path)
+    return any(
+        line.startswith("worktree ") and line[9:].replace("\\", "/").lower() == needle
+        for line in p.splitlines()
+    )
+
+
+def marker_temp_branch(path: Path) -> str | None:
+    marker = path / MARKER
+    if not marker.exists():
+        return None
+    for line in marker.read_text(encoding="utf-8", errors="replace").splitlines():
+        if line.startswith("temp_branch="):
+            branch = line.split("=", 1)[1].strip()
+            if branch.startswith(TEMP_BRANCH_PREFIX):
+                return branch
+    return None
+
+
+def local_branch_exists(branch: str) -> bool:
+    return run(
+        ["git", "show-ref", "--verify", "--quiet", f"refs/heads/{branch}"],
+        check=False,
+    ).returncode == 0
+
+
+def delete_temp_branch(branch: str | None) -> None:
+    if not branch or not branch.startswith(TEMP_BRANCH_PREFIX):
+        return
+    if local_branch_exists(branch):
+        p = run(["git", "branch", "-D", branch], check=False, capture=True)
+        if p.returncode:
+            print(f"[WARN] 临时融合分支删除失败：{branch}")
+        else:
+            print(f"[INFO] 已删除临时融合分支：{branch}")
+
+
+def detach_preview_branch(path: Path, branch: str) -> None:
+    if not path.exists() or not registered(path):
+        delete_temp_branch(branch)
+        return
+    current = run(
+        ["git", "symbolic-ref", "--quiet", "--short", "HEAD"],
+        cwd=path,
+        check=False,
+        capture=True,
+    ).stdout.strip()
+    if current == branch:
+        p = run(["git", "checkout", "--detach", "HEAD"], cwd=path, check=False, capture=True)
+        if p.returncode:
+            print(f"[WARN] preview worktree 无法从临时分支脱离：{branch}")
+            return
+    delete_temp_branch(branch)
 
 
 def clean_preview(path: Path) -> None:
+    """只清理带 preview 标记的目录，并回收可能残留的临时融合分支。"""
     if Path.cwd().resolve() == path.resolve():
         raise SystemExit("不能从待删除的 preview 目录内部执行 --clean；先 cd 到正常 worktree。")
-    if registered(path):
+    if path.resolve() == ROOT.resolve():
+        raise SystemExit("preview 路径不能等于当前仓库根目录。")
+
+    exists = path.exists()
+    is_registered = registered(path)
+    stale_branch = marker_temp_branch(path) if exists else None
+    if exists and not (path / MARKER).exists():
+        raise SystemExit(
+            f"拒绝清理没有 {MARKER} 标记的目录：{path}\n"
+            "请确认路径；preview 脚本不会删除普通工作目录。"
+        )
+
+    if is_registered:
         run(["git", "worktree", "remove", "--force", str(path)], check=False)
     if path.exists():
+        if not (path / MARKER).exists():
+            raise SystemExit(f"preview worktree 移除后标记异常，拒绝继续删除：{path}")
         shutil.rmtree(path, ignore_errors=False)
+    delete_temp_branch(stale_branch)
     run(["git", "worktree", "prune"], check=False)
 
 
@@ -121,10 +195,16 @@ def overlay_branch(module: dict, audit_base_ref: str, preview: Path) -> None:
 def module_plan(extra_skip: set[str]) -> list[dict]:
     integ = integration_cfg()
     skip = set(integ.get("skip_module_keys", [])) | extra_skip
-    return sorted(
-        (m for m in CFG["modules"] if m.get("active", True) and m["key"] not in skip),
-        key=lambda x: x["merge_order"],
-    )
+    modules = [m for m in CFG["modules"] if m.get("active", True)]
+    known = {m["key"] for m in modules}
+    unknown = extra_skip - known
+    if unknown:
+        raise SystemExit("--skip 包含未知模块 key: " + ", ".join(sorted(unknown)))
+    plan = [m for m in modules if m["key"] not in skip]
+    keys = [m["key"] for m in plan]
+    if len(keys) != len(set(keys)):
+        raise SystemExit("config/project.json 中存在重复模块 key。")
+    return sorted(plan, key=lambda x: x["merge_order"])
 
 
 def cite_audit(preview: Path):
@@ -160,11 +240,15 @@ def cite_audit(preview: Path):
 
 def compose_commit(preview: Path) -> None:
     run(["git", "add", "-A"], cwd=preview)
-    if run(["git", "diff", "--cached", "--quiet"], cwd=preview, check=False).returncode:
-        run([
-            "git", "-c", "user.name=CUMCM Preview", "-c", "user.email=preview@local.invalid",
-            "commit", "-m", "preview: compose owned module snapshots"
-        ], cwd=preview)
+    if not run(["git", "diff", "--cached", "--quiet"], cwd=preview, check=False).returncode:
+        print("[INFO] overlay 与 compose base 无文件差异，无需创建临时提交。")
+        return
+    if run(["git", "diff", "--cached", "--check"], cwd=preview, check=False).returncode:
+        raise RuntimeError("git diff --cached --check 发现空白错误。")
+    run([
+        "git", "-c", "user.name=CUMCM Preview", "-c", "user.email=preview@local.invalid",
+        "commit", "-m", "preview: compose owned module snapshots"
+    ], cwd=preview)
 
 
 def build(preview: Path, no_build: bool) -> None:
@@ -182,7 +266,9 @@ def build(preview: Path, no_build: bool) -> None:
 
 
 def prepare_preview_path(preview: Path) -> None:
-    """Recycle only an old preview created by this script; never delete an arbitrary directory."""
+    """回收旧 preview；无标记目录一律拒绝删除。"""
+    if preview.resolve() == ROOT.resolve():
+        raise SystemExit("preview 路径不能等于当前仓库根目录。")
     exists = preview.exists()
     is_registered = registered(preview)
     if not exists and not is_registered:
@@ -190,19 +276,24 @@ def prepare_preview_path(preview: Path) -> None:
 
     marker = preview / MARKER
     if exists and marker.exists():
-        print(f"[INFO] 回收上次失败遗留的 preview：{preview}")
+        print(f"[INFO] 回收上次 preview：{preview}")
         clean_preview(preview)
         return
 
     if not exists and is_registered:
         print(f"[INFO] 清理已失效的 preview worktree 注册：{preview}")
-        clean_preview(preview)
+        run(["git", "worktree", "remove", "--force", str(preview)], check=False)
+        run(["git", "worktree", "prune"], check=False)
         return
 
     raise SystemExit(
         f"目标 preview 路径已存在但没有 {MARKER} 标记：{preview}\n"
         "为避免误删普通工作目录，本脚本拒绝自动清理；请人工确认后换路径或删除。"
     )
+
+
+def make_temp_branch() -> str:
+    return f"{TEMP_BRANCH_PREFIX}{time.strftime('%Y%m%d-%H%M%S')}-{os.getpid()}"
 
 
 def main() -> None:
@@ -244,8 +335,18 @@ def main() -> None:
     for m in plan:
         print(f"  {m['merge_order']:>3}  {m['key']:<12} {m['branch']}")
 
-    run(["git", "worktree", "add", "--detach", str(preview), compose_ref])
-    (preview / MARKER).write_text("temporary detached full-paper preview\n", encoding="utf-8")
+    temp_branch = make_temp_branch()
+    print("[INFO] temporary integration branch:", temp_branch)
+    try:
+        run(["git", "worktree", "add", "-b", temp_branch, str(preview), compose_ref])
+    except Exception:
+        delete_temp_branch(temp_branch)
+        raise
+
+    (preview / MARKER).write_text(
+        "temporary full-paper preview\n" + f"temp_branch={temp_branch}\n",
+        encoding="utf-8",
+    )
     try:
         for module in plan:
             ref = f"refs/remotes/origin/{module['branch']}"
@@ -258,8 +359,6 @@ def main() -> None:
             overlay_branch(module, audit_ref, preview)
 
         compose_commit(preview)
-        if run(["git", "diff", "--check", "HEAD^", "HEAD"], cwd=preview, check=False).returncode:
-            raise RuntimeError("git diff --check 发现空白错误。")
         missing, _unused = cite_audit(preview)
         if missing:
             raise RuntimeError("正文引用与 references.tex 不一致。")
@@ -292,6 +391,10 @@ def main() -> None:
     except Exception:
         print(f"\n临时目录保留用于检查：{preview}")
         raise
+    finally:
+        # 保留 preview worktree/PDF 供查看，但立即让它脱离临时融合分支并删除该分支。
+        # 因此任何 preview 提交都不会落到 q1/q2/.../evaluation 等责任分支上。
+        detach_preview_branch(preview, temp_branch)
 
 
 if __name__ == "__main__":
