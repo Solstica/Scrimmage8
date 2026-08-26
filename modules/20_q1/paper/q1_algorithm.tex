@@ -1,27 +1,20 @@
-\begin{algorithm}[H]
-\SetAlgoLined
-\setstretch{0.92}
-\SetAlFnt{\normalsize}
-\SetArgSty{textnormal}
-\SetKwInput{KwIn}{输入}
-\SetKwInput{KwInit}{初始化}
-\SetKwInput{KwOut}{输出}
-\SetKwFor{For}{for}{do}{end for}
-\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
-\SetKw{KwRet}{return}
-\caption{问题一通用参数求解流程示例}
-\label{alg:q1-demo}
-\KwIn{观测数据$\mathcal D=\{(x_i,y_i)\}_{i=1}^{n}$，参数边界$\Omega$，候选初值集合$\mathcal S$}
-\KwInit{$J_{\min}\leftarrow+\infty$，$\boldsymbol\theta^{*}\leftarrow\varnothing$}
-\For{$\boldsymbol\theta^{(0)}\in\mathcal S$}{
-    在$\Omega$内由$\boldsymbol\theta^{(0)}$求解当前模型\;
-    得到$\widehat{\boldsymbol\theta}$并计算$J(\widehat{\boldsymbol\theta})$\;
-    \If{$J(\widehat{\boldsymbol\theta})<J_{\min}$}{
-        $J_{\min}\leftarrow J(\widehat{\boldsymbol\theta})$\;
-        $\boldsymbol\theta^{*}\leftarrow\widehat{\boldsymbol\theta}$\;
-    }
-}
-计算与本问不确定性对应的误差、稳健性或独立验证指标\;
-\KwRet $\boldsymbol\theta^{*}$及评价指标\;
-\KwOut{最终参数、关键结果与检验量}
+\begin{algorithm}[!htbp]
+\caption{问题一微小时间段分离变量求解流程}
+\label{alg:q1-short-time-separation}
+\begin{algorithmic}[1]
+\Require 三层厚度与热物性，初始温度$37\,^{\circ}\mathrm C$，环境温度$-40\,^{\circ}\mathrm C$，附件放热曲线$q_{\rm pcm}(T)$，时间步$\Delta t$
+\Ensure 温度场$T(x,t)$、人体侧温度$T_s(t)$及阈值时间$t_{15},t_{10}$
+\State 对附件放热数据建立保形插值函数$q_{\rm pcm}(T)$
+\State 初始化$T_i(x,0)=37\,^{\circ}\mathrm C$，令$n\gets0$
+\While{$T_s(t_n)>10\,^{\circ}\mathrm C$}
+    \State 由当前功能层温度计算$q_{\rm pcm}(\bar T_2^n)$，并在$[t_n,t_{n+1}]$内冻结该热源
+    \State 将两个界面温度写成局部线性形式，未知斜率记为$\beta_{12}^n,\beta_{23}^n$
+    \State 对三层分别进行边界齐次化，并由分离变量法得到该时间段的解析温度表达式
+    \State 代入两个界面的热流连续条件，求$\beta_{12}^n,\beta_{23}^n$
+    \State 更新$t_{n+1}$时刻的三层温度场，并计算$T_s(t_{n+1})$
+    \State 若首次越过$15\,^{\circ}\mathrm C$或$10\,^{\circ}\mathrm C$，则在相邻时间点间插值确定$t_{15}$或$t_{10}$
+    \State $n\gets n+1$
+\EndWhile
+\State 以$\Delta t/2$重复计算，检查$t_{15}$和$t_{10}$的时间步收敛性
+\end{algorithmic}
 \end{algorithm}
