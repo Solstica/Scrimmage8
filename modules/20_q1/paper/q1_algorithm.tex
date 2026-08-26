@@ -7,8 +7,13 @@
 \State 对附件DSC曲线完成基线、符号和单位整理，计算归一化累计面积得到$\xi_{\rm DSC}(T)$及$-\mathrm d\xi_{\rm DSC}/\mathrm dT$
 \State 初始化$T_i(x,0)=37\,^{\circ}\mathrm C$，相变进度$\xi(x,0)=0$，令$n\gets0$
 \While{$T_{\rm in}(t_n)>10\,^{\circ}\mathrm C$}
-    \State 由当前功能层温度计算$\bar T_2^n$，更新$c_{2,\rm eff}^n=c_2-L_{\rm pcm}\xi'_{\rm DSC}(\bar T_2^n)$与$\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$
-    \State 对相变进度施加历史约束$\xi^{n+1}=\max\{\xi^n,\xi_{\rm DSC}(T_2)\}$，禁止已固化部分因局部回温而反向减少
+    \State 由当前功能层温度计算$\bar T_2^n$及候选固化进度$\xi_{\rm trial}=\xi_{\rm DSC}(\bar T_2^n)$
+    \If{$\xi_{\rm trial}>\xi^n$}
+        \State 固化继续推进，取$c_{2,\rm eff}^n=c_2-L_{\rm pcm}\xi'_{\rm DSC}(\bar T_2^n)$，并令$\xi^{n+1}=\xi_{\rm trial}$
+    \Else
+        \State 无新增固化，取$c_{2,\rm eff}^n=c_2$，并令$\xi^{n+1}=\xi^n$
+    \EndIf
+    \State 计算$\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$；上述历史约束保证已固化部分不因局部回温而反向减少
     \State 由当前服装外表面温度计算$h_e^n=2.38[T_3(L,t_n)-T_\infty]^{0.25}$，在当前时间段内冻结
     \State 令$T_{12},T_{23}$在当前微小时间段内线性变化，未知斜率为$\beta_{12}^n,\beta_{23}^n$；人体边界$T_b$保持常数
     \State 第一层采用Robin--Dirichlet本征展开，第二层采用Dirichlet--Dirichlet正弦展开，第三层采用Dirichlet--Robin本征展开
