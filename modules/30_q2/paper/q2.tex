@@ -1,6 +1,6 @@
 \section{问题二模型的建立与求解}
 
-\subsection{问题二的描述与模型继承}
+\subsection{问题的描述与分析}
 
 问题二在问题一的基础上增加两个条件：长城站外风速为$3\ \mathrm{m/s}$，实验者由静止站立改为轻微运动。三层防护材料的厚度、密度、比热容和导热系数均保持不变，中间功能层继续采用问题一已经校正的有限、不可逆相变模型。人体仍按附件测试条件视为$37\,^{\circ}\mathrm C$恒温热源，评价量仍取内层织物贴近人体一侧的温度
 \begin{equation}
@@ -172,7 +172,7 @@ t_{10}^{(2)}
 \end{equation}
 两种阈值均通过相邻时间步线性插值确定，避免时间步端点离散误差。
 
-采用ISO 11079简化关系（$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$）作为主模型，三种DSC扫描速率下的结果见表\ref{tab:q2-results-main}。此外，旧PMV择大关系（$h_e=20.96\ \mathrm{W/(m^2\cdot K)}$）与Kuwabara经验关系（$h_e=21.95\ \mathrm{W/(m^2\cdot K)}$）的对照结果见表\ref{tab:q2-results-sens}，以说明外对流相关式选择对阈值时间的影响。
+采用ISO 11079简化关系（$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$）作为主模型，三种DSC扫描速率下的结果见表\ref{tab:q2-results-main}和图\ref{fig:q2-threshold-time}。此外，旧PMV择大关系（$h_e=20.96\ \mathrm{W/(m^2\cdot K)}$）与Kuwabara经验关系（$h_e=21.95\ \mathrm{W/(m^2\cdot K)}$）的对照结果见表\ref{tab:q2-results-sens}，以说明外对流相关式选择对阈值时间的影响。
 
 \begin{table}[!htbp]
 \centering
@@ -194,6 +194,14 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \boxed{t_{15}^{(2)}=103.49\ \mathrm s}
 \end{equation}
 后需要返回室内。与问题一基准结果$273.91\ \mathrm s$相比，有风和轻微运动条件下贴身侧降温明显加快，说明$3\ \mathrm{m/s}$外部风速造成的强制对流增强是问题二防护时间显著缩短的主要边界条件变化。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureFullWidth]{modules/30_q2/figures/阈值时间.svg}
+\caption{不同外对流关系与DSC工况下贴身侧服装温度的阈值时间。（a）首次达到15$\,^{\circ}\mathrm C$与10$\,^{\circ}\mathrm C$的时间；（b）两阈值的时间间隔。连接线表示阈值配对，不表示统计不确定性。}
+\label{fig:q2-threshold-time}
+\end{figure}
+\FloatBarrier
 
 \begin{table}[!htbp]
 \centering
@@ -224,4 +232,26 @@ Kuwabara经验关系 & 21.95 & 10 & 63.977 & 74.242 \\
 
 以ISO 11079主模型的$\beta_{\rm DSC}=5\ \mathrm{K/min}$作为基准工况，将时间步由$0.25\ \mathrm s$减半至$0.125\ \mathrm s$后，$t_{15}$与$t_{10}$分别变化约$0.0127\%$和$0.0154\%$；模态数由40增加至60后，两阈值变化约$0.2843\%$和$0.2776\%$。对$18.46$、$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$三种外对流关系与三组$\beta_{\rm DSC}$组成的9个工况，独立隐式有限体积法与模态结果的阈值偏差均不超过$1.2146\%$。ISO 11079简化关系的$5\ \mathrm{K/min}$工况中，有限体积法减半时间步和加密网格后的最大变化为$0.0036\%$。三组外对流核算中，自然支路最大值约为$7.049\ \mathrm{W/(m^2\cdot K)}$，低于最小强制对流候选$18.46\ \mathrm{W/(m^2\cdot K)}$，说明固定风速下强制支路始终占优；但不同强制对流相关式造成的阈值差异不可忽略。
 
-阈值时间由相邻时间步线性插值确定，避免了简单取时间步端点的$0.25\ \mathrm s$量级离散误差。上述数值检验支持当前离散参数下的正式结果，但不构成实地实验验证，也不支持外推到其他风速或未登记材料参数。
+阈值时间由相邻时间步线性插值确定，避免了简单取时间步端点的$0.25\ \mathrm s$量级离散误差。数值验证结果见图\ref{fig:q2-numerical-validation}。上述数值检验支持当前离散参数下的正式结果，但不构成实地实验验证，也不支持外推到其他风速或未登记材料参数。
+
+\subsection{灵敏度分析}
+
+外对流相关式选择是问题二的主要不确定来源。ISO 11079简化关系、旧PMV择大关系与Kuwabara经验关系在相同DSC工况下的阈值差异见图\ref{fig:q2-boundary-sensitivity}。ISO 11079简化关系与旧PMV择大关系的阈值差异约为$+11.4\%$--$+12.0\%$，Kuwabara经验关系与旧PMV的差异约为$-3.8\%$--$-4.0\%$，三组关系在相同DSC速率下的最大绝对差异可达约$28\ \mathrm s$。
+
+DSC扫描速率是另一主要不确定来源。在$\beta_{\rm DSC}=2$--$10\ \mathrm{K/min}$范围内，ISO 11079主模型的$t_{15}^{(2)}$约为$74.04$--$192.03\ \mathrm s$，因扫描速率引发的阈值差异约为$2.6$倍，超过外对流相关式选择的影响。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureFullWidth]{modules/30_q2/figures/边界敏感性.svg}
+\caption{外对流关系对阈值时间的影响。以同一DSC工况下的旧PMV阈值为分母，比较ISO简化与Kuwabara关系的相对变化。正值表示阈值推迟，负值表示提前；零线为旧PMV对照。}
+\label{fig:q2-boundary-sensitivity}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureFullWidth]{modules/30_q2/figures/数值验证.svg}
+\caption{独立有限体积复核与离散参数加密检查。（a）九个工况的阈值相对差异，以模态结果为分母；（b）ISO简化、5$\ \mathrm{K/min}$工况的时间步减半及网格加密变化，以基准FVM为分母。}
+\label{fig:q2-numerical-validation}
+\end{figure}
+\FloatBarrier
