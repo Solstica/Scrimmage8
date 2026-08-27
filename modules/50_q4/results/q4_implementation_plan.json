@@ -1,0 +1,68 @@
+{
+  "question": "Q4",
+  "model_id": "Q4-M1",
+  "model_version": "1.0",
+  "final_method": "Q1 modal forward solver plus upper-bound expansion and binary search in alpha",
+  "core_implementation": "Reuse Q1 basis and modal_step functions, replace L_pcm by alpha*L_pcm, test feasibility only through t3_best, and then run the selected alpha until the actual 15 degC crossing.",
+  "key_parameters": [
+    {
+      "name": "dt",
+      "value": "0.25 s",
+      "source_type": "numerical",
+      "source_ref": "Q1 formal solver",
+      "affects_feasible_region": false
+    },
+    {
+      "name": "M",
+      "value": "40 modes per layer",
+      "source_type": "numerical",
+      "source_ref": "Q1 formal solver",
+      "affects_feasible_region": false
+    },
+    {
+      "name": "nq",
+      "value": "160 Gauss points",
+      "source_type": "numerical",
+      "source_ref": "Q1 formal solver",
+      "affects_feasible_region": false
+    },
+    {
+      "name": "alpha_tol",
+      "value": "1e-4",
+      "source_type": "numerical",
+      "source_ref": "binary-search stopping tolerance",
+      "affects_feasible_region": false
+    },
+    {
+      "name": "t3_best",
+      "value": "416.0379012473915 s",
+      "source_type": "modeler",
+      "source_ref": "Q3 formal v=5 K/min result",
+      "affects_feasible_region": true
+    }
+  ],
+  "approximations": [
+    {
+      "name": "time marching with dt=0.25 s",
+      "approved": true,
+      "source_type": "approved_approximation",
+      "source_ref": "Q1 formal solver"
+    },
+    {
+      "name": "40-term modal truncation",
+      "approved": true,
+      "source_type": "approved_approximation",
+      "source_ref": "Q1 formal solver"
+    },
+    {
+      "name": "160-point Gaussian quadrature",
+      "approved": true,
+      "source_type": "approved_approximation",
+      "source_ref": "Q1 formal solver"
+    }
+  ],
+  "search_space_changes": [],
+  "outputs": [
+    "q4_result.csv"
+  ]
+}

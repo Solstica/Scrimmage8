@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "model_id": "Q4-M1",
+  "model_version": "1.0",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\50_q4\\code\\q4.py"
+  ],
+  "cwd": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-26T17:13:43.483076+00:00",
+  "finished_at": "2026-08-26T17:15:01.142402+00:00",
+  "source_files": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\50_q4\\code\\q4.py",
+      "size": 4445,
+      "sha256": "4471fd5578094836dd74d94ee218baceb32ac8692349c25c60141385074b75ed"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\20_q1\\code\\q1.py",
+      "size": 11141,
+      "sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\50_q4\\results\\q4_result.csv",
+      "size": 349,
+      "sha256": "751ac1e6d8feadbb1449ec133d734773e60876b9d77dc2dda0da405f2dd19d7d"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "Q3基准时间（s）: 416.0379012473915\n服装质量（kg）: 0.754216692\n承重上限（s）: 784.91566616\n最小放热倍率: 1.86328125\n最小提高比例（%）: 86.328125\n热安全时间（s）: 416.04276393956764\n实际坚持时间（s）: 416.04276393956764\n最大条件数: 1.066353958725648\n最大热流残差（W/m2）: 9.663381206337363e-13\n",
+  "stderr_tail": ""
+}
