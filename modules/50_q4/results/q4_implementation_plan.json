@@ -1,9 +1,9 @@
 {
   "question": "Q4",
   "model_id": "Q4-M1",
-  "model_version": "1.1",
+  "model_version": "1.2",
   "final_method": "Q1 modal forward solver plus upper-bound expansion and binary search in alpha",
-  "core_implementation": "Read every Q3 optimum row, match its scan rate to Q1 L_pcm(v), replace L_pcm by alpha*L_pcm(v), check weight feasibility, and independently expand and bisect alpha for that row.",
+  "core_implementation": "Read all 16 Q3 optimum rows keyed by scan rate and threshold; join the companion candidate table for latent heat and target verification; forward each row's threshold to Q1. Keep original thicknesses, hard weight check, expansion and bisection. Save dual-threshold diagnostics separately from old 15 degC results.",
   "key_parameters": [
     {
       "name": "dt",
@@ -34,24 +34,24 @@
       "affects_feasible_region": false
     },
     {
-      "name": "t3_best(v)",
+      "name": "t3_best(v,threshold)",
       "value": "read from each Q3 optimum row",
       "source_type": "modeler",
-      "source_ref": "Q3 optimum result table at matching v",
+      "source_ref": "Q3 764375a coarse optimum table matched by v and threshold",
       "affects_feasible_region": true
     },
     {
       "name": "scan rates",
-      "value": "all rows currently present in Q3: 2,5,10 K/min",
+      "value": "all rows currently present in Q3: 0.5,1,1.25,1.5,1.75,2,5,10 K/min",
       "source_type": "modeler",
-      "source_ref": "Q4 task P0",
+      "source_ref": "Q3 764375a approved diagnostic scope and user interface update request",
       "affects_feasible_region": true
     },
     {
       "name": "temperature threshold",
-      "value": "15 degC",
+      "value": "15 and 10 degC, each read explicitly from its Q3 row",
       "source_type": "modeler",
-      "source_ref": "current Q3 stage objective",
+      "source_ref": "Q3 764375a dual-threshold diagnostic table; neither selected as final",
       "affects_feasible_region": true
     }
   ],
@@ -77,6 +77,6 @@
   ],
   "search_space_changes": [],
   "outputs": [
-    "q4_result.csv with one row per Q3 scan rate"
+    "双阈值结果.csv with one row per Q3 scan-rate/threshold pair; old q4_result.csv is not overwritten"
   ]
 }

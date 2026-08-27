@@ -10,16 +10,15 @@ import numpy as np
 m_c = 1.6521 * (208.0 * 0.0007 + 552.3 * 0.0004 + 300.0 * 0.0003)
 tW4 = 20.0 * (40.0 - m_c)
 
-# 当前 Q3 阶段口径与数值参数
-limit = 15.0
+# 数值参数；阈值逐行继承 Q3，不能全局固定为 15℃
 dt = 0.25
 M = 40
 nq = 160
 alpha_tol = 1e-4
 
 root = Path(__file__).resolve().parents[3]
-q3_file = root / "modules" / "40_q3" / "results" / "正式运行_20260827" / "问题三最优方案.csv"
-out_file = root / "modules" / "50_q4" / "results" / "q4_result.csv"
+q3_file = root / "modules/40_q3/results/EXPERIMENT/低速扫描重审/粗扫描最优方案.csv"
+out_file = root / "modules/50_q4/results/双阈值结果.csv"
 
 
 def load_q1():
@@ -30,18 +29,36 @@ def load_q1():
     return q1
 
 
-def read_q3(path):
+def read_q3(path, legacy_limit=None):
     with Path(path).open(encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
-    return [
-        {
-            "v": float(row["扫描速率（K/min）"]),
-            "L_q3": float(row["潜热（kJ/kg）"]),
-            "n": int(float(row["新增层数"])),
-            "target": float(row["有效时间（s）"]),
-        }
-        for row in rows
-    ]
+    if "阈值口径" not in rows[0]:
+        if legacy_limit not in (10.0, 15.0):
+            raise ValueError("旧 Q3 表没有阈值列，必须显式指定 legacy_limit")
+        return [{"v": float(row["扫描速率（K/min）"]),
+                 "L_q3": float(row["潜热（kJ/kg）"]),
+                 "n": int(float(row["新增层数"])),
+                 "target": float(row["有效时间（s）"]),
+                 "limit": float(legacy_limit)} for row in rows]
+
+    # 新最优表不含潜热，按速率和层数关联其配套候选表。
+    with Path(path).with_name("粗扫描方案.csv").open(encoding="utf-8-sig") as f:
+        candidates = list(csv.DictReader(f))
+    by_n = {(float(row["扫描速率（K/min）"]), int(row["新增层数"])): row for row in candidates}
+    cases = []
+    for row in rows:
+        v = float(row["扫描速率（K/min）"])
+        limit = {"15℃": 15.0, "10℃": 10.0}[row["阈值口径"]]
+        n = int(row["最优新增层数"])
+        target = float(row["最大有效时间（s）"])
+        selected = by_n[v, n]
+        if abs(target - float(selected[f"{limit:g}℃有效时间（s）"])) > 1e-6:
+            raise ValueError(f"Q3 最优表与候选表不一致：v={v:g}, 阈值={limit:g}℃")
+        cases.append({"v": v, "L_q3": float(selected["潜热（kJ/kg）"]),
+                      "n": n, "target": target, "limit": limit})
+    if len({(case["v"], case["limit"]) for case in cases}) != len(cases):
+        raise ValueError("Q3 存在重复的扫描速率/阈值目标")
+    return cases
 
 
 def prepare(q1, step, modes, quad):
@@ -147,6 +164,7 @@ def exact_tT(alpha, target, forward, step):
 def solve_case(case, model):
     v = case["v"]
     target = case["target"]
+    limit = case["limit"]
     L_pcm = model["area"] * 60.0 / v
     if abs(L_pcm / 1000.0 - case["L_q3"]) > 1e-6:
         raise RuntimeError(f"v={v:g} K/min 的 Q1/Q3 潜热不一致")
@@ -191,14 +209,15 @@ def solve_case(case, model):
     }
 
 
-def solve(q3_path=q3_file, step=dt, modes=M, quad=nq, save=True):
-    cases = read_q3(q3_path)
+def solve(q3_path=q3_file, step=dt, modes=M, quad=nq, save=True, output_path=out_file, legacy_limit=None):
+    cases = read_q3(q3_path, legacy_limit)
     model = prepare(load_q1(), step, modes, quad)
     rows = [solve_case(case, model) for case in cases]
 
     if save:
-        out_file.parent.mkdir(parents=True, exist_ok=True)
-        with out_file.open("w", newline="", encoding="utf-8-sig") as f:
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with output_path.open("w", newline="", encoding="utf-8-sig") as f:
             writer = csv.DictWriter(f, fieldnames=list(rows[0]))
             writer.writeheader()
             writer.writerows(rows)
@@ -207,12 +226,13 @@ def solve(q3_path=q3_file, step=dt, modes=M, quad=nq, save=True):
         if row["状态"] == "OK":
             print(
                 f"v={row['扫描速率（K/min）']:g} K/min, "
+                f"阈值={row['Q4阈值（℃）']:g}℃, n3={row['Q3最优新增层数']}, "
                 f"alpha={row['最小放热倍率']:.8f}, "
                 f"提高={row['最小提高比例（%）']:.6f}%, "
                 f"t_eff={row['Q4实际时间（s）']:.6f} s"
             )
         else:
-            print(f"v={row['扫描速率（K/min）']:g} K/min: INFEASIBLE_WEIGHT")
+            print(f"v={row['扫描速率（K/min）']:g}, 阈值={row['Q4阈值（℃）']:g}℃: INFEASIBLE_WEIGHT")
     return rows
 
 

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "model_id": "Q4-M1",
+  "model_version": "1.2",
+  "model_sha256": "2a96d86906e754fcc0a0868a11829f9c540f0d0455bc4a418ccd797e4205950e",
+  "plan_sha256": "3f70e17e8d3268b6ad9830c1dcacb8f3081dead91e22099dc11dfc683934f0b1",
+  "code_sha256": "5a3f559afcc5097b5fa429648feabb8619d16758e28a5a813ad0d75b62893a92",
+  "blocks": [],
+  "warnings": [],
+  "gate_role": "external_read_only_model_drift_audit",
+  "participant_code_modified": false,
+  "scope_note": "This gate only reports declared model changes and high-confidence code hints. It never rewrites, wraps, or injects protection into participant code, and it does not prove mathematical semantic equivalence."
+}
