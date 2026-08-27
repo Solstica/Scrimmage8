@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q1-THERMAL",
+  "model_version": "3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\check_q1_m60.py",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\EXPERIMENT\\m60_recalculation_20260827"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q1",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-27T01:19:05.728685+00:00",
+  "finished_at": "2026-08-27T01:19:23.628369+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\check_q1_m60.py",
+      "size": 1764,
+      "sha256": "15800b1c16ef527f68a52b0b2ccd0686f62b9367e3d7d967aaab38eeb19823de"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\q1.py",
+      "size": 11141,
+      "sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\formal_run_20260826_v2\\q1_results.csv",
+      "size": 430,
+      "sha256": "54d836d53aa3c45232c0b921f27905f4e37767a6ef3df52c10bcc65c937edb48"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\EXPERIMENT\\m60_recalculation_20260827\\m60_results.csv",
+      "size": 779,
+      "sha256": "342428e18fdd34ea7caa944fe3c203bac7882d60255819e711e5300c60fb414b"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "v=2 K/min: t15=522.533456 s, t10=559.920847 s, change=+0.3131%/+0.3071%\nv=5 K/min: t15=274.705924 s, t10=312.038880 s, change=+0.2912%/+0.2831%\nv=10 K/min: t15=192.161586 s, t10=229.466275 s, change=+0.2709%/+0.2633%\n",
+  "stderr_tail": ""
+}
