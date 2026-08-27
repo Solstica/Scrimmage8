@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-HCONV-FVM",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\外对流有限体积验证.py",
+    "D:\\qq文件\\附件1 放热能力数据.xlsx",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results\\外对流核算.csv",
+    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\外对流有限体积门禁_1"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q2",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-27T07:31:38.361686+00:00",
+  "finished_at": "2026-08-27T07:31:52.287569+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\外对流有限体积验证.py",
+      "size": 3593,
+      "sha256": "78fff42f26a760228eecacd04224a7e90e446b4644c78f0ab9a329f266de1c4a"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\check_q2.py",
+      "size": 7120,
+      "sha256": "c2abafdf864af8f483508a15b81a36ddff90323e5c0b1f6be7c31e85bdcc4a72"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\q2.py",
+      "size": 10659,
+      "sha256": "6c895d900fc5ad2870cb7b050be36e874481e09a7ee0287b33f087a4ad2d3ca4"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\qq文件\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results\\外对流核算.csv",
+      "size": 1861,
+      "sha256": "e0710b79200c306e88097a34209428706eb5af4ea1c969266cfe46bb4af815d8"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\外对流有限体积门禁_1\\外对流有限体积验证.csv",
+      "size": 2924,
+      "sha256": "b82dd58d8c5c217a98330000773bd98cfdfefc1f072d36d35f33e5c49a3e2276"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "9 个工况有限体积复核完成，较模态解最大偏差 1.2146%\nISO 11079、5 K/min 加密检查最大变化 0.0036%\n",
+  "stderr_tail": ""
+}
