@@ -161,8 +161,31 @@ h_e(t)=2.38\bigl[T_3(L,t)-T_\infty\bigr]^{0.25}.
 \label{eq:q1-outer-robin}
 \end{equation}
 
-\noindent\textbf{模型汇总}\par
-本模型以待求三层温度场$T_i(x,t)$为状态变量，通过一维瞬态导热方程\eqref{eq:q1-governing-13}--\eqref{eq:q1-governing-2}确定温度演化，以功能层有效比热形式\eqref{eq:q1-ceff}描述有限相变放热，并满足初始条件\eqref{eq:q1-initial}、层间连续条件\eqref{eq:q1-interface}、人体侧Robin边界\eqref{eq:q1-inner-robin}和环境侧Robin边界\eqref{eq:q1-outer-robin}。输出量为贴身侧温度$T_{\rm in}(t)=T_1(0,t)$及阈值时间$t_{15},t_{10}$。
+\subsubsection{模型汇总}
+
+{\boldmath
+\begin{equation}
+\left\{
+\begin{aligned}
+&\rho_i c_i\frac{\partial T_i}{\partial t}=k_i\frac{\partial^2T_i}{\partial x^2},\quad i=1,3,\\[2mm]
+&\rho_2 c_{2,\rm eff}(T_2)\frac{\partial T_2}{\partial t}
+ =k_2\frac{\partial^2T_2}{\partial x^2},\\[2mm]
+&c_{2,\rm eff}(T)=c_2+L_{\rm pcm}
+ \frac{p(T)}{\displaystyle\int_{T_f}^{T_s}p(\theta)\,\mathrm d\theta},\\[4mm]
+&T_i(x,0)=37\,^{\circ}\mathrm C,\quad i=1,2,3,\\[2mm]
+&T_1(x_1^-)=T_2(x_1^+),\;
+ k_1T_{1,x}(x_1^-)=k_2T_{2,x}(x_1^+),\\
+&T_2(x_2^-)=T_3(x_2^+),\;
+ k_2T_{2,x}(x_2^-)=k_3T_{3,x}(x_2^+),\\[2mm]
+&-k_1T_{1,x}(0,t)=h_b\bigl[T_b-T_1(0,t)\bigr],\\[2mm]
+&-k_3T_{3,x}(L,t)=h_e(t)\bigl[T_3(L,t)-T_\infty\bigr],\\[2mm]
+&T_{\rm in}(t)=T_1(0,t),\quad
+ t_{15}=\inf\{t>0:T_{\rm in}\le15\,^{\circ}\mathrm C\},\quad
+ t_{10}=\inf\{t>0:T_{\rm in}\le10\,^{\circ}\mathrm C\}.
+\end{aligned}
+\right.
+\label{eq:q1-model-summary}
+\end{equation}}
 
 \subsection{模型求解}
 
