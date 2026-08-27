@@ -1,2 +1,3 @@
 result_id,status,review_state,value,unit,source_file,used_in_paper,notes
-Q2-d50852b-Q1-3a1982f-20260827,FROZEN,CHECKED,"2K/min:t15=171.403;t10=182.234 | 5K/min:t15=92.670;t10=103.439 | 10K/min:t15=66.481;t10=77.207",s,modules/30_q2/results/计算结果.csv,no,"run_gate PASS; numerical validation completed; q2.tex synchronization pending"
+Q2-d50852b-Q1-3a1982f-20260827,DRAFT,NEEDS_REVIEW,"2K/min:t15=171.403;t10=182.234 | 5K/min:t15=92.670;t10=103.439 | 10K/min:t15=66.481;t10=77.207",s,modules/30_q2/results/计算结果.csv,no,"old PMV convection baseline only; final external-convection relation reopened; do not use as final Q2 answer"
+Q2-HCONV-SENS-20260827,FROZEN,CHECKED,"h_e=18.46/20.9578/21.95; DSC=2/5/10; max abs t15 change=12.033%",comparison,modules/30_q2/results/外对流核算.csv,yes,"run_gate PASS; relation-sensitivity comparison only; final main convection model remains NEEDS_REVIEW"

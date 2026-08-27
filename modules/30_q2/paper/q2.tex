@@ -12,6 +12,8 @@ T_{\rm in}(t)=T_1(0,t).
 
 \subsection{有风条件下的外表面对流修正}
 
+外侧强制对流相关式的适用范围会显著影响返回时间。以下保留原自然--强制对流择大关系作为旧关系对照；冷环境ISO 11079简化关系和室外风经验关系的核算表明，外侧对流模型仍是本问的主要不确定来源。因此，本节旧关系计算不作为最终唯一外边界，主模型需在相关式适用范围核定后确定。
+
 问题一无外加风速，服装外表面采用附件给出的自然对流关系
 \begin{equation}
 h_{\rm nat}=2.38\left|T_{\rm cl}-T_\infty\right|^{0.25},
@@ -36,7 +38,7 @@ h_{\rm for}=12.1\sqrt{3}=20.96\ \mathrm{W/(m^2\cdot K)}.
 \begin{equation}
 h_{\rm nat,max}=2.38\times77^{0.25}\approx7.05\ \mathrm{W/(m^2\cdot K)},
 \end{equation}
-随后衣表温度降低，自然对流支路进一步减小，因此整个主要降温阶段均由强制对流支路控制。故正式求解可固定取
+随后衣表温度降低，自然对流支路进一步减小，因此旧关系对照计算固定取
 \begin{equation}
 \boxed{h_e=20.96\ \mathrm{W/(m^2\cdot K)}}.
 \end{equation}
@@ -109,6 +111,24 @@ T_i(x,0)=37\,^{\circ}\mathrm C,
 \end{equation}
 两处材料界面继续满足温度连续和热流连续，再与式\eqref{eq:q2-inner-robin}、\eqref{eq:q2-outer-robin}联立，构成问题二闭合模型。
 
+\subsubsection{模型汇总}
+
+{\boldmath
+\begin{equation}
+\left\{
+\begin{aligned}
+&\rho_i c_i\frac{\partial T_i}{\partial t}=k_i\frac{\partial^2T_i}{\partial x^2},\quad i=1,3,\\[4pt]
+&\rho_2 c_{2,\mathrm{eff}}(T_2)\frac{\partial T_2}{\partial t}=k_2\frac{\partial^2T_2}{\partial x^2},\\[4pt]
+&-k_1T_{1,x}(0,t)=h_b\bigl[37-T_1(0,t)\bigr],\qquad h_b=4.0\ \mathrm{W/(m^2\cdot K)},\\[4pt]
+&-k_3T_{3,x}(L,t)=h_e\bigl[T_3(L,t)+40\bigr],\qquad h_e=20.96\ \mathrm{W/(m^2\cdot K)},\\[4pt]
+&T_i(d_1,t)=T_{i+1}(d_1,t),\quad
+k_iT_{i,x}(d_1,t)=k_{i+1}T_{i+1,x}(d_1,t),\quad i=1,2,\\[4pt]
+&T_i(x,0)=37\,^{\circ}\mathrm C,\quad i=1,2,3.
+\end{aligned}
+\right.
+\label{eq:q2-model-summary}
+\end{equation}}
+
 \subsection{微小时间段拓展分离变量求解}
 
 问题二继续采用问题一的微小时间段拓展分离变量法。每个时间段内将两个材料界面温度近似为线性变化，并冻结当前功能层有效比热。第一层仍采用Robin--Dirichlet本征展开，本征值满足
@@ -119,11 +139,11 @@ T_i(x,0)=37\,^{\circ}\mathrm C,
 \begin{equation}
 \alpha_2^n=\frac{k_2}{\rho_2c_{2,\rm eff}^n}.
 \end{equation}
-第三层采用Dirichlet--Robin本征展开。由于本问外侧换热系数固定为$20.96\ \mathrm{W/(m^2\cdot K)}$，其本征值满足
+第三层采用Dirichlet--Robin本征展开。在旧关系对照中，外侧换热系数固定为$20.96\ \mathrm{W/(m^2\cdot K)}$，其本征值满足
 \begin{equation}
 \tan(\lambda_{3,m}d_3)=-\frac{k_3\lambda_{3,m}}{20.96},
 \end{equation}
-可在计算开始前一次求得。
+可在计算开始前一次求得。若采用其他固定强制对流系数，只需以相应$h_e$替换分母中的$20.96$，其余离散和界面连续条件不变。
 
 人体恒温以后，每个微小时间段只有两个未知界面斜率$\beta_{12}^n,\beta_{23}^n$，由两处材料界面的段末热流连续条件组成$2\times2$线性方程求解。正式计算采用时间步$\Delta t=0.25\ \mathrm s$、每层$M=40$个模态和160点Gauss积分，并使用独立隐式有限体积法进行核对。
 
@@ -143,7 +163,7 @@ t_{10}^{(2)}
 
 \begin{table}[!htbp]
 \centering
-\caption{问题二不同DSC扫描速率下的返回室内时间}
+\caption{旧PMV外对流关系下不同DSC扫描速率的对照结果}
 \label{tab:q2-results}
 \begin{tabular}{cccc}
 \toprule
@@ -156,14 +176,14 @@ t_{10}^{(2)}
 \end{tabular}
 \end{table}
 
-以$v=5\ \mathrm{K/min}$作为基准工况，实验者约在
+在旧PMV外对流关系下，以$v=5\ \mathrm{K/min}$作为基准工况，实验者约在
 \begin{equation}
-\boxed{t_{15}^{(2)}=92.67\ \mathrm s}
+t_{15}^{(2)}=92.67\ \mathrm s
 \end{equation}
-后需要返回室内。与问题一基准结果$273.91\ \mathrm s$相比，有风和轻微运动条件下贴身侧降温明显加快，说明$3\ \mathrm{m/s}$外部风速造成的强制对流增强是问题二防护时间显著缩短的主要边界条件变化。
+后达到返回阈值。该数值仅作为旧外对流关系的对照，不作为最终唯一答案。
 
-由于DSC扫描速率并非附件给定参数，绝对返回时间仍具有明显不确定性。在$v=2$--$10\ \mathrm{K/min}$范围内，$t_{15}^{(2)}$约为$66.48$--$171.40\ \mathrm s$，因此正文以$92.67\ \mathrm s$作为基准条件预测，并同时报告上述敏感性区间。
+由于DSC扫描速率并非附件给定参数，绝对返回时间仍具有明显不确定性。在$v=2$--$10\ \mathrm{K/min}$范围内，旧关系下$t_{15}^{(2)}$约为$66.48$--$171.40\ \mathrm s$。外对流相关式核算显示，采用$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$时阈值时间较旧关系增加约$11.36\%$--$12.09\%$，采用$h_e=21.95\ \mathrm{W/(m^2\cdot K)}$时减少约$3.77\%$--$4.00\%$，故最终结果必须同时说明外对流模型来源及其敏感性。
 
 \subsection{数值检验}
 
-基准工况将时间步由$0.25\ \mathrm s$减半至$0.125\ \mathrm s$后，$t_{15}$与$t_{10}$分别变化约$0.0127\%$和$0.0154\%$；模态数由40增加至60后，两阈值变化约$0.2843\%$和$0.2776\%$。独立隐式有限体积法在三组扫描速率下与正式模态结果的阈值偏差均不超过$1.20\%$，有限体积法自身减半时间步和加密网格后的变化均小于$0.005\%$。此外，使用完整的式\eqref{eq:q2-hout-mixed}重新计算所得阈值与固定强制对流支路结果一致，说明本问将$h_e$固定为$20.96\ \mathrm{W/(m^2\cdot K)}$不会引入额外边界近似误差。
+旧PMV关系的基准工况将时间步由$0.25\ \mathrm s$减半至$0.125\ \mathrm s$后，$t_{15}$与$t_{10}$分别变化约$0.0127\%$和$0.0154\%$；模态数由40增加至60后，两阈值变化约$0.2843\%$和$0.2776\%$。独立隐式有限体积法在三组扫描速率下与模态结果的阈值偏差均不超过$1.20\%$，有限体积法自身减半时间步和加密网格后的变化均小于$0.005\%$。三组外对流核算中，自然支路最大值约为$7.049\ \mathrm{W/(m^2\cdot K)}$，低于最小强制对流候选$18.46\ \mathrm{W/(m^2\cdot K)}$，说明固定风速下强制支路始终占优；但不同强制对流相关式造成的阈值差异不可忽略。

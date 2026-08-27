@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-HCONV-SENS",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\外对流核算.py",
+    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\外对流门禁运行"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q2",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-27T07:02:02.815786+00:00",
+  "finished_at": "2026-08-27T07:02:04.106971+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\外对流核算.py",
+      "size": 2204,
+      "sha256": "006008bd987b570fa2765154eeb4c1c9b593f62e0cfff4efa5aea8459504e176"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\q2.py",
+      "size": 10659,
+      "sha256": "6c895d900fc5ad2870cb7b050be36e874481e09a7ee0287b33f087a4ad2d3ca4"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\外对流门禁运行\\外对流核算.csv",
+      "size": 1861,
+      "sha256": "e0710b79200c306e88097a34209428706eb5af4ea1c969266cfe46bb4af815d8"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "ISO 11079简化, scan=2 K/min, t15=192.028 s, t10=204.262 s, relative=(12.033%, 12.088%)\nISO 11079简化, scan=5 K/min, t15=103.492 s, t10=115.666 s, relative=(11.678%, 11.820%)\nISO 11079简化, scan=10 K/min, t15=74.035 s, t10=86.167 s, relative=(11.362%, 11.606%)\n旧PMV关系, scan=2 K/min, t15=171.403 s, t10=182.234 s, relative=(0.000%, 0.000%)\n旧PMV关系, scan=5 K/min, t15=92.670 s, t10=103.439 s, relative=(0.000%, 0.000%)\n旧PMV关系, scan=10 K/min, t15=66.481 s, t10=77.207 s, relative=(0.000%, 0.000%)\nKuwabara经验, scan=2 K/min, t15=164.575 s, t10=174.946 s, relative=(-3.984%, -4.000%)\nKuwabara经验, scan=5 K/min, t15=89.084 s, t10=99.393 s, relative=(-3.869%, -3.911%)\nKuwabara经验, scan=10 K/min, t15=63.977 s, t10=74.242 s, relative=(-3.766%, -3.840%)\n",
+  "stderr_tail": ""
+}
