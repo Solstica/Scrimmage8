@@ -118,28 +118,28 @@ def draw_sens(data, out):
     fig, axes = plt.subplots(1, 2, figsize=(180 * MM, 94 * MM), sharey=True)
     fig.subplots_adjust(left=0.12, right=0.965, bottom=0.25, top=0.80, wspace=0.24)
     handles = [Line2D([], [], color=COLORS[n], marker=m, linewidth=1.1, markersize=4.5, label=SHORT[n])
-               for n, m in [(NAMES[0], "o"), (NAMES[2], "D")]]
+               for n, m in [(NAMES[1], "o"), (NAMES[2], "D")]]
     fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.54, 0.985), ncol=2, frameon=False)
     for k, ax, tag in zip((15, 10), axes, ("a", "b")):
         style(ax)
         for r in data:
             name, scan = r["外对流模型"], float(r["扫描速率（K/min）"])
-            y = {2: 2, 5: 1, 10: 0}[scan] + (0.17 if name == NAMES[0] else -0.17)
+            y = {2: 2, 5: 1, 10: 0}[scan] + (0.17 if name == NAMES[1] else -0.17)
             x = float(r[f"t{k}变化（%）"])
             color = COLORS[name]
             ax.hlines(y, 0, x, color=color, linewidth=1.1)
-            ax.plot(x, y, "o" if name == NAMES[0] else "D", color=color, markersize=4.5)
+            ax.plot(x, y, "o" if name == NAMES[1] else "D", color=color, markersize=4.5)
             ax.annotate(f"{x:+.2f}%", (x, y), xytext=(6 if x > 0 else -6, 0), textcoords="offset points",
                         ha="left" if x > 0 else "right", va="center", color=color)
         ax.axvline(0, color=INK, linewidth=0.8)
         ax.set_xlim(-19, 19)
         ax.set_ylim(-0.6, 2.6)
         ax.set_xticks([-15, -10, -5, 0, 5, 10, 15])
-        ax.set_xlabel("相对旧 PMV 的变化 / %", labelpad=8)
+        ax.set_xlabel("相对 ISO 11079 简化的变化 / %", labelpad=8)
         panel(ax, rf"({tag})  $t_{{{k}}}$")
     axes[0].set_yticks([2, 1, 0], ["2", "5", "10"])
     axes[0].set_ylabel("DSC 扫描速率 / (K/min)", labelpad=8)
-    fig.text(0.12, 0.08, "负值：阈值提前     |     零线：旧 PMV 基准     |     正值：阈值推迟", fontsize=8)
+    fig.text(0.12, 0.08, "负值：阈值提前     |     零线：ISO 11079 简化基准     |     正值：阈值推迟", fontsize=8)
     save(fig, out, "边界敏感性")
 
 

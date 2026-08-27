@@ -5,20 +5,20 @@
   "command": [
     "D:\\python3.12.7\\python.exe",
     "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\绘图数据.py",
-    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results",
-    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据"
+    "D:/最后一次练习赛-worktrees/q2/modules/30_q2/results",
+    "C:/Users/rog/Documents/Codex/2026-08-26/new-chat-16/work/outputs/origin表/数据重算2"
   ],
   "cwd": "D:\\最后一次练习赛-worktrees\\q2",
   "returncode": 0,
   "runner_role": "external_audit_wrapper",
   "participant_code_integration_required": false,
-  "started_at": "2026-08-27T09:52:23.682089+00:00",
-  "finished_at": "2026-08-27T09:52:23.742918+00:00",
+  "started_at": "2026-08-27T12:26:13.158283+00:00",
+  "finished_at": "2026-08-27T12:26:13.202115+00:00",
   "source_files": [
     {
       "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\绘图数据.py",
-      "size": 3646,
-      "sha256": "fabd8b253675e02bef60e5a0922aa6673e9715b69590553ab41401180986918a"
+      "size": 3569,
+      "sha256": "00931fc5570904424ae33d9426d4be4839afbde0cd1bb21b06321abd1f8a746a"
     }
   ],
   "inputs": [
@@ -35,17 +35,17 @@
   ],
   "outputs": [
     {
-      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据\\阈值时间.csv",
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\origin表\\数据重算2\\阈值时间.csv",
       "size": 878,
       "sha256": "b2035d9d460b61962cf95de68998cfe19840e1e4c117209bc851a92d152de6a9"
     },
     {
-      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据\\边界敏感性.csv",
-      "size": 432,
-      "sha256": "75fa9bf61c4d16f77266e3c6472a7d060b30f763cf90f74756df2352eb692964"
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\origin表\\数据重算2\\边界敏感性.csv",
+      "size": 430,
+      "sha256": "6c095568a49cc1f577e8a3619f037e62689e0b7d3edce466ef21364eb03f8cf6"
     },
     {
-      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据\\数值验证.csv",
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\origin表\\数据重算2\\数值验证.csv",
       "size": 1669,
       "sha256": "5cdd04f0c873cc780430a7ff659358f77982d48ea6f5620b9ce4458fa3d10a9d"
     }

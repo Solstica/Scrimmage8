@@ -30,7 +30,7 @@ def main():
 
     time_rows, sens_rows, check_rows = [], [], []
     for scan in (2.0, 5.0, 10.0):
-        ref = index["旧PMV关系", scan]
+        ref = index["ISO 11079简化", scan]
         for name in names:
             r = index[name, scan]
             h, t15, t10 = (float(r[k]) for k in ("h_e（W/(m2 K)）", "t15（s）", "t10（s）"))
@@ -38,10 +38,9 @@ def main():
                 raise ValueError("阈值时间不合法")
             time_rows.append([name, h, scan, t15, t10, t10 - t15])
             change = [100 * (float(r[f"t{k}（s）"]) / float(ref[f"t{k}（s）"]) - 1) for k in (15, 10)]
-            for k, value in zip((15, 10), change):
-                if not math.isclose(value, float(r[f"t{k}较旧值变化（%）"]), abs_tol=1e-10):
-                    raise ValueError("敏感性复算与原表不符")
-            if name != "旧PMV关系":
+            if not all(math.isfinite(value) for value in change):
+                raise ValueError("敏感性复算得到非有限数值")
+            if name != "ISO 11079简化":
                 sens_rows.append([name, scan, *change])
 
     base = {(r["外对流模型"], float(r["扫描速率（K/min）"])): r for r in fvm if r["设置"] == "基准"}
