@@ -37,7 +37,7 @@ T_b=37\,^{\circ}\mathrm C.
 
 \noindent\textbf{2. DSC 相变数据特征}\par
 
-附件1共357个有效数据点，温度从$14.050\,^{\circ}\mathrm C$单调增至$26.018\,^{\circ}\mathrm C$，平均点距约$0.0336\ \mathrm{K}$。DSC原始数值均为负值，按附件"放热为负"的约定统一转换为正向放热功率$p_{\rm raw}(T)=-1000\times\mathrm{DSC}(T)$。放热主峰位于$20.622\,^{\circ}\mathrm C$，原始峰值$3782.57\ \mathrm{W/kg}$。
+附件1共357个有效数据点，温度从$14.050\,^{\circ}\mathrm C$单调增至$26.018\,^{\circ}\mathrm C$，平均点距约$0.0336\ \mathrm{K}$。附件DSC数据在相变区间表现为负峰，本文统一取其放热幅值为正，令$p_{\rm raw}(T)=-1000\times\mathrm{DSC}(T)$。放热主峰位于$20.622\,^{\circ}\mathrm C$，原始峰值$3782.57\ \mathrm{W/kg}$。
 
 原始曲线两端点热流分别为$403.86\ \mathrm{W/kg}$和$400.42\ \mathrm{W/kg}$，不能直接以零线作为已校正基线。本模型采用温度区间两端点连线作为操作基线，校正后全部357个数据点非负，校正峰面积为$A_{\rm DSC}=20385.458\ \mathrm{W\cdot K/kg}$。该基线规则是显式建模假设，不同的基线选择会直接影响由DSC数据反推的绝对潜热值。
 
@@ -94,7 +94,7 @@ c_{2,\rm eff}(T)
 \frac{p(T)}{\int_{T_f}^{T_s}p(\theta)\,\mathrm d\theta}.
 \label{eq:q1-ceff}
 \end{equation}
-由此相变总放热被限制为每单位质量$L_{\rm pcm}$，固化完成后$\xi=1$且不再继续释放热量。由于附件未给出扫描速率，取$v=5\ \mathrm{K/min}$作为基准建模假设，并由$L_{\rm pcm}=60A_{\rm DSC}/v$得到$L_{\rm pcm}=244.63\ \mathrm{kJ/kg}$；同时计算$v=2,10\ \mathrm{K/min}$两组敏感性工况。该扫描速率是假设而非附件事实。
+由此相变总放热被限制为每单位质量$L_{\rm pcm}$，固化完成后$\xi=1$且不再继续释放热量。由于附件未给出扫描速率，取$\beta_{\rm DSC}=5\ \mathrm{K/min}$作为基准建模假设，并由$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$得到$L_{\rm pcm}=244.63\ \mathrm{kJ/kg}$；同时计算$\beta_{\rm DSC}=2,10\ \mathrm{K/min}$两组敏感性工况。该扫描速率是假设而非附件事实。
 
 \noindent\textbf{2. 初始条件与层间条件}\par
 
@@ -151,7 +151,7 @@ T_\infty=-40\,^{\circ}\mathrm C.
 h_e(t)=2.38\bigl[T_3(L,t)-T_\infty\bigr]^{0.25}.
 \label{eq:q1-hout}
 \end{equation}
-这里$2.38$仅为无风自然对流经验关系中的系数，真正的表面对流换热系数是式\eqref{eq:q1-hout}所定义的完整$h_e(t)$。问题一没有外加风速，空气运动由衣表与环境之间的温差产生，故该经验式不显式含风速$v$，自然对流强弱通过$T_3(L,t)-T_\infty$体现。若后续问题给定有限外部风速，则不能继续原样沿用式\eqref{eq:q1-hout}，应根据风速重新确定外侧换热系数。
+这里$2.38$仅为无风自然对流经验关系中的系数，真正的表面对流换热系数是式\eqref{eq:q1-hout}所定义的完整$h_e(t)$。问题一没有外加风速，空气运动由衣表与环境之间的温差产生，故该经验式不显式含空气风速$v_a$，自然对流强弱通过$T_3(L,t)-T_\infty$体现。若后续问题给定有限外部风速，则不能继续原样沿用式\eqref{eq:q1-hout}，应根据风速重新确定外侧换热系数。
 
 于是外侧Robin边界为
 \begin{equation}
@@ -353,7 +353,7 @@ t_{10}=\inf\{t>0:T_{\rm in}(t)\le10\,^{\circ}\mathrm C\}
 \label{tab:q1-time-result}
 \begin{tabular}{cccc}
 \toprule
-$v\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ \\
+$\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ \\
 \midrule
 2  & 611.564 & 520.903 & 558.207 \\
 5  & 244.625 & 273.908 & 311.158 \\
@@ -368,7 +368,7 @@ $v\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\,(\mathrm{s})$
 
 \noindent\textbf{3. 衣料初始温度灵敏度}\par
 
-为检验实验前服装热状态的影响，保持人体边界$T_b=37\,^{\circ}\mathrm C$及基准扫描速率$v=5\ \mathrm{K/min}$不变，仅将三层衣料的统一初始温度改为$T_0=27,30,33,37\,^{\circ}\mathrm C$。其中$27\,^{\circ}\mathrm C$高于DSC数据最高温度$26.018\,^{\circ}\mathrm C$，故四组工况的功能层初始均按液态处理。图\ref{fig:q1-initial-temperature}给出各工况的贴身侧温度曲线。
+为检验实验前服装热状态的影响，保持人体边界$T_b=37\,^{\circ}\mathrm C$及基准扫描速率$\beta_{\rm DSC}=5\ \mathrm{K/min}$不变，仅将三层衣料的统一初始温度改为$T_0=27,30,33,37\,^{\circ}\mathrm C$。其中$27\,^{\circ}\mathrm C$高于DSC数据最高温度$26.018\,^{\circ}\mathrm C$，故四组工况的功能层初始均按液态处理。图\ref{fig:q1-initial-temperature}给出各工况的贴身侧温度曲线。
 
 \begin{figure}[!htbp]
 \centering
