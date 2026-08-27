@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "model_id": "Q1-3a1982f-20260826",
+  "model_version": "initial-temperature-sensitivity-20260827",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\check_q1_initial_temperature.py",
+    "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\EXPERIMENT\\initial_temperature_sensitivity_20260827"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q1",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-27T02:15:58.914945+00:00",
+  "finished_at": "2026-08-27T02:16:13.569486+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\check_q1_initial_temperature.py",
+      "size": 5015,
+      "sha256": "3cdd92ee33e4d0ff26443430d41ca13aff55bed66938c7e691271fd0c6628b03"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\code\\q1.py",
+      "size": 11141,
+      "sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\EXPERIMENT\\initial_temperature_sensitivity_20260827\\q1_initial_temperature_results.csv",
+      "size": 405,
+      "sha256": "dbfe4c642d4037842590bf4ca9571f1802b590a7ba8079480e0a577eaa9b681b"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\EXPERIMENT\\initial_temperature_sensitivity_20260827\\q1_initial_temperature_plot_data.csv",
+      "size": 143965,
+      "sha256": "8770c37a275db8aba37c0c39a20830b1b100064d7dc879e1a6da63c3558fb68f"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\EXPERIMENT\\initial_temperature_sensitivity_20260827\\q1_initial_temperature_sensitivity.png",
+      "size": 182712,
+      "sha256": "23e300e06823fbea590be24f436b79282ef5d3406f20c90db7dc20dd583cf981"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\EXPERIMENT\\initial_temperature_sensitivity_20260827\\analysis.md",
+      "size": 419,
+      "sha256": "3e94a65d16552fcc1afd0aaec434adcd9e86daac900fb7d65daa2cedd6134c15"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "T0=27 degC: t15=236.644 s, t10=273.894 s, relative=-13.60%/-11.98%\nT0=30 degC: t15=248.807 s, t10=286.057 s, relative=-9.16%/-8.07%\nT0=33 degC: t15=260.075 s, t10=297.324 s, relative=-5.05%/-4.45%\nT0=37 degC: t15=273.908 s, t10=311.158 s, relative=+0.00%/+0.00%\n",
+  "stderr_tail": ""
+}

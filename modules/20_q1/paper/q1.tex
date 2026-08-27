@@ -343,3 +343,32 @@ $v\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\,(\mathrm{s})$
 \end{table}
 
 基准工况下将时间步减半后，$t_{15}$与$t_{10}$的相对变化分别为$0.0019\%$和$0.0010\%$；将模态数增至$60$后变化分别为$0.291\%$和$0.283\%$。采用单元级不可逆相变的隐式有限体积法复算三组工况，阈值时间与模态法相差$0.81\%$--$0.99\%$，且有限体积时间步减半、网格加密后结果基本不变。表\ref{tab:q1-time-result}表明扫描速率假设会显著改变坚持时间，因此基准结果应与敏感性范围同时报告，不能视为与实验条件无关的唯一值。
+
+\subsubsection{衣料初始温度灵敏度}
+
+为检验实验前服装热状态的影响，保持人体边界$T_b=37\,^{\circ}\mathrm C$及基准扫描速率$v=5\ \mathrm{K/min}$不变，仅将三层衣料的统一初始温度改为$T_0=27,30,33,37\,^{\circ}\mathrm C$。其中$27\,^{\circ}\mathrm C$高于DSC数据最高温度$26.018\,^{\circ}\mathrm C$，故四组工况的功能层初始均按液态处理。图\ref{fig:q1-initial-temperature}给出各工况的贴身侧温度曲线。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.70\textwidth]{\ProjectRoot/modules/20_q1/figures/q1_initial_temperature_sensitivity.png}
+\caption{不同衣料初始温度下的贴身侧温度变化}
+\label{fig:q1-initial-temperature}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{衣料初始温度对阈值时间的影响}
+\label{tab:q1-initial-temperature}
+\begin{tabular}{cccc}
+\toprule
+$T_0\,(^{\circ}\mathrm C)$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ & 相对$37\,^{\circ}\mathrm C$变化（$t_{15}/t_{10}$） \\
+\midrule
+27 & 236.644 & 273.894 & $-13.60\%/-11.98\%$ \\
+30 & 248.807 & 286.057 & $-9.16\%/-8.07\%$ \\
+33 & 260.075 & 297.324 & $-5.05\%/-4.45\%$ \\
+37 & 273.908 & 311.158 & $0.00\%/0.00\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+预冷工况下，人体恒温边界先向内层织物供热，使$T_{\rm in}$在最初约$2$--$3\ \mathrm{s}$内轻微回升，随后外界散热占主导并持续下降。衣料初温由$37\,^{\circ}\mathrm C$降至$27\,^{\circ}\mathrm C$时，$t_{15}$缩短$37.264\ \mathrm{s}$，$t_{10}$缩短$37.264\ \mathrm{s}$，相对降幅分别为$13.60\%$和$11.98\%$。因此实验前衣料温度是短时坚持时间的重要输入；现有$37\,^{\circ}\mathrm C$结果仍作为基准工况保留，但不应解释为对任意服装预热状态均适用，也不将$T_0=37\,^{\circ}\mathrm C$表述为附件事实。
