@@ -11,18 +11,19 @@
 \SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
 \SetKw{KwRet}{return}
 \SetKwFunction{SolveLinear}{SolveLinear}
+\SetKwFunction{InterpThresh}{InterpThresh}
 \caption{问题二微小时间段拓展分离变量法}
 \label{alg:q2-thermal}
 \KwIn{三层材料参数$\rho_i,c_i,k_i,d_i\;(i=1,2,3)$，
 DSC校正积分面积$A_{\rm DSC}$，
-扫描速率$v$，
+扫描速率$\beta_{\rm DSC}$，
 人体侧换热系数$h_b=4.0\ \mathrm{W/(m^2\cdot K)}$，
-外侧对流系数$h_e=20.96\ \mathrm{W/(m^2\cdot K)}$，
+外侧对流系数$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$，
 环境温度$T_\infty=-40\,^{\circ}\mathrm C$，
 时间步$\Delta t=0.25\ \mathrm s$，
 模态数$M=40$，
 总时长$t_{\max}$}
-\KwInit{计算潜热$L_{\rm pcm}=60A_{\rm DSC}/v$
+\KwInit{计算潜热$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$
 及权重函数$w(T)$\;
 预求第一层Robin--Dirichlet本征值
 $\tan(\lambda_{1,m}d_1)=-k_1\lambda_{1,m}/h_b$\;
@@ -48,10 +49,10 @@ $n\leftarrow0$,\;$t_{15}\leftarrow\varnothing$,\;$t_{10}\leftarrow\varnothing$}
         不再继续释放潜热\;
     }
     \If{$t_{15}=\varnothing$ \rm 且 $T_1(0,t_{n+1})\le15\,^{\circ}\mathrm C$}{
-        $t_{15}\leftarrow t_{n+1}$\;
+        $t_{15}\leftarrow\InterpThresh(T_1(0,t_n),T_1(0,t_{n+1}),n\Delta t,(n+1)\Delta t,15)$\;
     }
     \If{$t_{10}=\varnothing$ \rm 且 $T_1(0,t_{n+1})\le10\,^{\circ}\mathrm C$}{
-        $t_{10}\leftarrow t_{n+1}$\;
+        $t_{10}\leftarrow\InterpThresh(T_1(0,t_n),T_1(0,t_{n+1}),n\Delta t,(n+1)\Delta t,10)$\;
     }
     $n\leftarrow n+1$\;
 }
