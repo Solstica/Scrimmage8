@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-HCONV-SENS",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\绘图数据.py",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results",
+    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q2",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-27T09:52:23.682089+00:00",
+  "finished_at": "2026-08-27T09:52:23.742918+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\绘图数据.py",
+      "size": 3646,
+      "sha256": "fabd8b253675e02bef60e5a0922aa6673e9715b69590553ab41401180986918a"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results\\外对流核算.csv",
+      "size": 1861,
+      "sha256": "e0710b79200c306e88097a34209428706eb5af4ea1c969266cfe46bb4af815d8"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results\\外对流有限体积验证.csv",
+      "size": 2924,
+      "sha256": "b82dd58d8c5c217a98330000773bd98cfdfefc1f072d36d35f33e5c49a3e2276"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据\\阈值时间.csv",
+      "size": 878,
+      "sha256": "b2035d9d460b61962cf95de68998cfe19840e1e4c117209bc851a92d152de6a9"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据\\边界敏感性.csv",
+      "size": 432,
+      "sha256": "75fa9bf61c4d16f77266e3c6472a7d060b30f763cf90f74756df2352eb692964"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\数据\\数值验证.csv",
+      "size": 1669,
+      "sha256": "5cdd04f0c873cc780430a7ff659358f77982d48ea6f5620b9ce4458fa3d10a9d"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "逐图数据复算通过：阈值 9 行，敏感性 6 行，数值验证 22 行；无平滑、拟合或抽样。\n",
+  "stderr_tail": ""
+}

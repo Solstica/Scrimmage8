@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-HCONV-FIG",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "command": [
+    "D:\\python3.12.7\\python.exe",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\第二问绘图.py",
+    "D:/最后一次练习赛-worktrees/q2/modules/30_q2/data/processed",
+    "C:/Users/rog/Documents/Codex/2026-08-26/new-chat-16/work/outputs/第二问绘图/交付终检"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q2",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-27T10:01:22.582553+00:00",
+  "finished_at": "2026-08-27T10:01:23.623143+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\第二问绘图.py",
+      "size": 9169,
+      "sha256": "19df0528d5fc1012c98e97b5df07dc6efbe5171e22fa94884c17886c51833783"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\data\\processed\\阈值时间.csv",
+      "size": 878,
+      "sha256": "b2035d9d460b61962cf95de68998cfe19840e1e4c117209bc851a92d152de6a9"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\data\\processed\\边界敏感性.csv",
+      "size": 432,
+      "sha256": "75fa9bf61c4d16f77266e3c6472a7d060b30f763cf90f74756df2352eb692964"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\data\\processed\\数值验证.csv",
+      "size": 1669,
+      "sha256": "5cdd04f0c873cc780430a7ff659358f77982d48ea6f5620b9ce4458fa3d10a9d"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\交付终检\\阈值时间.svg",
+      "size": 34441,
+      "sha256": "f913679e20dde7b22a969eadb6b4ad80719097b7f64645a01ecbce66df0fa736"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\交付终检\\边界敏感性.svg",
+      "size": 25280,
+      "sha256": "eae571a9f812a3a89847b417d75702e0ec4bc384c93e7e739aaaf5735c8f4d25"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\交付终检\\数值验证.svg",
+      "size": 26365,
+      "sha256": "8f5fde6276de899da60717f0309ac0088e418964e3047f8bff150a27c2e0b561"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\交付终检\\预览\\阈值时间.png",
+      "size": 176266,
+      "sha256": "b393ecd6eaf2094de3079fa5d2b1eb5a0062ffc8dc8ede860624326317189e2e"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\交付终检\\预览\\边界敏感性.png",
+      "size": 117714,
+      "sha256": "d4d3afb0a3062902b1eee1137d8ae42f23962084d90ee626d7cffd1827801199"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\outputs\\第二问绘图\\交付终检\\预览\\数值验证.png",
+      "size": 216839,
+      "sha256": "249b2864d9e5974dca80122dcfe3555631f971b56563f2120118a1b94fcdc188"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "已生成 阈值时间：SVG 与 300 dpi PNG\n已生成 边界敏感性：SVG 与 300 dpi PNG\n已生成 数值验证：SVG 与 300 dpi PNG\n",
+  "stderr_tail": ""
+}
