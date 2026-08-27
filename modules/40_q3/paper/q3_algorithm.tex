@@ -1,0 +1,48 @@
+\begin{algorithm}[H]
+\SetAlgoLined
+\setstretch{0.92}
+\SetAlFnt{\normalsize}
+\SetArgSty{textnormal}
+\SetKwInput{KwIn}{输入}
+\SetKwInput{KwOut}{输出}
+\SetKwFor{For}{for}{do}{end for}
+\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
+\SetKw{KwRet}{return}
+\caption{问题三最优厚度黄金分割搜索}
+\label{alg:q3-golden-section}
+\KwIn{可行区间$[a_0,b_0]$，容差$\varepsilon_d$，扫描速率$v$，潜热$L_{\rm pcm}$}
+\KwOut{最优功能层厚度$d_2^*$，最长实际坚持时间$t_{\rm eff}^*$}
+
+计算可行域上下界：
+$a\leftarrow d_{2,\min}$，$b\leftarrow d_{2,\max}$\;
+黄金分割比例：$\varphi\leftarrow(\sqrt{5}-1)/2$\;
+$c\leftarrow b - \varphi(b-a)$\;
+$d\leftarrow a + \varphi(b-a)$\;
+调用问题一正演计算$f_c\leftarrow t_{\rm eff}(c)$\;
+调用问题一正演计算$f_d\leftarrow t_{\rm eff}(d)$\;
+\While{$b-a > \varepsilon_d$}{
+  \If{$f_c > f_d$}{
+    $b\leftarrow d$\;
+    $d\leftarrow c$\;
+    $f_d\leftarrow f_c$\;
+    $c\leftarrow b - \varphi(b-a)$\;
+    调用问题一正演计算$f_c\leftarrow t_{\rm eff}(c)$\;
+  }
+  \Else{
+    $a\leftarrow c$\;
+    $c\leftarrow d$\;
+    $f_c\leftarrow f_d$\;
+    $d\leftarrow a + \varphi(b-a)$\;
+    调用问题一正演计算$f_d\leftarrow t_{\rm eff}(d)$\;
+  }
+}
+\If{$f_c > f_d$}{
+  $d_2^*\leftarrow c$\;
+  $t_{\rm eff}^*\leftarrow f_c$\;
+}
+\Else{
+  $d_2^*\leftarrow d$\;
+  $t_{\rm eff}^*\leftarrow f_d$\;
+}
+\KwRet $d_2^*$，$t_{\rm eff}^*$\;
+\end{algorithm}

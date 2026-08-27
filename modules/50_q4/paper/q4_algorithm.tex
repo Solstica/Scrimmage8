@@ -1,0 +1,38 @@
+\begin{algorithm}[H]
+\SetAlgoLined
+\setstretch{0.92}
+\SetAlFnt{\normalsize}
+\SetArgSty{textnormal}
+\SetKwInput{KwIn}{输入}
+\SetKwInput{KwOut}{输出}
+\SetKwFor{For}{for}{do}{end for}
+\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
+\SetKw{KwRet}{return}
+\caption{问题四最小放热倍率二分搜索}
+\label{alg:q4-bisection}
+\KwIn{基准时间$t_3^*$，负重上限$t_W^{(4)}$，容差$\varepsilon_\alpha$，各扫描速率下潜热$L_{\rm pcm}(v)$}
+\KwOut{最小放热倍率$\alpha^*$，提高比例$r_{\min}=100(\alpha^*-1)\%$}
+
+\If{$t_W^{(4)}<t_3^*$}{
+  \KwRet 负重上限不足，本问无可行解\;
+}
+$\alpha_L\leftarrow1$\;
+$\alpha_U\leftarrow2$\;
+\While{$t_T^{(4)}(\alpha_U)<t_3^*$}{
+  $\alpha_L\leftarrow\alpha_U$\;
+  $\alpha_U\leftarrow2\alpha_U$\;
+}
+\While{$\alpha_U-\alpha_L>\varepsilon_\alpha$}{
+  $\alpha_M\leftarrow(\alpha_L+\alpha_U)/2$\;
+  调用问题一正演器计算$t_T^{(4)}(\alpha_M)$\;
+  \If{$t_T^{(4)}(\alpha_M)\ge t_3^*$}{
+    $\alpha_U\leftarrow\alpha_M$\;
+  }
+  \Else{
+    $\alpha_L\leftarrow\alpha_M$\;
+  }
+}
+$\alpha^*\leftarrow\alpha_U$\;
+$t_{\rm eff}^{(4)}(\alpha^*)\leftarrow\min\{t_T^{(4)}(\alpha^*),t_W^{(4)}\}$\;
+\KwRet $\alpha^*$，$100(\alpha^*-1)\%$，$t_{\rm eff}^{(4)}(\alpha^*)$\;
+\end{algorithm}

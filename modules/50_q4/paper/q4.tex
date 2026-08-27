@@ -2,7 +2,7 @@
 
 \subsection{问题四的描述与设计变量}
 
-问题四承接问题三的室外工况，以问题三所得最优坚持时间$t_3^*$作为目标，但不再追加材料资金，而是通过改进中间功能层材料，使其在各温度下的放热能力按同一比例提高。由于本问不增加材料用量，三层厚度恢复并固定为原始设计
+问题四承接问题三的室外工况，以问题三所得最优坚持时间$t_3^*$作为性能基准，但不再追加材料资金，而是通过改进中间功能层材料，使其在各温度下的放热能力按同一比例提高。由于本问不增加材料用量，三层厚度恢复并固定为原始设计
 \begin{equation}
 d_1=0.7\ \mathrm{mm},\qquad
 d_2=0.4\ \mathrm{mm},\qquad
@@ -37,7 +37,7 @@ w(T)=\frac{p(T)}{\displaystyle\int_{T_f}^{T_s}p(\theta)\,\mathrm d\theta},
 \label{eq:q4-xi}
 \end{equation}
 
-题目规定“各个温度下同比例增加放热能力”，因此新材料的DSC放热曲线写为
+题目规定"各个温度下同比例增加放热能力"，因此新材料的DSC放热曲线写为
 \begin{equation}
 p_{\alpha}(T)=\alpha p(T).
 \label{eq:q4-dsc-scale}
@@ -103,39 +103,50 @@ t_{\rm eff}^{(4)}(\alpha)
 
 \subsection{最小放热能力提高比例模型}
 
-以问题三最优方案得到的实际坚持时间$t_3^*$为性能基准，问题四写成单变量约束优化模型
+以问题三最优方案得到的实际坚持时间$t_3^*$为性能基准，问题四写成单变量约束优化模型。
+
+\noindent\textbf{1. 决策变量}\par
+设$\alpha\ge1$为中间功能层相对于原材料的放热能力倍率，其小数部分$\alpha-1$即为所求提高比例。
+
+\noindent\textbf{2. 目标函数}\par
+最小化放热能力提高比例，即
 \begin{equation}
-\boxed{
-\begin{aligned}
-\min_{\alpha}\quad &\alpha-1,\\
+\min_{\alpha}\quad \alpha-1.
+\label{eq:q4-obj}
+\end{equation}
+
+\noindent\textbf{3. 约束条件}\par
+
+\noindent\textbf{（1）坚持时间约束：}通过放热倍率获得的实际坚持时间不得低于问题三的最优水平，即
+\begin{equation}
+t_{\rm eff}^{(4)}(\alpha)\ge t_3^*.
+\label{eq:q4-time-constraint}
+\end{equation}
+
+\noindent\textbf{（2）可行性约束：}放热倍率的物理下限为$\alpha\ge1$，对应不放热能力无提高。
+
+\subsubsection{模型汇总}
+{\boldmath
+\begin{equation}
+\min_{\alpha\ge1}\quad \alpha-1
+\label{eq:q4-summary-obj}
+\end{equation}}
+
+{\boldmath
+\begin{equation}
 \mathrm{s.t.}\quad
+\left\{
+\begin{aligned}
 &t_{\rm eff}^{(4)}(\alpha)\ge t_3^*,\\
 &\alpha\ge1.
 \end{aligned}
-}
-\label{eq:q4-optimization}
-\end{equation}
-
-求解前先进行可行性判断。若$t_W^{(4)}<t_3^*$，则无论怎样提高放热能力，最终都会受到负重时间上限限制，本问在当前结构下无可行解；若$t_W^{(4)}\ge t_3^*$，则只需使
-\begin{equation}
-t_T^{(4)}(\alpha)\ge t_3^*.
-\end{equation}
-当$\alpha=1$已经满足该条件时，最小提高比例为$0$；否则在固定结构和边界条件下，提高$\alpha$等价于增加相变温区内的有效热容和总潜热，热安全时间随$\alpha$非减，因此最小可行倍率位于边界
-\begin{equation}
-t_T^{(4)}(\alpha^*)=t_3^*.
-\label{eq:q4-active-boundary}
-\end{equation}
-最终结果为
-\begin{equation}
-\boxed{
-r_{\min}=100(\alpha^*-1)\%.
-}
-\label{eq:q4-percent}
-\end{equation}
+\right.
+\label{eq:q4-summary-con}
+\end{equation}}
 
 \subsection{二分搜索求解}
 
-由于设计变量仅有一个且$t_T^{(4)}(\alpha)$具有明确的单调性，本问无需使用遗传算法或其他高维启发式方法。先令下界$\alpha_L=1$，逐步扩大上界$\alpha_U$直至$t_T^{(4)}(\alpha_U)\ge t_3^*$；随后对区间$[\alpha_L,\alpha_U]$进行二分。每次取
+设计变量仅有一个且$t_T^{(4)}(\alpha)$具有明确的单调性，本问无需使用高维启发式方法。先令下界$\alpha_L=1$，逐步扩大上界$\alpha_U$直至$t_T^{(4)}(\alpha_U)\ge t_3^*$；随后对区间$[\alpha_L,\alpha_U]$进行二分。每次取
 \begin{equation}
 \alpha_M=\frac{\alpha_L+\alpha_U}{2},
 \end{equation}
@@ -151,10 +162,53 @@ c_{2,\rm eff}^{n,(\alpha)}
 \alpha_2^{n,(\alpha)}
 =\frac{k_2}{\rho_2c_{2,\rm eff}^{n,(\alpha)}}.
 \end{equation}
-第一层、第三层的本征展开、两界面斜率闭合以及外侧换热系数更新时间推进均直接复用问题一，因此问题四只是在同一正演器外增加一个单变量二分搜索层。
+第一层、第三层的本征展开、两界面斜率闭合以及外侧换热系数更新时间推进均直接复用问题一，因此问题四只是在同一正演器外增加一个单变量二分搜索层。完整求解步骤整理为算法\ref{alg:q4-bisection}。
 
-\subsection{结果输出与检验}
+\input{modules/50_q4/paper/q4_algorithm.tex}
 
-数值求解后应报告问题三基准时间$t_3^*$、最小倍率$\alpha^*$、最小提高比例$r_{\min}$以及对应的$t_T^{(4)}(\alpha^*)$和$t_{\rm eff}^{(4)}(\alpha^*)$。同时至少进行三项检验：第一，抽取若干$\alpha$验证$t_T^{(4)}(\alpha)$的单调性；第二，缩小二分容差检查$\alpha^*$稳定性；第三，沿用问题一的时间步和模态截断收敛检验，避免正演误差传递到倍率反求结果。
+\subsection{求解结果与分析}
 
-当前问题一的绝对潜热$L_{\rm pcm}$尚待可靠来源核定，问题三的最优坚持时间$t_3^*$也需在问题一修正后重新求解，因此本节先完成模型结构，不预先填写数值提高比例。
+\noindent\textbf{1. 求解结果}\par
+
+问题四在$v=2,5,10\ \mathrm{K/min}$三个扫描速率下，各自匹配同一扫描速率下问题一的潜热$L_{\rm pcm}(v)$与问题三的最优实际坚持时间$t_3^*(v)$进行反求。原始厚度下的负重上限均为$t_W^{(4)}=784.916\ \mathrm{s}$，三组均通过可行性检查，且活动约束均为热安全控制。求解结果汇总于表\ref{tab:q4-results}。
+
+\begin{table}[!htbp]
+\centering
+\caption{问题四各扫描速率下最小放热能力提高比例}
+\label{tab:q4-results}
+\begin{tabular}{cccccc}
+\toprule
+\rowcolor{CumcmLightBlue}
+$v$\ (\mathrm{K/min}) & $\alpha^*$ & $r_{\min}$(\%) & $t_T^{(4)}$(\mathrm{s}) & $t_{\rm eff}^{(4)}$(\mathrm{s}) & 活动约束 \\
+\midrule
+2    & 1.437866 & 43.787 & 701.204 & 701.204 & 热安全 \\
+5    & 1.863281 & 86.328 & 416.043 & 416.043 & 热安全 \\
+10   & 2.572876 & 157.288 & 321.061 & 321.061 & 热安全 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{2. 结果分析}\par
+
+从表\ref{tab:q4-results}可以看出，扫描速率越低，所需放热能力提高比例越小。$v=2\ \mathrm{K/min}$时仅需提高$43.787\%$，而$v=10\ \mathrm{K/min}$时需提高$157.288\%$。这一趋势的原因在于：低速扫描下相变过程的持续时间更长，潜热$L_{\rm pcm}(v)$更大，原始材料已能较好地延缓温度下降，因此只需较小的倍率提升即可达到目标时间。
+
+三组二分搜索的区间宽度均为$6.104\times10^{-5}$，对应的百分比区间宽度均小于$0.01$个百分点，数值精度满足要求。单调性验证表明，在$\alpha=1,1.5,\alpha^*,2$及二分下界处，热安全时间$t_T^{(4)}(\alpha)$随$\alpha$严格单调递增，未发现平台或异常反向变化，验证结果见表\ref{tab:q4-validation}。
+
+\begin{table}[!htbp]
+\centering
+\caption{问题四放热倍率单调性验证}
+\label{tab:q4-validation}
+\begin{tabular}{cccc}
+\toprule
+\rowcolor{CumcmLightBlue}
+$\alpha$ & $v=2$ & $v=5$ & $v=10$ \\
+\midrule
+1.0      & 520.903 & 273.908 & 191.642 \\
+1.5      & 726.790 & 356.223 & 232.766 \\
+$\alpha^*$ & 701.204 & 416.043 & 321.061 \\
+2.0      & 932.696 & 438.557 & 273.908 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+需要指出的是，问题三的目标阈值和扫描速率可信域尚未最终锁定，上述结果对应于$15\,^{\circ}\mathrm C$阈值口径下的阶段结果。若问题三最终目标定义调整，问题四需严格继承同一目标定义重新反求。
