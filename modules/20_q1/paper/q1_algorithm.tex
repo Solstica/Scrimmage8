@@ -1,28 +1,27 @@
 \begin{algorithm}[!htbp]
-\caption{恒温人体边界下的微小时间段分离变量求解流程}
+\caption{Micro-interval separated-variable solution under a fixed body-temperature boundary}
 \label{alg:q1-short-time-separation}
-\KwIn{三层厚度与热物性，人体恒温$T_b=37\,^{\circ}\mathrm C$，人体侧$h_b=3.0\,\mathrm{W/(m^2\cdot K)}$，环境温度$T_\infty=-40\,^{\circ}\mathrm C$，附件DSC曲线$p(T)$，扫描速率$\beta_{\rm DSC}$，时间步$\Delta t$，模态截断数$M$}
-\KwOut{三层温度场$T_i(x,t)$、贴身侧温度$T_{\rm in}(t)=T_1(0,t)$及阈值时间$t_{15},t_{10}$}
-对附件DSC曲线采用端点线性操作基线完成基线、符号和单位整理，计算$A_{\rm DSC}=\int p(T)\,\mathrm dT$\;
-由$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$得到单位质量总潜热；基准取$\beta_{\rm DSC}=5\,\mathrm{K/min}$，并另算$\beta_{\rm DSC}=2,10\,\mathrm{K/min}$敏感性工况\;
-由归一化累计面积计算$\xi_{\rm DSC}(T)$及$-\mathrm d\xi_{\rm DSC}/\mathrm dT$\;
-初始化$T_i(x,0)=37\,^{\circ}\mathrm C$，相变进度$\xi(x,0)=0$，令$n\gets0$\;
+\KwIn{layer thickness and thermophysical properties, fixed body temperature $T_b=37\,^{\circ}\mathrm C$, body-side convection $h_b=3.0\,\mathrm{W/(m^2\cdot K)}$, ambient temperature $T_\infty=-40\,^{\circ}\mathrm C$, baseline-corrected DSC curve $p(T)$, scan rate $\beta_{\rm DSC}$, time step $\Delta t$, modal truncation $M$}
+\KwOut{three-layer temperature fields $T_i(x,t)$, body-side temperature $T_{\rm in}(t)=T_1(0,t)$, threshold times $t_{15},t_{10}$}
+Apply the endpoint-linear operational baseline to the DSC data and compute $A_{\rm DSC}=\int p(T)\,\mathrm dT$\;
+Set $L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$, with baseline $\beta_{\rm DSC}=5\ \mathrm{K/min}$\;
+Build the normalized cumulative progress $\xi_{\rm DSC}(T)$ and its derivative $-\mathrm d\xi_{\rm DSC}/\mathrm dT$\;
+Initialize $T_i(x,0)=37\,^{\circ}\mathrm C$, solidification progress $\xi(x,0)=0$, and set $n\gets0$\;
 \While{$T_{\rm in}(t_n)>10\,^{\circ}\mathrm C$}{
-  由当前功能层温度计算$\bar T_2^n$及候选固化进度$\xi_{\rm trial}=\xi_{\rm DSC}(\bar T_2^n)$\;
+  Evaluate the layer-mean temperature $\bar T_2^n$ and the candidate progress $\xi_{\rm trial}=\xi_{\rm DSC}(\bar T_2^n)$\;
   \eIf{$\xi_{\rm trial}>\xi^n$}{
-    固化继续推进，取$c_{2,\rm eff}^n=c_2-L_{\rm pcm}\xi'_{\rm DSC}(\bar T_2^n)$，并令$\xi^{n+1}=\xi_{\rm trial}$\;
+    Advance solidification: set $c_{2,\rm eff}^n=c_2-L_{\rm pcm}\xi'_{\rm DSC}(\bar T_2^n)$ and $\xi^{n+1}=\xi_{\rm trial}$\;
   }{
-    无新增固化，取$c_{2,\rm eff}^n=c_2$，并令$\xi^{n+1}=\xi^n$\;
+    Freeze solidification: set $c_{2,\rm eff}^n=c_2$ and $\xi^{n+1}=\xi^n$\;
   }
-  计算$\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$；历史约束保证已固化部分不因局部回温而反向减少\;
-  由当前服装外表面温度计算$h_e^n=2.38[T_3(L,t_n)-T_\infty]^{0.25}$，在当前时间段内冻结\;
-  令$T_{12},T_{23}$在当前微小时间段内线性变化，未知斜率为$\beta_{12}^n,\beta_{23}^n$；人体边界$T_b$保持常数\;
-  第一层采用Robin--Dirichlet本征展开，第二层采用Dirichlet--Dirichlet正弦展开，第三层采用Dirichlet--Robin本征展开\;
-  由两个材料界面的段末热流连续条件联立求$\beta_{12}^n,\beta_{23}^n$\;
-  代入各层模态解析式，更新$t_{n+1}$时刻的三层温度场及$T_{\rm in}(t_{n+1})$\;
-  若$T_{\rm in}$首次越过$15\,^{\circ}\mathrm C$或$10\,^{\circ}\mathrm C$，则在相邻时间点间插值确定$t_{15}$或$t_{10}$\;
+  Compute $\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$, where the history constraint keeps $\xi$ nondecreasing\;
+  Update $h_e^n=2.38[T_3(L,t_n)-T_\infty]^{0.25}$ and freeze it on $[t_n,t_{n+1}]$\;
+  Approximate $T_{12},T_{23}$ as linear in $\tau$ with unknown slopes $\beta_{12}^n,\beta_{23}^n$ while $T_b$ stays constant\;
+  Expand layer 1 with Robin--Dirichlet eigenfunctions, layer 2 with Dirichlet--Dirichlet sines, and layer 3 with Dirichlet--Robin eigenfunctions\;
+  Enforce heat-flux continuity at both material interfaces at $\tau=\Delta t$ to close $\beta_{12}^n,\beta_{23}^n$\;
+  Advance the full temperature field to $t_{n+1}$ by the modal solutions and update $T_{\rm in}(t_{n+1})$\;
+  If $T_{\rm in}$ first crosses $15\,^{\circ}\mathrm C$ or $10\,^{\circ}\mathrm C$, interpolate $t_{15}$ or $t_{10}$ between adjacent time nodes\;
   $n\gets n+1$\;
 }
-以$\Delta t/2$和更大的$M$重复基准工况，检查$t_{15},t_{10}$的时间步与模态截断收敛性，并与单元级不可逆相变的隐式有限体积基线核对\;
-比较$\beta_{\rm DSC}=2,5,10\,\mathrm{K/min}$三组$t_{15},t_{10}$，量化缺失DSC扫描速率对最终结论的影响\;
+\Return{$T_i(x,t)$, $T_{\rm in}(t)$, $t_{15}$, $t_{10}$}\;
 \end{algorithm}
