@@ -1,0 +1,37 @@
+{
+  "question": "Q3低速扫描重审",
+  "model_id": "WHUT13-Q3-LOW-RATE-AUDIT",
+  "model_version": "1.1",
+  "final_method": "复用冻结Q1模态正演器，对四个预算候选做完整枚举，并对发生层数变化的扫描速率区间进行二分定位",
+  "core_implementation": "从q3.py导入既有基函数、投影、边界换热、模态步进和候选生成函数；一次正演持续到15摄氏度和10摄氏度两个阈值均被跨越，再计算两种有效时间和限制因素。",
+  "key_parameters": [
+    {"name": "新增层数候选", "value": [0, 1, 2, 3], "source_type": "derived", "source_ref": "固定0.3 mm增量和50%预算约束", "affects_feasible_region": true},
+    {"name": "材料面积", "value": 1.6521, "source_type": "modeler", "source_ref": "已确认A=A_b", "affects_feasible_region": false},
+    {"name": "包含人体自重", "value": true, "source_type": "modeler", "source_ref": "已确认承重口径", "affects_feasible_region": false},
+    {"name": "粗扫描速率", "value": [0.5, 1.0, 1.25, 1.5, 1.75, 2.0, 5.0, 10.0], "source_type": "modeler", "source_ref": "work/tasks/q3.md", "affects_feasible_region": false},
+    {"name": "模态数值设置", "value": "dt=0.25 s, M=40, nq=160", "source_type": "numerical", "source_ref": "冻结Q1已检查运行", "affects_feasible_region": false}
+  ],
+  "numerical_decisions": [
+    {"name": "时间上限", "value": "先采用3600 s，仅当10摄氏度未到达时按实际需要延长并记录", "source_type": "numerical", "source_ref": "防止低速高潜热工况被静默截断", "affects_feasible_region": false},
+    {"name": "切换定位精度", "value": "0.01 K/min", "source_type": "numerical", "source_ref": "任务要求定位切换范围，精度足以报告两位小数区间", "affects_feasible_region": false}
+  ],
+  "approximations": [
+    {"name": "冻结Q1短时模态传播和层平均不可逆相变进度", "approved": true, "source_type": "approved_approximation", "source": "冻结Q1模型"}
+  ],
+  "search_space_changes": [
+    {"name": "预算精确化简为n=0..3", "approved": true, "source_type": "derived", "source": "C(n)<=1.5*C0的代数化简"}
+  ],
+  "added_methods": [
+    {"name": "层数切换区间二分定位", "approved": true, "source_type": "modeler", "source": "work/tasks/q3.md自适应细扫要求"}
+  ],
+  "model_semantic_changes": [],
+  "outputs": [
+    "粗扫描方案.csv",
+    "粗扫描最优方案.csv",
+    "切换区间.csv",
+    "潜热数量级审查.csv",
+    "层数时间曲线数据.csv",
+    "层数时间曲线.png",
+    "诊断说明.md"
+  ]
+}

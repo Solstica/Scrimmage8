@@ -1,2 +1,3 @@
 result_id,status,review_state,value,unit,source_file,used_in_paper,notes
-Q3-1.0-20260827,FROZEN,CHECKED,"v=2: n=3,t_eff=701.195; v=5: n=3,t_eff=416.038; v=10: n=3,t_eff=321.060",s,modules/40_q3/results/正式运行_20260827/问题三最优方案.csv,yes,"三种扫描速率均选 d3=1.2mm 且由热安全限制；正文已同步完成撰写"
+Q3-1.0-20260827,VALIDATED,NEEDS_REVIEW,"v=2: n=3,t_eff15=701.195; v=5: n=3,t_eff15=416.038; v=10: n=3,t_eff15=321.060",s,modules/40_q3/results/正式运行_20260827/问题三最优方案.csv,no,"15℃阶段结果；Q3最终阈值未确认，不得提前冻结或写入正式正文"
+Q3-1.1-20260827,VALIDATED,NEEDS_REVIEW,"15℃切换0->1/1->2/2->3约在1.22/1.36/1.54 K/min；10℃约在1.29/1.48/1.72 K/min",K/min,modules/40_q3/results/EXPERIMENT/低速扫描重审/切换区间.csv,no,"内部最优对应潜热约712--1004 kJ/kg，仅作数学诊断；最终阈值待确认"

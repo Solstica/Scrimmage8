@@ -7,39 +7,18 @@
 \SetKwInput{KwInit}{初始化}
 \SetKwInput{KwOut}{输出}
 \SetKwFor{For}{for}{do}{end for}
-\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
-\SetKw{KwRet}{return}
-\caption{问题三离散厚度优化枚举算法}
+\caption{问题三双阈值离散厚度枚举算法}
 \label{alg:q3-enumeration}
-\KwIn{DSC 扫描速率 $v$，相变放热数据 $(T, p(T))$，问题一模型参数}
-\KwInit{读取问题一已验证的模态基函数与时间步长设置}
-\KwOut{最优新增层数 $n^*$，对应有效站立时间 $t_{\mathrm{eff}}^*$，各候选方案完整结果}
+\KwIn{DSC扫描速率$v$、放热数据、问题一模型参数}
+\KwInit{候选集合$n\in\{0,1,2,3\}$，时间步$0.25\ \mathrm{s}$，模态数$M=40$}
+\KwOut{全部候选的$t_{15},t_{10},t_W,t_{\mathrm{eff},15},t_{\mathrm{eff},10}$及两种最优层数}
 
-\eighthskip
-% 预算约束化简得到候选集合
-根据费用约束计算最大允许新增层数 $n_{\max} \gets \lfloor 0.5 C_0 / \Delta C \rfloor$\;
-得到所有候选方案集合 $n \in \{0, 1, 2, 3\}$\;
-计算每个候选的最外层厚度 $d_3(n) = 0.3(1+n)\ \mathrm{mm}$\;
-计算每个候选的服装质量 $m_c(n)$ 和负重时间上限 $t_W(n) = 20[40 - m_c(n)]$\;
-
-\eighthskip
-\For{每个候选 $n \in \{0, 1, 2, 3\}$}{
-    初始化温度分布：人体与服装均为 $37^\circ\mathrm{C}$，相变进度 $\xi \gets 0$\;
-    \While{$T_h(t) > 15^\circ\mathrm{C}$ 且 $t < 3600\ \mathrm{s}$}{
-        更新外侧对流换热系数 $h \gets 2.38 (T_3(L) + 40)^{1.25}$\;
-        根据当前平均温度判断相变进展，计算有效热容 $c_{\mathrm{eff}}(T_2)$\;
-        隐式模态一步推进：求解界面热流平衡得到温度增量\;
-        更新模态系数与平均温度，推进时间 $t \gets t + \Delta t$\;
-    }
-    线性插值得到首次降至 $15^\circ\mathrm{C}$ 的热安全时间 $t_T(n)$\;
-    计算有效时间 $t_{\mathrm{eff}}(n) \gets \min\{t_T(n), t_W(n)\}$\;
-    记录受限因素：若 $t_T(n) \le t_W(n)$ 则为热安全限制，否则为负重限制\;
+计算$d_3(n)=0.3(1+n)\ \mathrm{mm}$、服装质量$m_c(n)$和$t_W(n)=20[40-m_c(n)]$\;
+\For{每个候选$n\in\{0,1,2,3\}$}{
+    按$37\,^{\circ}\mathrm C$恒温人体边界初始化三层温度和不可逆相变进度\;
+    采用问题一模态求解器逐步推进，直至人体侧温度首次低于$10\,^{\circ}\mathrm C$\;
+    线性插值得到首次达到$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的时间$t_{15}(n),t_{10}(n)$\;
+    计算$t_{\mathrm{eff},\theta}(n)=\min\{t_\theta(n),t_W(n)\}$，$\theta\in\{15,10\}$\;
 }
-
-\eighthskip
-在四个候选中选择有效时间最大值对应的方案\;
-$n^* \gets \arg\max_{n \in \{0,1,2,3\}} t_{\mathrm{eff}}(n)$\;
-$t_{\mathrm{eff}}^* \gets t_{\mathrm{eff}}(n^*)$\;
-输出所有候选结果与最优方案\;
-\KwRet $n^*, d_3^*, t_{\mathrm{eff}}^*$ 及各候选完整数据\;
+分别计算$n_\theta^*=\arg\max_n t_{\mathrm{eff},\theta}(n)$，$\theta\in\{15,10\}$\;
 \end{algorithm}

@@ -1,0 +1,67 @@
+{
+  "question": "Q3低速扫描重审",
+  "model_id": "WHUT13-Q3-LOW-RATE-AUDIT",
+  "model_version": "1.1",
+  "status": "APPROVED",
+  "objective_or_outputs": [
+    "对每个扫描速率和新增层数同时计算t15、t10、tW、t_eff15与t_eff10",
+    "分别选择15摄氏度和10摄氏度口径下的最大有效站立时间方案",
+    "定位相邻扫描速率之间最优新增层数发生变化的数值区间",
+    "区分数学上的内部最优与对应潜热数量级的物理可信性"
+  ],
+  "variables": [
+    {"name": "n", "unit": "1", "meaning": "新增0.3 mm外层的层数"},
+    {"name": "d3", "unit": "m", "meaning": "外层厚度d3=0.0003(1+n)"},
+    {"name": "t15", "unit": "s", "meaning": "人体侧温度首次达到15摄氏度的时间"},
+    {"name": "t10", "unit": "s", "meaning": "人体侧温度首次达到10摄氏度的时间"},
+    {"name": "tW", "unit": "s", "meaning": "包含人体自重的负重约束时间"}
+  ],
+  "parameters": [
+    {"name": "A", "value": 1.6521, "unit": "m2", "source": "已确认面积口径A=A_b"},
+    {"name": "m_h", "value": 60.0, "unit": "kg", "source": "题目及已确认的人体自重口径"},
+    {"name": "coarse v", "value": [0.5, 1.0, 1.25, 1.5, 1.75, 2.0, 5.0, 10.0], "unit": "K/min", "source": "work/tasks/q3.md当前任务"},
+    {"name": "d3 candidates", "value": [0.0003, 0.0006, 0.0009, 0.0012], "unit": "m", "source": "0.3 mm固定增量及50%预算约束的精确化简"}
+  ],
+  "equations_or_objective": [
+    "d3(n)=0.0003(1+n), n in {0,1,2,3}",
+    "m_c=A(rho1*d1+rho2*d2+rho3*d3)",
+    "tW=(100-m_h-m_c)/0.05",
+    "t_eff15=min(t15,tW), t_eff10=min(t10,tW)",
+    "n15*=argmax_n t_eff15, n10*=argmax_n t_eff10",
+    "L_pcm=1223127.48/v J/kg"
+  ],
+  "constraints": [
+    "C(n)<=1.5*C0",
+    "m_h+m_c(n)<=100-0.05*t",
+    "n为{0,1,2,3}中的整数",
+    "完全继承冻结Q1的恒温人体边界及有限不可逆相变语义"
+  ],
+  "initial_or_boundary_conditions": [
+    "继承冻结Q1三层瞬态传热模型",
+    "仅在候选方案间改变外层厚度d3"
+  ],
+  "data_scope": [
+    "data/raw/附件1 放热能力数据.xlsx的Sheet1温度与放热能力两列",
+    "附件2材料参数及价格",
+    "Q1端点线性DSC基线"
+  ],
+  "required_outputs": [
+    "粗扫描全部候选表及双阈值最优方案表",
+    "最优层数切换区间表",
+    "潜热数量级审查表",
+    "新增层数与热安全、负重时间的曲线及一图一数据表",
+    "诊断说明"
+  ],
+  "allowed_numerical_freedom": [
+    "沿用冻结Q1的dt=0.25 s、M=40、nq=160",
+    "仅在检测到最优层数变化的相邻速率区间内二分，直到区间宽度不大于0.01 K/min",
+    "对切换附近方案使用更小时间步长复核"
+  ],
+  "forbidden_silent_changes": [
+    "把15摄氏度或10摄氏度静默指定为Q3最终唯一阈值",
+    "为制造内部最优而修改热模型、负重公式或候选集合",
+    "排除人体自重或改变A=A_b",
+    "改变冻结Q1输出或覆盖既有Q3阶段结果"
+  ],
+  "modeler_notes": "本轮是阈值未决条件下的实验诊断，不登记为正式Q3最终结果。"
+}

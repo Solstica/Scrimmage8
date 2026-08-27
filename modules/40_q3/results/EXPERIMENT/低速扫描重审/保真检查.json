@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q3-LOW-RATE-AUDIT",
+  "model_version": "1.1",
+  "model_sha256": "09a916718b0887f2ea8208a40db684ca3b573b57d1de69f5f12d97988e25f5b8",
+  "plan_sha256": "efc43d4ca4dfdf67618dcfb89bc87ddfdd1e94e1b7126a1db2235eeffbc20980",
+  "code_sha256": "70997978c5b6fbdcc58e2066327ff9dbe7ac51335c53a7c0039106f1afb66547",
+  "blocks": [],
+  "warnings": [],
+  "gate_role": "external_read_only_model_drift_audit",
+  "participant_code_modified": false,
+  "scope_note": "This gate only reports declared model changes and high-confidence code hints. It never rewrites, wraps, or injects protection into participant code, and it does not prove mathematical semantic equivalence."
+}
