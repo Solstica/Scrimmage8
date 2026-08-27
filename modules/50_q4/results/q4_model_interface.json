@@ -1,7 +1,7 @@
 {
   "question": "Q4",
   "model_id": "Q4-M1",
-  "model_version": "1.0",
+  "model_version": "1.1",
   "status": "APPROVED",
   "objective_or_outputs": [
     "minimize alpha - 1 and report 100(alpha - 1)%"
@@ -11,19 +11,19 @@
     "T_i(x,t): temperature field of layer i in degC"
   ],
   "parameters": [
-    "t3_best = 416.0379012473915 s from Q3 v=5 K/min optimum",
+    "t3_best(v) is read from the Q3 optimum row at the same scan rate",
     "d = (0.7, 0.4, 0.3) mm from the original garment",
-    "L_pcm = 244625.496 J/kg from Q1 v=5 K/min baseline",
+    "L_pcm(v) = 1223127.48/v J/kg for v=2,5,10 K/min",
     "tW4 = 784.91566616 s derived from the Q3 weight formula"
   ],
   "equations_or_objective": [
     "c2_eff(T,alpha) = c2 + alpha*L_pcm*w(T) while solidification advances",
-    "t_eff(alpha) = min(tT(alpha), tW4)",
-    "min alpha-1 subject to t_eff(alpha) >= t3_best"
+    "t_eff(alpha,v) = min(tT(alpha,v), tW4)",
+    "for each v, min alpha(v)-1 subject to t_eff(alpha,v) >= t3_best(v)"
   ],
   "constraints": [
     "alpha >= 1",
-    "t_eff(alpha) >= t3_best",
+    "t_eff(alpha,v) >= t3_best(v)",
     "middle-layer solidification progress is nondecreasing"
   ],
   "initial_or_boundary_conditions": [
@@ -34,14 +34,15 @@
   ],
   "data_scope": [
     "attachment 1 DSC temperature and heat-flow columns",
-    "Q1 baseline scan rate v=5 K/min",
-    "Q3 v=5 K/min optimum"
+    "Q1 scan rates v=2,5,10 K/min",
+    "Q3 optimum row at each matching scan rate",
+    "current Q3 stage objective uses the 15 degC threshold"
   ],
   "required_outputs": [
-    "minimum alpha",
-    "minimum increase percentage",
-    "thermal safety time",
-    "effective endurance time"
+    "minimum alpha at every Q3 scan rate",
+    "minimum increase percentage at every scan rate",
+    "thermal and effective endurance times",
+    "binary lower and upper bounds proving minimality"
   ],
   "allowed_numerical_freedom": [
     "time step and modal truncation",
@@ -51,9 +52,10 @@
   "forbidden_silent_changes": [
     "change the Q1 finite latent-heat model back to a persistent source",
     "change the original three layer thicknesses",
-    "change the v=5 K/min baseline",
+    "mix Q1 latent heat and Q3 target times from different scan rates",
+    "mix Q3 and Q4 threshold definitions",
     "cap alpha without a proved bound",
     "replace the hard endurance constraint by a penalty"
   ],
-  "modeler_notes": "Q4 v1 is conditional on the Q1 v=5 scan-rate interpretation and the current Q3 verified baseline."
+  "modeler_notes": "Q4 v1.1 sweeps all scan rates currently present in Q3. Results remain conditional until Q3 locks its threshold and credible scan-rate domain."
 }

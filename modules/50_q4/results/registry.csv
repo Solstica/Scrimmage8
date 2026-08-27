@@ -1,2 +1,3 @@
 result_id,status,review_state,value,unit,source_file,used_in_paper,notes
-Q4-1.0-20260827,DRAFT,NEEDS_REVIEW,"alpha=1.86328125,increase=86.328125%,tT=416.042764,t_eff=416.042764",mixed,modules/50_q4/results/q4_result.csv,no,"条件于Q1的v=5 K/min基线和Q3当前VALIDATED结果；M=60时提高比例为85.552979%，待决定最终截断设置"
+Q4-1.0-20260827,DRAFT,NEEDS_REVIEW,"alpha=1.86328125,increase=86.328125%,tT=416.042764,t_eff=416.042764",mixed,modules/50_q4/results/q4_result.csv,no,"已由Q4-1.1三扫描速率阶段结果替代；仅保留v=5历史对照"
+Q4-1.1-20260827,DRAFT,NEEDS_REVIEW,"v=2: alpha=1.437866,increase=43.786621%; v=5: alpha=1.863281,increase=86.328125%; v=10: alpha=2.572876,increase=157.287598%",mixed,modules/50_q4/results/q4_result.csv,no,"逐速率匹配Q1潜热与Q3当前15℃阶段目标；三组均热安全约束活动；Q3目标阈值和可信扫描速率域锁定后需重跑"

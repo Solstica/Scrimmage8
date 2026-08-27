@@ -1,44 +1,49 @@
 {
   "status": "PASS",
   "model_id": "Q4-M1",
-  "model_version": "1.0",
+  "model_version": "1.1",
   "command": [
     "D:\\python3.12.7\\python.exe",
-    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\50_q4\\code\\q4.py"
+    "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-sweep-overlay\\modules\\50_q4\\code\\q4.py"
   ],
-  "cwd": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay",
+  "cwd": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-sweep-overlay",
   "returncode": 0,
   "runner_role": "external_audit_wrapper",
   "participant_code_integration_required": false,
-  "started_at": "2026-08-26T17:13:43.483076+00:00",
-  "finished_at": "2026-08-26T17:15:01.142402+00:00",
+  "started_at": "2026-08-27T02:10:11.407213+00:00",
+  "finished_at": "2026-08-27T02:14:47.368970+00:00",
   "source_files": [
     {
-      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\50_q4\\code\\q4.py",
-      "size": 4445,
-      "sha256": "4471fd5578094836dd74d94ee218baceb32ac8692349c25c60141385074b75ed"
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-sweep-overlay\\modules\\50_q4\\code\\q4.py",
+      "size": 6282,
+      "sha256": "e7ef5b29cccdca5de055a198da1df627350b9657b659d629d6a2c579878d4f30"
     },
     {
-      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\20_q1\\code\\q1.py",
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-sweep-overlay\\modules\\20_q1\\code\\q1.py",
       "size": 11141,
       "sha256": "d50a5d8325fcef92137012a39f5c60b525e7fbe00fed1266abb643880534bf0f"
     }
   ],
   "inputs": [
     {
-      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\data\\raw\\附件1 放热能力数据.xlsx",
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-sweep-overlay\\data\\raw\\附件1 放热能力数据.xlsx",
       "size": 17180,
       "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    },
+    {
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-sweep-overlay\\modules\\40_q3\\results\\正式运行_20260827\\问题三最优方案.csv",
+      "size": 717,
+      "sha256": "d4d5a530c3120809eafaefea9aff5446bd80f77203f9d848a4c68df770ad979f"
     }
   ],
   "outputs": [
     {
-      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-run-overlay\\modules\\50_q4\\results\\q4_result.csv",
-      "size": 349,
-      "sha256": "751ac1e6d8feadbb1449ec133d734773e60876b9d77dc2dda0da405f2dd19d7d"
+      "path": "C:\\Users\\rog\\Documents\\Codex\\2026-08-26\\new-chat-16\\work\\q4-sweep-overlay\\modules\\50_q4\\results\\q4_result.csv",
+      "size": 929,
+      "sha256": "95a62a922c5bce97cd9c63aa1eb7f5c5f97315226a886be19598ef0a4551d23e"
     }
   ],
   "missing_outputs": [],
-  "stdout_tail": "Q3基准时间（s）: 416.0379012473915\n服装质量（kg）: 0.754216692\n承重上限（s）: 784.91566616\n最小放热倍率: 1.86328125\n最小提高比例（%）: 86.328125\n热安全时间（s）: 416.04276393956764\n实际坚持时间（s）: 416.04276393956764\n最大条件数: 1.066353958725648\n最大热流残差（W/m2）: 9.663381206337363e-13\n",
+  "stdout_tail": "v=2 K/min, alpha=1.43786621, 提高=43.786621%, t_eff=701.204036 s\nv=5 K/min, alpha=1.86328125, 提高=86.328125%, t_eff=416.042764 s\nv=10 K/min, alpha=2.57287598, 提高=157.287598%, t_eff=321.061069 s\n",
   "stderr_tail": ""
 }
