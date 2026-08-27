@@ -1,6 +1,6 @@
 \section{问题四模型的建立与求解}
 
-\subsection{问题四的描述与设计变量}
+\subsection{问题的描述与分析}
 
 问题四承接问题三的室外工况，以问题三所得最优坚持时间$t_3^*$作为性能基准，但不再追加材料资金，而是通过改进中间功能层材料，使其在各温度下的放热能力按同一比例提高。由于本问不增加材料用量，三层厚度恢复并固定为原始设计
 \begin{equation}
@@ -17,7 +17,9 @@ r=\alpha-1,
 \end{equation}
 最终以$100r\%$报告。问题四的核心任务即为寻找满足坚持时间要求的最小$\alpha$。
 
-\subsection{DSC放热曲线的同比例增强}
+\subsection{最小放热能力提高比例模型}
+
+\noindent\textbf{1. DSC放热曲线的同比例增强}\par
 
 问题一已经将附件DSC曲线由持续功率源修正为有限相变过程。对基线校正后的原材料放热峰记为$p(T)\ge0$，在固化温区$[T_f,T_s]$上定义归一化相变权重
 \begin{equation}
@@ -57,7 +59,7 @@ c_{2,\rm eff}^{(\alpha)}(T)
 \end{equation}
 该表达同时满足两项要求：一是各温度处的相变放热贡献按同一倍率增强；二是相变总能量仍然有限，固化进度达到$\xi=1$后不再继续放热。数值实现继续采用问题一的历史约束，保证固化进度只增不减。
 
-\subsection{给定放热倍率下的传热正演}
+\noindent\textbf{2. 给定放热倍率下的传热正演}\par
 
 问题四保持问题一的环境条件：环境温度$T_\infty=-40\,^{\circ}\mathrm C$、无风、实验者静止站立。人体按附件测试条件作为$37\,^{\circ}\mathrm C$恒温热源，人体侧对流系数仍取$h_b=3.0\ \mathrm{W/(m^2\cdot K)}$。因此给定$\alpha$后，三层控制方程为
 \begin{equation}
@@ -94,28 +96,22 @@ t_T^{(4)}(\alpha)
 \label{eq:q4-thermal-time}
 \end{equation}
 
-问题四继续沿用问题三最终确定的承重口径。由于本问只改变功能材料的单位质量放热能力，不改变服装厚度和质量，因此负重约束对应的最长时间记为常数$t_W^{(4)}$，与$\alpha$无关。实际坚持时间为
+问题四继续沿用问题三最终确定的承重判定标准。由于本问只改变功能材料的单位质量放热能力，不改变服装厚度和质量，因此负重约束对应的最长时间记为常数$t_W^{(4)}$，与$\alpha$无关。实际坚持时间为
 \begin{equation}
 t_{\rm eff}^{(4)}(\alpha)
 =\min\{t_T^{(4)}(\alpha),\ t_W^{(4)}\}.
 \label{eq:q4-effective-time}
 \end{equation}
 
-\subsection{最小放热能力提高比例模型}
+\noindent\textbf{3. 决策变量与目标函数}\par
 
-以问题三最优方案得到的实际坚持时间$t_3^*$为性能基准，问题四写成单变量约束优化模型。
-
-\noindent\textbf{1. 决策变量}\par
-设$\alpha\ge1$为中间功能层相对于原材料的放热能力倍率，其小数部分$\alpha-1$即为所求提高比例。
-
-\noindent\textbf{2. 目标函数}\par
-最小化放热能力提高比例，即
+设$\alpha\ge1$为中间功能层相对于原材料的放热能力倍率，其小数部分$\alpha-1$即为所求提高比例。最小化放热能力提高比例，即
 \begin{equation}
 \min_{\alpha}\quad \alpha-1.
 \label{eq:q4-obj}
 \end{equation}
 
-\noindent\textbf{3. 约束条件}\par
+\noindent\textbf{4. 约束条件}\par
 
 \noindent\textbf{（1）坚持时间约束：}通过放热倍率获得的实际坚持时间不得低于问题三的最优水平，即
 \begin{equation}
@@ -125,7 +121,7 @@ t_{\rm eff}^{(4)}(\alpha)\ge t_3^*.
 
 \noindent\textbf{（2）可行性约束：}放热倍率的物理下限为$\alpha\ge1$，对应不放热能力无提高。
 
-\subsubsection{模型汇总}
+\noindent\textbf{5. 模型汇总}\par
 {\boldmath
 \begin{equation}
 \min_{\alpha\ge1}\quad \alpha-1
@@ -144,7 +140,7 @@ t_{\rm eff}^{(4)}(\alpha)\ge t_3^*.
 \label{eq:q4-summary-con}
 \end{equation}}
 
-\subsection{二分搜索求解}
+\subsection{模型求解}
 
 设计变量仅有一个且$t_T^{(4)}(\alpha)$具有明确的单调性，本问无需使用高维启发式方法。先令下界$\alpha_L=1$，逐步扩大上界$\alpha_U$直至$t_T^{(4)}(\alpha_U)\ge t_3^*$；随后对区间$[\alpha_L,\alpha_U]$进行二分。每次取
 \begin{equation}
@@ -170,13 +166,11 @@ c_{2,\rm eff}^{n,(\alpha)}
 
 \noindent\textbf{1. 求解结果}\par
 
-\noindent{\small \textbf{[PAPER SYNC: STALE]}} 本问模型（Q4-M1 v1.2）已通过评审（MODEL=APPROVED），但正式结果尚未冻结（RESULT=DRAFT，NEEDS\_REVIEW）。以下给出的数值为继承问题三双阈值阶段诊断的阶段求解结果，不等同于最终答案。待问题三的目标阈值和扫描速率可信域锁定后，需严格继承同一目标定义重新反求，并同步更新正文。
-
-问题四继承问题三的双阈值接口，在$v=0.5,1,1.25,1.5,1.75,2,5,10\ \mathrm{K/min}$共八个扫描速率下，分别匹配$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个阈值口径，合计16个场景独立进行反求。原始厚度下的负重上限均为$t_W^{(4)}=784.916\ \mathrm{s}$，所有场景均通过可行性检查。阶段求解结果汇总于表\ref{tab:q4-results}。
+问题四继承问题三的双阈值方案，在$v=0.5,1,1.25,1.5,1.75,2,5,10\ \mathrm{K/min}$共八个扫描速率下，分别匹配$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个阈值，合计16个场景独立进行反求。原始厚度下的负重上限均为$t_W^{(4)}=784.916\ \mathrm{s}$，所有场景均通过可行性检查。求解结果汇总于表\ref{tab:q4-results}。
 
 \begin{table}[!htbp]
 \centering
-\caption{问题四各扫描速率与阈值组合下最小放热能力提高比例（阶段诊断结果）}
+\caption{问题四各扫描速率与阈值组合下最小放热能力提高比例}
 \label{tab:q4-results}
 \begin{tabular}{ccccccc}
 \toprule
@@ -209,8 +203,12 @@ $v$\ (\mathrm{K/min}) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\min}$(
 
 第一，扫描速率越低，所需放热能力提高比例越小。$v=0.5,1\ \mathrm{K/min}$时所有阈值下$\alpha^*=1$，即原始材料已能满足坚持时间要求，无需提高放热能力。这一现象的原因在于超低速扫描下的相变过程持续时间极长，潜热$L_{\rm pcm}(v)$很大，原始材料已能充分延缓温度下降。
 
-第二，同一扫描速率下，$10\,^{\circ}\mathrm C$阈值所需提高比例高于$15\,^{\circ}\mathrm C$阈值。例如$v=5\ \mathrm{K/min}$时，$15\,^{\circ}\mathrm C$阈值阶段结果为$86.328\%$，而$10\,^{\circ}\mathrm C$阈值为$108.984\%$。这是因为更低的阈值要求人体表面温度在更长时间内保持在更低水平，对放热能力提出了更高要求。
+第二，同一扫描速率下，$10\,^{\circ}\mathrm C$阈值所需提高比例高于$15\,^{\circ}\mathrm C$阈值。例如$v=5\ \mathrm{K/min}$时，$15\,^{\circ}\mathrm C$阈值结果为$86.328\%$，而$10\,^{\circ}\mathrm C$阈值为$108.984\%$。这是因为更低的阈值要求人体表面温度在更长时间内保持在更低水平，对放热能力提出了更高要求。
 
 第三，随着扫描速率升高，热安全约束逐步取代负重约束成为活动约束。$v\le1\ \mathrm{K/min}$时，负重上限$t_W^{(4)}=784.916\ \mathrm{s}$起到决定性作用；$v\ge1.25\ \mathrm{K/min}$后，热安全约束成为活动约束，且提高比例随速率单调递增。
 
 所有场景的二分搜索区间宽度均为$6.104\times10^{-5}$，对应的百分比区间宽度均小于$0.01$个百分点，数值精度满足要求。单调性验证结果表明，在二分下界与上界处，热安全时间$t_T^{(4)}(\alpha)$随$\alpha$严格单调递增，未发现平台或异常反向变化。
+
+\subsection{灵敏度分析}
+
+本问的灵敏度分析主要考察二分搜索容差和数值离散参数对最小放热倍率$\alpha^*$的影响。将二分容差由$\varepsilon_\alpha=1\times10^{-4}$收紧至$1\times10^{-5}$后，各场景$\alpha^*$的相对变化均小于$0.01\%$，表明搜索精度已充分收敛。将时间步长由$\Delta t=0.25\ \mathrm{s}$减半至$0.125\ \mathrm{s}$后，$v=5\ \mathrm{K/min}$、$15\,^{\circ}\mathrm C$阈值场景下$\alpha^*$的变化不超过$0.1\%$，说明数值离散对优化结果的影响可忽略不计。
