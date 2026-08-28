@@ -6,6 +6,13 @@
 
 附件规定后期增厚仅调整最外层，且每层固定$0.3\ \mathrm{mm}$，故以新增最外层涂层数$n$作为离散决策变量。题面给出$15\,^{\circ}\mathrm C$工作困难阈值与$10\,^{\circ}\mathrm C$生命危险阈值，本文分别计算两种评价边界，用于比较阈值判据对最优厚度和有效持续时间的影响。
 
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/40_q3/figures/q3_flow.png}
+\caption{问题三的求解流程}
+\label{fig:q3-flow}
+\end{figure}
+
 \subsection{预备工作}
 
 \noindent\textbf{1. 材料费用约束}\par
@@ -122,6 +129,8 @@ t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\},
 \centering
 \caption{问题三三种主扫描速率下的最优方案}
 \label{tab:q3-optimum}
+\begingroup
+\rowcolors{2}{gray!10}{white}
 \begin{tabular}{ccccccccc}
 \toprule
 \rowcolor{CumcmLightBlue}
@@ -134,6 +143,7 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 10 & 3 & 1.2 & 321.06 & 热安全 & 3 & 1.2 & 396.27 & 热安全\\
 \bottomrule
 \end{tabular}
+\endgroup
 \end{table}
 
 在上述主扫描速率范围内，热安全约束均先于负重约束达到，因此增厚的隔热收益仍占主导，最优解位于预算允许的厚度边界。值得注意的是，$\beta_{\rm DSC}=2\ \mathrm{K/min}$、$n=3$、$10\,^{\circ}\mathrm C$口径下$t_{10}=774.808\ \mathrm s$，而$t_W=775.994\ \mathrm s$，两者仅相差约$1.19\ \mathrm s$，说明该工况已经接近热安全与负重约束的交汇区域。
