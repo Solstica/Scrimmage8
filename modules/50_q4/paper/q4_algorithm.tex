@@ -5,40 +5,35 @@
 \SetArgSty{textnormal}
 \SetKwInput{KwIn}{Input}
 \SetKwInput{KwOut}{Output}
-\SetKwInput{KwInit}{Initialize}
-\SetKwFor{While}{while}{do}{end while}
+\SetKwFor{For}{for}{do}{end for}
+\SetKwWhile{While}{while}{do}{end while}
 \SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
 \SetKw{KwRet}{Return}
-\caption{问题四最小放热倍率二分搜索}
+\caption{Bisection search for the minimum heat release multiplier}
 \label{alg:q4-bisection}
-\KwIn{场景$(\beta_{\rm DSC},\theta,t_{3,\theta}^*)$，负重上限$t_W^{(4)}$，倍率容差$\varepsilon_\alpha$，潜热$L_{\rm pcm}(\beta_{\rm DSC})$}
-\KwInit{$\alpha_L\leftarrow1$，$\alpha_U\leftarrow2$}
-\KwOut{最小放热倍率$\alpha^*$、提高比例$r_{\min}=100(\alpha^*-1)\%$及实际持续时间$t_{\rm eff,\theta}^{(4)}(\alpha^*)$}
+\KwIn{target time $t_3^*$, weight limit $t_W^{(4)}$, tolerance $\varepsilon_\alpha$, latent heat $L_{\rm pcm}(\beta_{\rm DSC})$}
+\KwOut{minimum multiplier $\alpha^*$, ratio $r_{\min}=100(\alpha^*-1)\%$}
 
-\If{$t_W^{(4)}<t_{3,\theta}^*$}{
-  \KwRet{负重上限不足，当前场景无可行解}\;
+\If{$t_W^{(4)}<t_3^*$}{
+  \KwRet{infeasible under the weight limit}\;
 }
-调用问题一传热正演模型计算$t_{T,\theta}^{(4)}(1)$，并取$t_{\rm eff,\theta}^{(4)}(1)=\min\{t_{T,\theta}^{(4)}(1),t_W^{(4)}\}$\;
-\If{$t_{\rm eff,\theta}^{(4)}(1)\ge t_{3,\theta}^*$}{
-  \KwRet{$\alpha^*=1$，$r_{\min}=0$，$t_{\rm eff,\theta}^{(4)}(1)$}\;
-}
-调用问题一传热正演模型计算$t_{\rm eff,\theta}^{(4)}(\alpha_U)$\;
-\While{$t_{\rm eff,\theta}^{(4)}(\alpha_U)<t_{3,\theta}^*$}{
-  $\alpha_L\leftarrow\alpha_U$\;
-  $\alpha_U\leftarrow2\alpha_U$\;
-  调用问题一传热正演模型计算$t_{\rm eff,\theta}^{(4)}(\alpha_U)$\;
+Set $\alpha_L\leftarrow1$\;
+Set $\alpha_U\leftarrow2$\;
+\While{$t_T^{(4)}(\alpha_U)<t_3^*$}{
+  Set $\alpha_L\leftarrow\alpha_U$\;
+  Double $\alpha_U$\;
 }
 \While{$\alpha_U-\alpha_L>\varepsilon_\alpha$}{
-  $\alpha_M\leftarrow(\alpha_L+\alpha_U)/2$\;
-  调用问题一传热正演模型计算$t_{T,\theta}^{(4)}(\alpha_M)$，并取$t_{\rm eff,\theta}^{(4)}(\alpha_M)=\min\{t_{T,\theta}^{(4)}(\alpha_M),t_W^{(4)}\}$\;
-  \If{$t_{\rm eff,\theta}^{(4)}(\alpha_M)\ge t_{3,\theta}^*$}{
-    $\alpha_U\leftarrow\alpha_M$\;
+  Compute $\alpha_M\leftarrow(\alpha_L+\alpha_U)/2$\;
+  Evaluate $t_T^{(4)}(\alpha_M)$ with the thermal forward model\;
+  \If{$t_T^{(4)}(\alpha_M)\ge t_3^*$}{
+    Set $\alpha_U\leftarrow\alpha_M$\;
   }
   \Else{
-    $\alpha_L\leftarrow\alpha_M$\;
+    Set $\alpha_L\leftarrow\alpha_M$\;
   }
 }
-$\alpha^*\leftarrow\alpha_U$\;
-调用问题一传热正演模型复算$t_{\rm eff,\theta}^{(4)}(\alpha^*)$\;
-\KwRet{$\alpha^*$，$100(\alpha^*-1)\%$，$t_{\rm eff,\theta}^{(4)}(\alpha^*)$}\;
+Set $\alpha^*\leftarrow\alpha_U$\;
+Compute $t_{\rm eff}^{(4)}(\alpha^*)\leftarrow\min\{t_T^{(4)}(\alpha^*),t_W^{(4)}\}$\;
+\KwRet{$\alpha^*$, $100(\alpha^*-1)\%$, $t_{\rm eff}^{(4)}(\alpha^*)$}\;
 \end{algorithm}

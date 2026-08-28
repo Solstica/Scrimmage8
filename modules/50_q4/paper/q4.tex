@@ -6,6 +6,15 @@
 
 令$\alpha\ge1$表示新功能材料相对于原材料的放热能力倍率，所求提高比例为$r=\alpha-1$，最终以$100r\%$报告。本问需在给定$(\beta_{\rm DSC},\theta)$场景下反求满足问题三目标时间的最小$\alpha$。
 
+本问整体求解流程如图\ref{fig:q4-flow}所示。对每个扫描速率与温度阈值场景，首先进行负重可行性检查，随后依次判断原材料是否已达标、是否需要二分搜索，最终输出最小放热倍率、提高比例与实际有效持续时间。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\FigureFlowWidth]{\ProjectRoot/modules/50_q4/figures/q4_flow.png}
+\caption{问题四最小放热能力提高比例求解流程}
+\label{fig:q4-flow}
+\end{figure}
+
 \subsection{预备工作}
 
 \noindent\textbf{1. DSC放热能力同比例增强}\par
@@ -119,7 +128,7 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 \subsection{模型求解}
 
-设计变量为单变量，且已计算场景中$t_{T,\theta}^{(4)}(\alpha)$随$\alpha$单调不减，因此采用“可行性预检 + 上界扩张 + 二分搜索”求最小可行倍率。首先检查固定负重上限是否满足$t_W^{(4)}\ge t_{3,\theta}^*$；随后计算$\alpha=1$的原材料工况，若已满足目标，则直接取$\alpha^*=1$。其余场景从$\alpha_L=1$开始扩张上界$\alpha_U$，直至得到下界不可行、上界可行的夹逼区间。
+设计变量为单变量，且已计算场景中$t_{T,\theta}^{(4)}(\alpha)$随$\alpha$单调不减，因此采用“可行性检查 + 上界扩张 + 二分搜索”求最小可行倍率。首先检查固定负重上限是否满足$t_W^{(4)}\ge t_{3,\theta}^*$；随后计算$\alpha=1$的原材料工况，若已满足目标，则直接取$\alpha^*=1$。其余场景从$\alpha_L=1$开始扩张上界$\alpha_U$，直至得到下界不可行、上界可行的夹逼区间。
 
 在每轮二分中取$\alpha_M=(\alpha_L+\alpha_U)/2$，将功能层有效比热更新为$c_{2,\rm eff}^{n,(\alpha_M)}=c_2+\alpha_ML_{\rm pcm}w(\bar T_2^n)$，相应热扩散率为$k_2/[\rho_2c_{2,\rm eff}^{n,(\alpha_M)}]$，再调用问题一传热正演模型求$t_{\rm eff,\theta}^{(4)}(\alpha_M)$。若中点达到目标，则更新上界；否则更新下界。当$\alpha_U-\alpha_L\le\varepsilon_\alpha$时取$\alpha^*=\alpha_U$。完整步骤见算法\ref{alg:q4-bisection}。
 
@@ -129,7 +138,7 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 \noindent\textbf{1. 求解结果}\par
 
-基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两种评价口径所需的最小放热能力提高比例分别为$86.328\%$和$108.984\%$。在$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75,2,5,10\ \mathrm{K/min}$八个扫描速率与两个阈值的16个场景中，均按相同$(\beta_{\rm DSC},\theta)$匹配问题三目标时间；原始厚度对应的固定负重上限为$t_W^{(4)}=784.916\ \mathrm s$。完整结果见表\ref{tab:q4-results}。
+基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个温度阈值下所需的最小放热能力提高比例分别为$86.328\%$和$108.984\%$。在$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75,2,5,10\ \mathrm{K/min}$八个扫描速率与两个阈值的16个场景中，均按相同$(\beta_{\rm DSC},\theta)$匹配问题三目标时间；原始厚度对应的固定负重上限为$t_W^{(4)}=784.916\ \mathrm s$。完整结果见表\ref{tab:q4-results}。
 
 \begin{table}[!htbp]
 \centering
@@ -165,9 +174,9 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 
 首先，在相同DSC峰面积下，较小的假设扫描速率通过$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$对应更大的反演潜热，因此原材料的有效储热能力更高，达到问题三目标所需的强化倍率随$\beta_{\rm DSC}$降低而减小。$\beta_{\rm DSC}=0.5$和$1\ \mathrm{K/min}$的两种阈值场景均有$\alpha^*=1$，表明原材料在这些诊断工况下已达到目标。
 
-其次，两种阈值下的强化需求由“Q3同阈值目标时间”和“Q4原始材料达到该阈值的时间”共同决定，不能仅由阈值高低判断。以基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$为例，问题三$10\,^{\circ}\mathrm C$口径的目标有效时间长于$15\,^{\circ}\mathrm C$口径，因此Q4追平该目标时所需提高比例由$86.328\%$增至$108.984\%$。在较低扫描速率处，负重上限会截断有效时间，因而两种阈值的倍率排序可以不同。
+其次，两种阈值下的强化需求由问题三同阈值目标时间和问题四原始材料达到该阈值的时间共同决定，不能仅由阈值高低判断。以基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$为例，问题三以$10\,^{\circ}\mathrm C$为阈值的目标有效时间长于以$15\,^{\circ}\mathrm C$为阈值的目标，因此问题四追平该目标时所需提高比例由$86.328\%$增至$108.984\%$。在较低扫描速率处，负重上限会截断有效时间，因而两种阈值的倍率排序可以不同。
 
-最后，活动约束随扫描速率和阈值发生切换：$\beta_{\rm DSC}=0.5,1\ \mathrm{K/min}$时两种阈值均由负重约束控制；$\beta_{\rm DSC}=1.25\ \mathrm{K/min}$时，$15\,^{\circ}\mathrm C$场景由热安全约束控制，而$10\,^{\circ}\mathrm C$场景仍由负重约束控制；从$\beta_{\rm DSC}=1.5\ \mathrm{K/min}$起，两种阈值均由热安全约束控制。该切换说明Q4的最小强化倍率必须与Q3的同场景目标和负重上限联合判断。
+最后，活动约束随扫描速率和阈值发生切换：$\beta_{\rm DSC}=0.5,1\ \mathrm{K/min}$时两种阈值均由负重约束控制；$\beta_{\rm DSC}=1.25\ \mathrm{K/min}$时，$15\,^{\circ}\mathrm C$场景由热安全约束控制，而$10\,^{\circ}\mathrm C$场景仍由负重约束控制；从$\beta_{\rm DSC}=1.5\ \mathrm{K/min}$起，两种阈值均由热安全约束控制。该切换说明问题四的最小强化倍率必须与问题三的同场景目标和负重上限联合判断。
 
 \subsection{灵敏度分析}
 
