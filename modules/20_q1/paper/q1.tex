@@ -24,6 +24,27 @@ T_b=37\,^{\circ}\mathrm C.
 
 原始曲线两端点热流分别为$403.86\ \mathrm{W/kg}$和$400.42\ \mathrm{W/kg}$。本模型直接采用温区两端点连线作为操作基线，校正后全部357个数据点非负，校正峰面积为$A_{\rm DSC}=20385.458\ \mathrm{W\cdot K/kg}$。该基线规则是显式建模假设，不同的基线选择会直接影响由DSC数据反推的绝对潜热值。
 
+图\ref{fig:q1-dsc-calibration}(a)对比原始放热功率、端点线性基线与校正放热功率，横轴为温度，功率单位为$\mathrm{W/kg}$，三组系列仅表示同一条DSC曲线在校正前后的不同形式，不是第二个物理自变量；图\ref{fig:q1-dsc-calibration}(b)给出由校正峰归一化累计面积构造的相对固化进度，温度由约$26\,^{\circ}\mathrm C$降至$14\,^{\circ}\mathrm C$时$\xi_{\rm DSC}$由$0$增至$1$，横轴反向表示冷却过程，该图不是时间曲线。
+
+\begin{figure}[!htbp]
+\centering
+\begin{subfigure}[b]{0.88\textwidth}
+\centering
+\includegraphics[width=\linewidth]{\ProjectRoot/modules/20_q1/figures/DSC 校正.png}
+\caption{原始放热功率、操作基线与校正放热功率}
+\label{subfig:q1-dsc-raw}
+\end{subfigure}
+
+\begin{subfigure}[b]{0.88\textwidth}
+\centering
+\includegraphics[width=\linewidth]{\ProjectRoot/modules/20_q1/figures/固化进度.png}
+\caption{归一化固化进度随温度的变化}
+\label{subfig:q1-xi}
+\end{subfigure}
+\caption{DSC 放热曲线校正及固化进度}
+\label{fig:q1-dsc-calibration}
+\end{figure}
+
 \subsection{人体—三层防护服耦合瞬态传热模型}
 
 \noindent\textbf{1. 三层瞬态导热控制方程}\par
@@ -319,12 +340,12 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 \end{tabular}
 \end{table}
 
-基准工况的温度场、温度响应与固化进度见图\ref{fig:q1-thermal-solidification}。面板(a)给出沿厚度方向的温度演化，白色虚线为两个材料界面，白色实线为$15/20/25\,^{\circ}\mathrm C$等温线，展示各层温度梯度与内外温差；面板(b)给出贴身侧、功能层均温与外表面温度的时间响应，标出$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的首次到达时刻；面板(c)给出功能层固化进度，黑色竖虚线为首次固化完成的网格时刻，约在$268.5\ \mathrm{s}$。
+基准工况的温度场、温度响应与固化进度见图\ref{fig:q1-thermal-solidification}。左图给出沿厚度方向的温度演化，白色虚线为两个材料界面，白色实线为$15/20/25\,^{\circ}\mathrm C$等温线，展示各层温度梯度与内外温差；右上给出贴身侧、功能层均温与外表面温度的时间响应，标出$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的首次到达时刻；右下给出功能层固化进度，黑色竖虚线为首次固化完成的网格时刻，约在$268.5\ \mathrm{s}$。
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/q1_thermal_solidification.png}
-\caption{基准工况的温度场、温度响应与固化进度}
+\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/三层防护服传热与固化过程.png}
+\caption{基准工况下三层防护服的温度场、温度响应与固化进度}
 \label{fig:q1-thermal-solidification}
 \end{figure}
 
@@ -334,20 +355,22 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 
 \subsection{灵敏度分析}
 
+为考察建模假设与输入参数对达阈时间的影响，分别对DSC扫描速率与衣料初始温度做敏感性分析，结果见图\ref{fig:q1-sensitivity}。左面板固定衣料初温$37\,^{\circ}\mathrm C$，比较$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$；右面板固定$\beta_{\rm DSC}=5\ \mathrm{K/min}$，比较衣料初温$T_0=27,30,33,37\,^{\circ}\mathrm C$。橙色为$t_{15}$，蓝色为$t_{10}$，单位均为$\mathrm{s}$；两面板纵轴范围不同，不能按视觉斜率比较两种输入的敏感性大小，图中只连接已计算的工况，连线不表示新增工况或拟合结果。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/敏感性分析.png}
+\caption{DSC 扫描速率与衣料初温对达阈时间的影响}
+\label{fig:q1-sensitivity}
+\end{figure}
+
 \noindent\textbf{1. DSC 扫描速率假设}\par
 
 由于附件未给出扫描速率，基准结果依赖$\beta_{\rm DSC}=5\ \mathrm{K/min}$这一显式建模假设。将扫描速率改为$2\ \mathrm{K/min}$与$10\ \mathrm{K/min}$后（表\ref{tab:q1-time-result}），$L_{\rm pcm}$分别变为$611.564\ \mathrm{kJ/kg}$与$122.313\ \mathrm{kJ/kg}$，$t_{15}$变为$520.903\ \mathrm{s}$与$191.642\ \mathrm{s}$。相对于基准$273.908\ \mathrm{s}$，$t_{15}$的变化幅度为$+90.2\%$与$-30.0\%$。因此缺失的扫描速率会显著改变坚持时间，基准结果应与敏感性范围同时报告，不能视为与实验条件无关的唯一值。
 
 \noindent\textbf{2. 衣料初始温度}\par
 
-为检验实验前服装热状态的影响，保持人体边界$T_b=37\,^{\circ}\mathrm C$及基准扫描速率$\beta_{\rm DSC}=5\ \mathrm{K/min}$不变，仅将三层衣料的统一初始温度改为$T_0=27,30,33,37\,^{\circ}\mathrm C$。其中$27\,^{\circ}\mathrm C$高于DSC数据最高温度$26.018\,^{\circ}\mathrm C$，故四组工况的功能层初始均按液态处理。图\ref{fig:q1-initial-temperature}给出各工况的贴身侧温度曲线，对应的阈值时间见表\ref{tab:q1-initial-temperature}。
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.70\textwidth]{\ProjectRoot/modules/20_q1/figures/q1_initial_temperature_sensitivity.png}
-\caption{不同衣料初始温度下的贴身侧温度变化}
-\label{fig:q1-initial-temperature}
-\end{figure}
+为检验实验前服装热状态的影响，保持人体边界$T_b=37\,^{\circ}\mathrm C$及基准扫描速率$\beta_{\rm DSC}=5\ \mathrm{K/min}$不变，仅将三层衣料的统一初始温度改为$T_0=27,30,33,37\,^{\circ}\mathrm C$。其中$27\,^{\circ}\mathrm C$高于DSC数据最高温度$26.018\,^{\circ}\mathrm C$，故四组工况的功能层初始均按液态处理。图\ref{fig:q1-sensitivity}右面板给出各工况的达阈时间，对应的阈值时间见表\ref{tab:q1-initial-temperature}。
 
 \begin{table}[!htbp]
 \centering
