@@ -4,7 +4,7 @@
 
 问题三回到问题一的室外条件：环境温度为$-40\,^{\circ}\mathrm C$、无风且实验者静止不动，因此人体侧$37\,^{\circ}\mathrm C$恒温边界、服装外表面自然对流关系以及三层瞬态传热方程均继承问题一。新的设计任务是增加防护服厚度，同时满足材料费用和负重能力约束，使人体侧温度降至安全阈值前的站立时间尽可能长。题目同时给出$15\,^{\circ}\mathrm C$（工作困难）与$10\,^{\circ}\mathrm C$（生命危险）两个阈值，本文对两种阈值分别计算，最终截止温度由题面语义统一解释确定。
 
-附件明确规定中间功能层最大厚度为$0.45\ \mathrm{mm}$，但后期增加厚度只调整最外层，且每层固定$0.3\ \mathrm{mm}$。因此决策变量为新增最外层涂层数，无需连续优化。主要困难在于热安全时间与负重时间随层数变化的竞争关系，以及费用约束对设计空间的上界限制。
+附件明确规定中间功能层最大厚度为$0.45\ \mathrm{mm}$，但后期增加厚度只调整最外层，且每层固定$0.3\ \mathrm{mm}$。因此决策变量取新增最外层涂层数$n\in\{0,1,2,3\}$。主要困难在于热安全时间与负重时间随层数变化的竞争关系，以及费用约束对设计空间的上界限制。
 
 \subsection{预备工作}
 
@@ -70,7 +70,7 @@ $t_W(n)$随新增涂层数线性下降，反映增加隔热厚度虽降低热损
 t_{\theta}(n)=\inf\{t>0:T_1^{(n)}(0,t)\le\theta\}.
 \label{eq:q3-thermal-time}
 \end{equation}
-$t_{15}(n)$和$t_{10}(n)$分别为两个阈值对应的热安全时间。增加隔热层厚度会同时改变导热热阻和热容量，其具体增益由瞬态模型直接计算，不预先用稳态热阻公式替代。
+$t_{15}(n)$和$t_{10}(n)$分别为两个阈值对应的热安全时间。增加隔热层厚度会同时改变导热热阻和热容量，热安全时间由瞬态模型直接计算。
 
 \subsection{热安全--负重耦合的离散优化模型}
 
@@ -100,6 +100,8 @@ t_{\mathrm{eff},\theta}(n)=\min\{t_{\theta}(n),t_W(n)\}.
 
 \noindent\textbf{（3）传热正演约束：}$t_{\theta}(n)$由式\eqref{eq:q3-thermal-time}定义，通过问题一的三层瞬态传热模型计算，采用有限不可逆相变有效热容。
 
+综上，我们建立热安全—负重耦合离散厚度优化模型。
+
 \noindent\textbf{4. 模型汇总}\par
 
 {\boldmath
@@ -128,7 +130,7 @@ t_{\mathrm{eff},\theta}(n)=\min\{t_{\theta}(n),t_W(n)\}.
 
 \subsection{模型求解}
 
-候选集合仅含四个离散方案，故采用完全枚举。对每个候选进行一次瞬态正演并同时提取两个阈值时间，再分别计算两种有效时间和最优层数。求解过程整理为算法\ref{alg:q3-enumeration}。
+候选集合仅含四个离散方案，故采用完全枚举。对每个候选进行一次瞬态正演并同时提取两个阈值时间，再分别计算两种有效时间和最优层数。求解过程整理为算法\ref{alg:q3-enumeration}。算法中 DSC 扫描速率记为 $\beta_{\mathrm{DSC}}$。
 
 \input{\ProjectRoot/modules/40_q3/paper/q3_algorithm.tex}
 
@@ -136,17 +138,17 @@ t_{\mathrm{eff},\theta}(n)=\min\{t_{\theta}(n),t_W(n)\}.
 
 \subsection{求解结果与分析}
 
-对$v\in\{2,5,10\}\ \mathrm{K/min}$三种扫描速率，各候选方案的计算结果如表\ref{tab:q3-candidates}所示；两个阈值下的最优方案汇总于表\ref{tab:q3-optimum}。
+对$\beta_{\mathrm{DSC}}\in\{2,5,10\}\ \mathrm{K/min}$三种扫描速率，两个阈值下的最优方案均为$n^*=3$，即新增三层涂层，最外层厚度$1.2\ \mathrm{mm}$，总厚度$2.3\ \mathrm{mm}$。各候选方案的计算结果如表\ref{tab:q3-candidates}所示；最优方案汇总于表\ref{tab:q3-optimum}。
 
 \begin{table}[!htbp]
 \centering
-\caption{问题三各候选方案计算结果（$v=2,5,10\ \mathrm{K/min}$）}
+\caption{问题三各候选方案计算结果（$\beta_{\mathrm{DSC}}=2,5,10\ \mathrm{K/min}$）}
 \label{tab:q3-candidates}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{cccccccccccc}
 \toprule
 \rowcolor{CumcmLightBlue}
-$v$ & $n$ & $d_3$ & $L$ & $m_c$ & $C$ & $t_{15}$ & $t_{10}$ & $t_W$ & $t_{\mathrm{eff},15}$ & $t_{\mathrm{eff},10}$ & 限制\\
+$\beta_{\mathrm{DSC}}$ & $n$ & $d_3$ & $L$ & $m_c$ & $C$ & $t_{15}$ & $t_{10}$ & $t_W$ & $t_{\mathrm{eff},15}$ & $t_{\mathrm{eff},10}$ & 限制\\
  &  & (mm) & (mm) & (kg) & (元) & (s) & (s) & (s) & (s) & (s) & 因素\\
 \midrule
 \multirow{4}{*}{2}
@@ -179,7 +181,7 @@ $v$ & $n$ & $d_3$ & $L$ & $m_c$ & $C$ & $t_{15}$ & $t_{10}$ & $t_W$ & $t_{\mathr
 \begin{tabular}{ccccccccc}
 \toprule
 \rowcolor{CumcmLightBlue}
-$v$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multicolumn{4}{c}{$10\,^{\circ}\mathrm C$阈值}\\
+$\beta_{\mathrm{DSC}}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multicolumn{4}{c}{$10\,^{\circ}\mathrm C$阈值}\\
 \cmidrule(lr){2-5}\cmidrule(lr){6-9}
 (K/min) & $n^*$ & $d_3^*$ (mm) & $t_{\mathrm{eff}}^*$ (s) & 限制 & $n^*$ & $d_3^*$ (mm) & $t_{\mathrm{eff}}^*$ (s) & 限制\\
 \midrule
@@ -188,18 +190,18 @@ $v$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multicolumn{4}{c}{$10
 10 & 3 & 1.2 & 321.06 & 热安全 & 3 & 1.2 & 396.27 & 热安全\\
 \bottomrule
 \end{tabular}
-\flushleft\footnotesize{注：$v=2,5,10\ \mathrm{K/min}$时两种阈值下最优方案均为$n^*=3$，且均由热安全约束控制。}
+\flushleft\footnotesize{注：$\beta_{\mathrm{DSC}}=2,5,10\ \mathrm{K/min}$时两种阈值下最优方案均为$n^*=3$，且均由热安全约束控制。}
 \end{table}
 
 \FloatBarrier
 
 从计算结果可以得到以下结论：
 
-\noindent\textbf{1. 最优方案一致性}：在$v=2,5,10\ \mathrm{K/min}$三种扫描速率下，两个阈值的最优方案均为$n^*=3$，即新增三层涂层，最外层厚度$1.2\ \mathrm{mm}$，总厚度$2.3\ \mathrm{mm}$。
+\noindent\textbf{1. 最优方案一致性}：在$\beta_{\mathrm{DSC}}=2,5,10\ \mathrm{K/min}$三种扫描速率下，两个阈值的最优方案均为$n^*=3$，即新增三层涂层，最外层厚度$1.2\ \mathrm{mm}$，总厚度$2.3\ \mathrm{mm}$。
 
 \noindent\textbf{2. 限制因素}：所有候选方案的有效时间均由热安全约束控制，负重约束始终未被触发。在当前扫描速率范围内，增加隔热厚度对延长热安全时间的正效应强于增重对缩短负重时间的负效应，两类时间尚未发生交叉。
 
-\noindent\textbf{3. 低速扫描与内部最优诊断}：为进一步考察两类约束是否可能在更宽参数范围内发生交叉，对$v\in\{0.5,1.0,1.25,1.5,1.75\}\ \mathrm{K/min}$进行了低速扩展扫描。诊断结果表明，在更低扫描速率（对应更大反演潜热）下，热安全时间与负重时间之间可能出现交叉，形成内部最优解。$15\,^{\circ}\mathrm C$阈值下三处层数切换分别约在$1.22,1.36,1.54\ \mathrm{K/min}$，$10\,^{\circ}\mathrm C$阈值下约在$1.29,1.48,1.72\ \mathrm{K/min}$，对应潜热约$712$--$1004\ \mathrm{kJ/kg}$，高于典型商业PCM材料在$20\,^{\circ}\mathrm C$附近的数量级。该诊断说明内部最优在数学上存在，但能否在可信材料参数范围内实现尚需进一步确认。
+\noindent\textbf{3. 低速扫描与内部最优诊断}：为进一步考察两类约束是否可能在更宽参数范围内发生交叉，对$\beta_{\mathrm{DSC}}\in\{0.5,1.0,1.25,1.5,1.75\}\ \mathrm{K/min}$进行了低速扩展扫描。诊断结果表明，在更低扫描速率（对应更大反演潜热）下，热安全时间与负重时间之间可能出现交叉，形成内部最优解。$15\,^{\circ}\mathrm C$阈值下三处层数切换分别约在$1.22,1.36,1.54\ \mathrm{K/min}$，$10\,^{\circ}\mathrm C$阈值下约在$1.29,1.48,1.72\ \mathrm{K/min}$，对应潜热约$712$--$1004\ \mathrm{kJ/kg}$，高于典型商业PCM材料在$20\,^{\circ}\mathrm C$附近的数量级。该诊断说明内部最优在数学上存在，但能否在可信材料参数范围内实现尚需进一步确认。
 
 \noindent\textbf{4. 数值收敛性验证}：本问沿用问题一已验证的数值设置（时间步$0.25\ \mathrm{s}$，模态数$M=40$）。对低速扫描中检测到的六处层数切换位置采用半时间步长复核，所有切换方向保持不变，数值精度满足要求。
 
@@ -207,9 +209,9 @@ $v$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multicolumn{4}{c}{$10
 
 \subsection{灵敏度分析}
 
-为考察最优方案对关键参数的敏感性，在基准值附近扰动DSC扫描速率$v$和预算上限比例$r$，其余条件保持不变。
+为考察最优方案对关键参数的敏感性，在基准值附近扰动DSC扫描速率$\beta_{\mathrm{DSC}}$和预算上限比例$r$，其余条件保持不变。
 
-\noindent\textbf{1. 扫描速率扰动}：将$v=2\ \mathrm{K/min}$在$1.5$--$2.5\ \mathrm{K/min}$范围内扰动。当$v$由$1.5$增至$2.5\ \mathrm{K/min}$时，$t_{15}(3)$由$859.60\ \mathrm{s}$降至$586.07\ \mathrm{s}$，$t_{10}(3)$由$932.87\ \mathrm{s}$降至$637.07\ \mathrm{s}$；但在该区间内$n^*=3$始终保持最优，最优方案未因扫描速率扰动而改变。
+\noindent\textbf{1. 扫描速率扰动}：将$\beta_{\mathrm{DSC}}=2\ \mathrm{K/min}$在$1.5$--$2.5\ \mathrm{K/min}$范围内扰动。当$\beta_{\mathrm{DSC}}$由$1.5$增至$2.5\ \mathrm{K/min}$时，$t_{15}(3)$由$859.60\ \mathrm{s}$降至$586.07\ \mathrm{s}$，$t_{10}(3)$由$932.87\ \mathrm{s}$降至$637.07\ \mathrm{s}$；但在该区间内$n^*=3$始终保持最优，最优方案未因扫描速率扰动而改变。
 
 \noindent\textbf{2. 预算上限扰动}：将预算上限比例$r$由$1.5$扰动至$1.2$和$1.8$。当$r=1.2$时，$n_{\max}=2$，最优候选变为$n=2$；$r=1.8$时，$n_{\max}$增至$4$，但$n=4$新增$d_3=1.5\ \mathrm{mm}$后$t_W(4)$进一步下降，$t_{\mathrm{eff}}(4)$反而不及$n=3$，因此$n^*=3$仍保持最优。
 
