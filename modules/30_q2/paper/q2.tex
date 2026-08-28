@@ -122,7 +122,7 @@ T_2(x_2,t)&=T_3(x_2,t),& k_2T_{2,x}(x_2,t)&=k_3T_{3,x}(x_2,t).
 
 正式计算取$\Delta t=0.25\ \mathrm s$、每层$M=40$个模态和160点Gauss积分；阈值穿越时刻在相邻时间点间线性插值。完整步骤见算法\ref{alg:q2-thermal}。
 
-\input{modules/30_q2/paper/q2_algorithm.tex}
+\input{\ProjectRoot/modules/30_q2/paper/q2_algorithm.tex}
 
 \subsection{求解结果与分析}
 
@@ -147,7 +147,7 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureFullWidth]{modules/30_q2/figures/阈值时间.svg}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/预览/阈值时间.png}
 \caption{不同DSC工况下问题二贴身侧服装温度的阈值时间。}
 \label{fig:q2-threshold-time}
 \end{figure}
@@ -184,7 +184,7 @@ DSC扫描速率同样显著影响绝对时间。在$\beta_{\rm DSC}=2$--$10\ \ma
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureFullWidth]{modules/30_q2/figures/边界敏感性.svg}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/预览/边界敏感性.png}
 \caption{外对流关系对阈值时间的影响。以同一DSC工况下的ISO 11079主关系为基准，负值表示阈值时间提前。}
 \label{fig:q2-boundary-sensitivity}
 \end{figure}
@@ -198,7 +198,7 @@ DSC扫描速率同样显著影响绝对时间。在$\beta_{\rm DSC}=2$--$10\ \ma
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureFullWidth]{modules/30_q2/figures/数值验证.svg}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/预览/数值验证.png}
 \caption{独立有限体积复核与离散参数加密检查。}
 \label{fig:q2-numerical-validation}
 \end{figure}
