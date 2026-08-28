@@ -30,15 +30,31 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 
-% ---------- fonts: Windows competition machine first, portable fallback second ----------
+% ---------- fonts: Windows competition machine first, bundled Fandol second, TeX Live fallback third ----------
 \IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
 \IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{TeX Gyre Heros}}
 \IfFontExistsTF{SimSun}{%
-  \setCJKmainfont{SimSun}[BoldFont=FandolSong-Bold.otf,ItalicFont=SimSun]
-  \setCJKfamilyfont{zhsong}{SimSun}[BoldFont=FandolSong-Bold.otf,ItalicFont=SimSun]
+  \setCJKmainfont{SimSun}[AutoFakeBold=2.5,ItalicFont=SimSun]
+  \setCJKfamilyfont{zhsong}{SimSun}[AutoFakeBold=2.5,ItalicFont=SimSun]
 }{%
-  \setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold.otf]
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[BoldFont=FandolSong-Bold.otf]
+  \IfFileExists{\ProjectRoot/paper/fonts/FandolSong-Regular.otf}{%
+    \IfFileExists{\ProjectRoot/paper/fonts/FandolSong-Bold.otf}{%
+      \setCJKmainfont{FandolSong-Regular.otf}[
+        Path={\ProjectRoot/paper/fonts/},
+        BoldFont=FandolSong-Bold.otf
+      ]
+      \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[
+        Path={\ProjectRoot/paper/fonts/},
+        BoldFont=FandolSong-Bold.otf
+      ]
+    }{%
+      \setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+      \setCJKfamilyfont{zhsong}{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+    }%
+  }{%
+    \setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+    \setCJKfamilyfont{zhsong}{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+  }%
 }
 \AtBeginDocument{\zihao{-4}\songti}
 
