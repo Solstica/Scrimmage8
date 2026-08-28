@@ -13,9 +13,13 @@
 - `li2021protective`：李长玉等，《热防护服-空气-皮肤热传导模型及其解析解》，应用数学和力学，2021，42(2): 162--169，DOI: 10.21656/1000-0887.400290。
   - 支持范围：将上述微小时间段分离变量方法用于热防护服--空气--皮肤层合传热，并通过循环得到全时域温度场。
   - 不支持：本题附件 DSC 曲线直接作为温度相关内部放热源的具体处理。
+- `iso11079`：ISO 11079:2007《Ergonomics of the thermal environment---Determination and interpretation of cold stress when using required clothing insulation (IREQ) and local cooling effects》。
+  - 进入Q2的位置：支撑冷环境服装边界空气层热阻关系及其适用背景；正文的 `h_r=0`、等有效面积等简化属于本题建模处理，应与标准原式分开表述。
 - `iso7730`：ISO 7730:2005《Ergonomics of the Thermal Environment---Analytical Determination and Interpretation of Thermal Comfort Using Calculation of the PMV and PPD Indices and Local Thermal Comfort Criteria》。
   - 进入Q2的位置：服装表面对流换热系数采用自然对流与强制对流两支中的较大者：`h_c=max{2.38|T_cl-T_a|^0.25, 12.1 sqrt(v)}`。
   - 使用边界：该关系来自热舒适/人体热平衡体系；本题南极低温环境超出典型室内舒适标定环境，因此同时用近年热人模和穿衣CFD文献交叉检查风速效应与数量级。
+- `kuwabara2005`：Kuwabara K, Mochida T, Nagano K, Shimakura K. Measurement of convective heat transfer coefficient of a thermal manikin in outdoor environment. Proceedings of the 10th International Conference on Environmental Ergonomics, 2005: 195--198。
+  - 进入Q2的位置：作为室外风条件下外对流关系的灵敏度对照，不作为本题主边界关系。
 - `yang2023hc`：Yang J, Zhang S. Three-dimensional simulation of the convective heat transfer coefficient of the human body under various air velocities and human body angles. International Journal of Thermal Sciences, 2023, 187: 108171, DOI: 10.1016/j.ijthermalsci.2023.108171。
   - 支持范围：0.2--20 m/s、五种人体迎风角的热人模CFD；全身和局部 `h_c` 随风速按幂函数增加，3 m/s位于研究区间内；用于Q2风速效应和换热系数量级校核。
   - 不直接支持：把裸热人模回归系数直接等同于防护服外表面系数。
@@ -25,6 +29,8 @@
 
 ## TODO
 - [ ] 核对正文所有引用键、文献真实性与格式。
+- [ ] 重点复核 `iso11079` 在正文所用边界空气层关系的原式与变量定义，避免把本题简化写成标准直接给出的最终 `h_e`。
+- [ ] 复核 `kuwabara2005` 的会议论文书目信息及 Q2 所用经验关系是否与原文完全对应。
 - [ ] 若 Q1 最终保留有限差分/有限体积作为独立基准，只在正文实际出现时补充对应数值方法文献。
 - [ ] Q3 成本/重量与 Q4 放热增强若使用外部参数，分别补充原始来源。
 
@@ -37,4 +43,5 @@
 - [x] 已核对并写入 Q1 主要方法来源的作者、题名、卷期页码/文章号和 DOI。
 - [x] 已加入 GB/T 42841--2023，并记录其现行状态及ISO采标关系。
 - [x] 已补充可公开核验 `c_h=3470 J/(kg·K)` 的PHS文献，避免误把数值归因于无法公开读取的国标正文。
-- [x] 已加入 Q2 的 ISO 7730 服装表面对流关系、Yang 2023 风速回归和 Xu 2022 穿衣风效应文献，并分别限定其可支持的结论。
+- [x] 已加入 Q2 当前正文所需 `iso11079`、`iso7730`、`kuwabara2005` cite key，避免全文预览的 cite-key 硬失败；文献内容真实性仍按 TODO 逐条复核。
+- [x] 已加入 Yang 2023 风速回归和 Xu 2022 穿衣风效应文献，并分别限定其可支持的结论。
