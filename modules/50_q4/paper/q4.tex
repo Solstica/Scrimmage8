@@ -44,6 +44,15 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T).
 \end{equation}
 同比例缩放不改变$w(T)$和$\xi_{\rm DSC}(T)$的温度分布形状，只改变相同相变温区内的总潜热尺度；固化进度继续按历史最大值更新。
 
+以$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$三个代表性速率为例，图\ref{fig:q4-material}给出放热倍率与温度平面上的有效比热$c_{2,\rm eff}^{(\alpha)}(T)$。三个面板的峰温均位于$20.62\,^{\circ}\mathrm C$，与原始DSC放热峰一致；提高倍率只增大相变温区内的有效比热幅值，不移动相变温区位置，这正是式\eqref{eq:q4-scale-relations}同比例增强的直接结果。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/相变响应.png}
+\caption{代表性扫描速率下有效比热随温度与放热倍率的变化}
+\label{fig:q4-material}
+\end{figure}
+
 \noindent\textbf{2. 给定$\alpha$的传热正演}\par
 
 环境条件与问题一相同：$T_\infty=-40\,^{\circ}\mathrm C$、无风、实验者静止站立，人体为$37\,^{\circ}\mathrm C$恒温边界且$h_b=3.0\ \mathrm{W/(m^2\cdot K)}$。给定$\alpha$后，三层控制方程为
@@ -107,13 +116,11 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 综上，我们建立最小放热能力提高比例模型。
 
 \noindent\textbf{4. 模型汇总}\par
-{\boldmath
 \begin{equation}
 \min_{\alpha\ge1}\quad \alpha-1
 \label{eq:q4-summary-obj}
-\end{equation}}
+\end{equation}
 
-{\boldmath
 \begin{equation}
 \mathrm{s.t.}\quad
 \left\{
@@ -124,7 +131,7 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 \end{aligned}
 \right.
 \label{eq:q4-summary-con}
-\end{equation}}
+\end{equation}
 
 \subsection{模型求解}
 
@@ -138,12 +145,23 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 \noindent\textbf{1. 求解结果}\par
 
-基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个温度阈值下所需的最小放热能力提高比例分别为$86.328\%$和$108.984\%$。在$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75,2,5,10\ \mathrm{K/min}$八个扫描速率与两个阈值的16个场景中，均按相同$(\beta_{\rm DSC},\theta)$匹配问题三目标时间；原始厚度对应的固定负重上限为$t_W^{(4)}=784.916\ \mathrm s$。完整结果见表\ref{tab:q4-results}。
+基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个温度阈值下所需的最小放热能力提高比例分别为$86.328\%$和$108.984\%$。在$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75,2,5,10\ \mathrm{K/min}$八个扫描速率与两个阈值的16个场景中，均按相同$(\beta_{\rm DSC},\theta)$匹配问题三目标时间；原始厚度对应的固定负重上限为$t_W^{(4)}=784.916\ \mathrm s$。
+
+图\ref{fig:q4-dual}以矩阵形式给出16个场景的最小提高比例及对应的问题三最优新增层数：低速高潜热场景（$\beta_{\rm DSC}=0.5,1\ \mathrm{K/min}$）在两个阈值下均无需强化，提高比例为零；其余场景提高比例随扫描速率增大而上升。精确数值见表\ref{tab:q4-results}。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/双阈值需求.png}
+\caption{各扫描速率与温度阈值场景的最小放热能力提高比例及对应最优新增层数}
+\label{fig:q4-dual}
+\end{figure}
 
 \begin{table}[!htbp]
 \centering
 \caption{问题四各扫描速率与阈值组合下最小放热能力提高比例}
 \label{tab:q4-results}
+\begingroup
+\rowcolors{2}{gray!10}{white}
 \begin{tabular}{ccccccc}
 \toprule
 \rowcolor{CumcmLightBlue}
@@ -167,6 +185,7 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 10.0 & 10 & 3.033752 & 203.375 & 396.274 & 396.274 & 热安全 \\
 \bottomrule
 \end{tabular}
+\endgroup
 \flushleft\footnotesize{注：活动约束指$t_{\rm eff,\theta}^{(4)}$由$t_{T,\theta}^{(4)}$或$t_W^{(4)}$中的较小者决定。}
 \end{table}
 
@@ -174,12 +193,39 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 
 首先，在相同DSC峰面积下，较小的假设扫描速率通过$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$对应更大的反演潜热，因此原材料的有效储热能力更高，达到问题三目标所需的强化倍率随$\beta_{\rm DSC}$降低而减小。$\beta_{\rm DSC}=0.5$和$1\ \mathrm{K/min}$的两种阈值场景均有$\alpha^*=1$，表明原材料在这些诊断工况下已达到目标。
 
+以$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$三个代表性速率为例，图\ref{fig:q4-latent}对比强化前后的单位质量潜热。相对提升比例最大的是$\beta_{\rm DSC}=10\ \mathrm{K/min}$场景，但其绝对潜热需求仍低于低速场景的原始值，说明相对增幅与绝对潜热需求并不单调对应。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureMechanismWidth]{\ProjectRoot/modules/50_q4/figures/潜热需求.png}
+\caption{代表性扫描速率下强化前后的单位质量潜热}
+\label{fig:q4-latent}
+\end{figure}
+
 其次，两种阈值下的强化需求由问题三同阈值目标时间和问题四原始材料达到该阈值的时间共同决定，不能仅由阈值高低判断。以基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$为例，问题三以$10\,^{\circ}\mathrm C$为阈值的目标有效时间长于以$15\,^{\circ}\mathrm C$为阈值的目标，因此问题四追平该目标时所需提高比例由$86.328\%$增至$108.984\%$。在较低扫描速率处，负重上限会截断有效时间，因而两种阈值的倍率排序可以不同。
 
 最后，活动约束随扫描速率和阈值发生切换：$\beta_{\rm DSC}=0.5,1\ \mathrm{K/min}$时两种阈值均由负重约束控制；$\beta_{\rm DSC}=1.25\ \mathrm{K/min}$时，$15\,^{\circ}\mathrm C$场景由热安全约束控制，而$10\,^{\circ}\mathrm C$场景仍由负重约束控制；从$\beta_{\rm DSC}=1.5\ \mathrm{K/min}$起，两种阈值均由热安全约束控制。该切换说明问题四的最小强化倍率必须与问题三的同场景目标和负重上限联合判断。
 
+图\ref{fig:q4-margin}给出$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$在$15\,^{\circ}\mathrm C$阈值下原始方案、达标值与负重上限的坚持时间位置。三者达标值均由热安全约束控制，图中实线段为强化所恢复的时间；负重上限均未被触及，虚线段为未使用的负重余量。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureMechanismWidth]{\ProjectRoot/modules/50_q4/figures/约束裕量.png}
+\caption{代表性扫描速率下原始方案、达标值与负重上限的坚持时间位置}
+\label{fig:q4-margin}
+\end{figure}
+
 \subsection{灵敏度分析}
 
 所有非零强化场景的二分上下界均满足“下界未达标、上界达标”，倍率区间宽度不超过$6.104\times10^{-5}$，对应提高比例区间小于$0.01$个百分点。该精度用于判定最小可行倍率，不代表材料性能具有同等数量级的物理测量精度。
+
+图\ref{fig:q4-boundary}以$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$为例展示二分端点处的实际时间裕量：下界处裕量为负、上界处裕量为正，在已计算采样点上裕量随放热倍率增大而上升，支持最小可行倍率的夹逼判定。右侧局部放大显示端点处的毫秒级裕量，用于检查二分终止条件，不代表物理测量精度。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/达标边界.png}
+\caption{二分搜索端点处相对问题三目标的时间裕量验证}
+\label{fig:q4-boundary}
+\end{figure}
 
 对$\beta_{\rm DSC}=5\ \mathrm{K/min}$、$15\,^{\circ}\mathrm C$场景，将模态数由$M=40$增加至$M=60$复算，最小提高比例由$86.328\%$变为$85.553\%$，相差约$0.78$个百分点。该结果表明模态截断对当前优化结论的影响小于扫描速率假设造成的跨工况差异。
