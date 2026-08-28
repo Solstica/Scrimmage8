@@ -14,6 +14,16 @@
 \end{figure}
 \FloatBarrier
 
+图\ref{fig:q2-flow}给出问题二建模与求解的总体流程：先分别确定外侧有风对流系数与人体侧换热参数并建立三层传热模型，再通过微小时间段拓展分离变量法推进求解，最后对阈值穿越时刻做线性插值并比较不同外对流相关式的敏感性。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureFlowWidth]{\ProjectRoot/modules/30_q2/figures/q2_flow.png}
+\caption{问题二建模与求解总体流程。}
+\label{fig:q2-flow}
+\end{figure}
+\FloatBarrier
+
 \subsection{预备工作}
 
 \noindent\textbf{1. 外表面对流系数确定}\par
