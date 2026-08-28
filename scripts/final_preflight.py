@@ -87,7 +87,8 @@ def strip_literal_environments(text: str) -> str:
     return text
 
 
-def project_assets(text: str):
+def paper_assets(text: str):
+    """Yield active includegraphics/lstinputlisting/input targets from TeX."""
     text = strip_literal_environments(text)
     patterns = (
         ("graphics", re.compile(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", re.S)),
@@ -96,8 +97,7 @@ def project_assets(text: str):
     )
     for kind, pat in patterns:
         for raw in pat.findall(text):
-            if raw.strip().startswith(r"\ProjectRoot/"):
-                yield kind, raw.strip()
+            yield kind, raw.strip()
 
 
 def main() -> None:
@@ -117,6 +117,12 @@ def main() -> None:
         r"\setCJKmainfont",
         r"\renewcommand\section",
         r"\renewcommand{\baselinestretch}",
+    )
+
+    preamble_path = ROOT / "paper/preamble.tex"
+    preamble_text = read(preamble_path) if preamble_path.exists() else ""
+    defined_figure_widths = set(
+        re.findall(r"\\newcommand\{(\\Figure[A-Za-z]+Width)\}", preamble_text)
     )
 
     for p in tex_files():
@@ -173,11 +179,20 @@ def main() -> None:
                 if n >= 200:
                     warns.append(f"{rel}: 第 {idx} 个文字段约 {n} 字，建议分点/分段或用公式组织")
 
-        # 对明确写成 \ProjectRoot/... 的活动资源做静态存在性检查，提前拦截路径拼错。
-        for kind, raw in project_assets(t):
-            target = resolve_project_path(raw, kind)
-            if target is not None and not target.exists():
-                errors.append(f"{rel}: {kind} 资源不存在: {raw}")
+        # 模块正文中的项目资源统一锚定到 \ProjectRoot，避免从 paper/ 编译时相对目录漂移。
+        for kind, raw in paper_assets(t):
+            if p in module_tex and not raw.startswith(r"\ProjectRoot/"):
+                errors.append(f"{rel}: {kind} 使用非 \\ProjectRoot 路径: {raw}")
+                continue
+            if raw.startswith(r"\ProjectRoot/"):
+                target = resolve_project_path(raw, kind)
+                if target is not None and not target.exists():
+                    errors.append(f"{rel}: {kind} 资源不存在: {raw}")
+
+        # 章节只允许使用 paper-shell 中真实定义的公共 Figure*Width 宏。
+        for macro in set(re.findall(r"\\Figure[A-Za-z]+Width", t)):
+            if macro not in defined_figure_widths:
+                errors.append(f"{rel}: 使用了未在 paper/preamble.tex 定义的图宽宏 {macro}")
 
     for p in module_tex:
         t = all_tex[p]
