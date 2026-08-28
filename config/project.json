@@ -1,5 +1,5 @@
 {
-  "project_name": "2026-WHUT-13",
+  "project_name": "2026-WHUT-13-alpha-stress",
   "default_base": "main",
   "integration": {
     "base_branch": "feature/paper-shell",
@@ -76,9 +76,12 @@
     },
     {
       "key": "q4",
-      "branch": "feature/q4",
+      "branch": "stress/alpha-q4-chaos",
       "path": "modules/50_q4",
       "task": "work/tasks/q4.md",
+      "extra_paths": [
+        "config/project.json"
+      ],
       "active": true,
       "merge_order": 80
     },
