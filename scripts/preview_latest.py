@@ -15,6 +15,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 CTRL_MARKER = ".cumcm-preview-controller"
@@ -138,8 +139,24 @@ def legacy_controller_is_safe(path: Path) -> bool:
         return False
 
 
+def remove_tree_with_retries(path: Path, attempts: int = 6) -> None:
+    """非交互删除临时 controller；Windows 文件句柄短暂占用时做有限重试。"""
+    last_error: OSError | None = None
+    for i in range(attempts):
+        try:
+            shutil.rmtree(path)
+            return
+        except FileNotFoundError:
+            return
+        except OSError as exc:
+            last_error = exc
+            if i + 1 < attempts:
+                time.sleep(0.20 * (i + 1))
+    raise RuntimeError(f"无法删除临时 preview controller：{path}\nlast error: {last_error}")
+
+
 def clean_controller(path: Path) -> None:
-    """回收 preview controller，并兼容旧版无 marker 的安全临时 worktree。"""
+    """回收 preview controller；避免 Git for Windows 在删除失败时进入交互式重试提示。"""
     exists = path.exists()
     is_registered = registered(path)
     marker = path / CTRL_MARKER
@@ -147,9 +164,7 @@ def clean_controller(path: Path) -> None:
     if exists and not marker.exists():
         if is_registered and legacy_controller_is_safe(path):
             print(f"[INFO] 回收旧版无标记 preview controller：{path}")
-            run(["git", "worktree", "remove", "--force", str(path)], check=False)
-            if path.exists():
-                shutil.rmtree(path)
+            remove_tree_with_retries(path)
             run(["git", "worktree", "prune"], check=False)
             return
         raise SystemExit(
@@ -157,15 +172,17 @@ def clean_controller(path: Path) -> None:
             "该目录未通过旧版 controller 安全识别；请人工确认后处理。"
         )
 
-    if is_registered:
-        run(["git", "worktree", "remove", "--force", str(path)], check=False)
-
-    if path.exists():
+    # 标记明确的 controller 不再调用 `git worktree remove` 直接递归删除。
+    # Git for Windows 在目录被杀毒软件/索引器短暂占用时会进入
+    # "Should I try again? (y/n)" 交互，导致 git paper-merge 看似挂起。
+    # 先由 Python 非交互重试删除目录，再用 prune 回收 worktree 元数据。
+    if exists:
         if not marker.exists():
-            raise SystemExit(f"controller 清理后标记丢失，拒绝继续删除：{path}")
-        shutil.rmtree(path)
+            raise SystemExit(f"controller 标记丢失，拒绝继续删除：{path}")
+        remove_tree_with_retries(path)
 
-    run(["git", "worktree", "prune"], check=False)
+    if is_registered or not path.exists():
+        run(["git", "worktree", "prune"], check=False)
 
 
 def main() -> None:
