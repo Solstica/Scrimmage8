@@ -4,22 +4,44 @@
 
 \begin{table}[H]
     \centering
-    \caption{主要符号及单位示例}
+    \caption{主要符号及单位}
     \label{tab:notation-demo}
     \begingroup
     \setlength{\extrarowheight}{2pt}
+    \rowcolors{2}{gray!10}{white}
     \begin{tabularx}{0.97\textwidth}{
-        >{\centering\arraybackslash}p{3.0cm}
+        >{\centering\arraybackslash}p{2.8cm}
         >{\centering\arraybackslash}X
         >{\centering\arraybackslash}p{2.5cm}}
         \toprule
         \rowcolor{CumcmLightBlue}
         \textbf{符号} & \textbf{含义} & \textbf{单位} \\
         \midrule
-        $x_i$ & 第$i$个观测对象或自变量 & 按题意填写 \\
-        $y_i$ & 第$i$个观测值或响应变量 & 按题意填写 \\
-        $\boldsymbol\theta$ & 待估参数向量 & --- \\
-        $J(\boldsymbol\theta)$ & 目标函数或损失函数 & --- \\
+        $x$ & 厚度方向坐标 & m \\
+        $t$ & 时间 & s \\
+        $T_i(x,t)$ & 第$i$层衣料的温度分布 & $^\circ$C \\
+        $\rho_i$ & 第$i$层衣料的密度 & kg/m$^3$ \\
+        $c_i$ & 第$i$层衣料的比热容 & J/(kg$\cdot$K) \\
+        $k_i$ & 第$i$层衣料的导热系数 & W/(m$\cdot$K) \\
+        $d_i$ & 第$i$层衣料的厚度 & m \\
+        $L$ & 三层衣料总厚度 & m \\
+        $T_b$ & 人体恒定温度 & $^\circ$C \\
+        $T_\infty$ & 环境温度 & $^\circ$C \\
+        $T_{\mathrm{in}}(t)$ & 贴身侧温度（$T_1(0,t)$） & $^\circ$C \\
+        $p(T)$ & 基线校正后的DSC放热功率 & W/kg \\
+        $A_{\mathrm{DSC}}$ & DSC校正峰面积 & W$\cdot$K/kg \\
+        $\xi_{\mathrm{DSC}}(T)$ & 由DSC数据定义的相对固化进度 & --- \\
+        $L_{\mathrm{pcm}}$ & 功能层单位质量相变潜热 & kJ/kg \\
+        $c_{2,\mathrm{eff}}(T)$ & 功能层有效比热容 & J/(kg$\cdot$K) \\
+        $\beta_{\mathrm{DSC}}$ & DSC扫描速率假设 & K/min \\
+        $h_b$ & 人体侧对流换热系数 & W/(m$^2\cdot$K) \\
+        $h_e$ & 服装外表面对流换热系数 & W/(m$^2\cdot$K) \\
+        $t_{15},t_{10}$ & 贴身侧温度首次降至$15^\circ$C、$10^\circ$C的时刻 & s \\
+        $n$ & 新增最外层涂层数 & 层 \\
+        $t_W(n)$ & 负重约束决定的站立时间 & s \\
+        $t_{\mathrm{eff}}$ & 有效持续时间（热安全与负重约束的较小者） & s \\
+        $\alpha$ & 功能层放热能力倍率 & --- \\
+        $r_{\min}$ & 最小放热能力提高比例 & \% \\
         \bottomrule
     \end{tabularx}
     \endgroup
