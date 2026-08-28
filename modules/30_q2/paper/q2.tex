@@ -4,6 +4,16 @@
 
 问题二在问题一的基础上增加$3\ \mathrm{m/s}$外部风速，并将实验者状态由静止站立改为轻微运动。三层材料的几何尺寸和热物性保持不变，中间功能层继续采用问题一的有限、不可逆相变模型，人体按附件测试条件保持$37\,^{\circ}\mathrm C$。评价温度仍取贴身侧$T_{\rm in}(t)=T_1(0,t)$，因此本问的关键在于确定有风条件下的外侧换热边界和轻微运动条件下的人体侧换热参数，并据此重新求解瞬态温度场与返回室内时间。
 
+图\ref{fig:q2-scenario}示意本问的物理场景与建模要素：$37\,^{\circ}\mathrm C$恒温热源经人体侧对流边界连接三层织物结构，中间功能层由有限不可逆相变材料承担潜热蓄放；模型外侧面向$3\ \mathrm{m/s}$冷风与$-40\,^{\circ}\mathrm C$环境，评价量取内层织物贴身侧温度$T_1(0,t)$首次降至$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$的时刻。后续各节依据该结构建立三层传热系统与两组对流边界。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureMechanismWidth]{\ProjectRoot/modules/30_q2/figures/示意图2.jpg}
+\caption{问题二物理场景与三层防护结构示意。人体恒温源、相变功能层、内外两侧对流边界及评价温度$T_1(0,t)$的位置关系。}
+\label{fig:q2-scenario}
+\end{figure}
+\FloatBarrier
+
 \subsection{预备工作}
 
 \noindent\textbf{1. 外表面对流系数确定}\par
