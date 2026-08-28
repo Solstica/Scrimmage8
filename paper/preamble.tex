@@ -30,15 +30,44 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 
-% ---------- fonts: Windows competition machine first, portable fallback second ----------
+% ---------- fonts: English TNR; Chinese SimSun regular + FandolSong bold; bundled fallback ----------
 \IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
 \IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{TeX Gyre Heros}}
 \IfFontExistsTF{SimSun}{%
-  \setCJKmainfont{SimSun}[BoldFont=FandolSong-Bold.otf,ItalicFont=SimSun]
-  \setCJKfamilyfont{zhsong}{SimSun}[BoldFont=FandolSong-Bold.otf,ItalicFont=SimSun]
+  \IfFileExists{\ProjectRoot/paper/fonts/FandolSong-Bold.otf}{%
+    \setCJKmainfont{SimSun}[
+      BoldFont=FandolSong-Bold.otf,
+      BoldFeatures={Path={\ProjectRoot/paper/fonts/}},
+      ItalicFont=SimSun
+    ]
+    \setCJKfamilyfont{zhsong}{SimSun}[
+      BoldFont=FandolSong-Bold.otf,
+      BoldFeatures={Path={\ProjectRoot/paper/fonts/}},
+      ItalicFont=SimSun
+    ]
+  }{%
+    \setCJKmainfont{SimSun}[BoldFont=FandolSong-Bold,ItalicFont=SimSun]
+    \setCJKfamilyfont{zhsong}{SimSun}[BoldFont=FandolSong-Bold,ItalicFont=SimSun]
+  }%
 }{%
-  \setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold.otf]
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[BoldFont=FandolSong-Bold.otf]
+  \IfFileExists{\ProjectRoot/paper/fonts/FandolSong-Regular.otf}{%
+    \IfFileExists{\ProjectRoot/paper/fonts/FandolSong-Bold.otf}{%
+      \setCJKmainfont{FandolSong-Regular.otf}[
+        Path={\ProjectRoot/paper/fonts/},
+        BoldFont=FandolSong-Bold.otf
+      ]
+      \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[
+        Path={\ProjectRoot/paper/fonts/},
+        BoldFont=FandolSong-Bold.otf
+      ]
+    }{%
+      \setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+      \setCJKfamilyfont{zhsong}{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+    }%
+  }{%
+    \setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+    \setCJKfamilyfont{zhsong}{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+  }%
 }
 \AtBeginDocument{\zihao{-4}\songti}
 
