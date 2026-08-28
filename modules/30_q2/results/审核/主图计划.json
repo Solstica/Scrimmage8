@@ -1,0 +1,15 @@
+{
+  "model_id": "WHUT13-Q2-THERMAL",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "final_method": "复用已核对的q2.solve_case，只重导出ISO基准温度历程",
+  "key_parameters": [
+    {"name": "外对流系数", "value": 18.46, "source_type": "modeler", "source_ref": "work/reviews/q2_20260827.md", "affects_feasible_region": false},
+    {"name": "扫描速率", "value": 5, "source_type": "modeler", "source_ref": "Q1/Q2共同基准假设", "affects_feasible_region": false},
+    {"name": "步长/模态/积分点", "value": [0.25, 40, 160], "source_type": "numerical", "source_ref": "code/外对流核算.py 已核对设置", "affects_feasible_region": false}
+  ],
+  "approximations": [{"name": "沿用模态截断、冻结有效比热及阈值线性插值", "approved": true, "source_type": "modeler", "source": "继承已确认的Q1/Q2模态实现"}],
+  "search_space_changes": [],
+  "added_methods": [],
+  "model_semantic_changes": [],
+  "outputs": ["主模型历程.json；仅时间、贴身侧温度和两个阈值事件"]
+}

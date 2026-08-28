@@ -1,0 +1,12 @@
+{
+  "model_id": "WHUT13-Q2-THERMAL",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "status": "APPROVED",
+  "approval_scope": "建模方向与数值工况已确认；不代表整问终稿冻结",
+  "source": "work/reviews/q2_20260827.md；code/外对流核算.py；Q2-HCONV-SENS-20260827",
+  "objective_or_outputs": ["ISO 主模型、扫描速率5 K/min的贴身侧温度历程和15/10℃阈值"],
+  "equations_or_objective": ["复用 q2.solve_case 的三层瞬态导热、有限不可逆相变与界面连续方程"],
+  "initial_or_boundary_conditions": ["衣料初温37℃，人体恒温37℃，环境-40℃", "人体侧h_b=4，外侧h_e=18.46 W/(m²·K)"],
+  "data_scope": ["附件1 Sheet1，端点线性DSC基线，L=60*area/5"],
+  "forbidden_silent_changes": ["不使用PMV默认外边界", "不改阈值变量，不增加人体热容节点或代谢热", "不平滑、外推或从阈值点拟合温度历程"]
+}

@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-THERMAL",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "command": [
+    "D:/python3.12.7/python.exe",
+    "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\降温数据.py",
+    "output/build/主结果导出/ISO_20260828_01",
+    "D:/最后一次练习赛-worktrees/q1/data/raw/附件1 放热能力数据.xlsx"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q2",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-28T02:38:47.663827+00:00",
+  "finished_at": "2026-08-28T02:38:48.692213+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\降温数据.py",
+      "size": 1039,
+      "sha256": "eca15d0393425d0b3e6d0fba863f3a5977aa14621e9c98091751dd2f9720c67a"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\code\\q2.py",
+      "size": 10659,
+      "sha256": "6c895d900fc5ad2870cb7b050be36e874481e09a7ee0287b33f087a4ad2d3ca4"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\data\\raw\\附件1 放热能力数据.xlsx",
+      "size": 17180,
+      "sha256": "739a3abfbb3c9b35e584b023e99f7cb5a01a68158f078309ef59a2f4304380b2"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\output\\build\\主结果导出\\ISO_20260828_01\\主模型历程.json",
+      "size": 25274,
+      "sha256": "f194b62e8e96cce9c9d88c72779ab66d8a7d94caaa2a07267689c92419224c66"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "ISO: t15=103.491584734214 s, t10=115.665766347209 s\n历程 464 点，终点 115.75 s，热流残差 1.36e-12\n",
+  "stderr_tail": ""
+}

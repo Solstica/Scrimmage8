@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "model_id": "WHUT13-Q2-PLOT-DATA",
+  "model_version": "91d96f4+Q1-3a1982f",
+  "command": [
+    "C:/Users/rog/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "D:\\最后一次练习赛-worktrees\\q2\\output\\build\\Origin表格\\数据整理.mjs",
+    "主结果",
+    "D:/最后一次练习赛-worktrees/q1",
+    "output/build/主结果导出/表格_20260828_01"
+  ],
+  "cwd": "D:\\最后一次练习赛-worktrees\\q2",
+  "returncode": 0,
+  "runner_role": "external_audit_wrapper",
+  "participant_code_integration_required": false,
+  "started_at": "2026-08-28T02:40:28.270502+00:00",
+  "finished_at": "2026-08-28T02:40:28.769606+00:00",
+  "source_files": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\output\\build\\Origin表格\\数据整理.mjs",
+      "size": 8307,
+      "sha256": "4b2f8b86de380deca2691d7531c2dc9f0db2b33d39654b3f94f0cd598a35468e"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results\\主模型历程.json",
+      "size": 25274,
+      "sha256": "f194b62e8e96cce9c9d88c72779ab66d8a7d94caaa2a07267689c92419224c66"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results\\外对流核算.csv",
+      "size": 1861,
+      "sha256": "e0710b79200c306e88097a34209428706eb5af4ea1c969266cfe46bb4af815d8"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\modules\\30_q2\\results\\registry.csv",
+      "size": 1826,
+      "sha256": "2b02405766a7324ed3c37e7fe3e70aa35759a633887c941fa2664ff75fa67511"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\Q1_FINAL\\01_正式结果.csv",
+      "size": 430,
+      "sha256": "54d836d53aa3c45232c0b921f27905f4e37767a6ef3df52c10bcc65c937edb48"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q1\\modules\\20_q1\\results\\registry.csv",
+      "size": 352,
+      "sha256": "1d9103395f7d115047eb678011af8106a17d67ebcdc28a85d05dd5dec05d5fde"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\output\\build\\主结果导出\\表格_20260828_01\\降温过程.csv",
+      "size": 12461,
+      "sha256": "3b959e447639b3ac8f1b71d1139eabcf86e8b1078d7e2b107380474e2827064c"
+    },
+    {
+      "path": "D:\\最后一次练习赛-worktrees\\q2\\output\\build\\主结果导出\\表格_20260828_01\\两问对比.csv",
+      "size": 535,
+      "sha256": "e65f308ad6725c40869de947ce77d46cfdbf4239aa87abab21bedf38b6153575"
+    }
+  ],
+  "missing_outputs": [],
+  "stdout_tail": "{\"kind\":\"table\",\"sheet\":\"降温过程\",\"address\":\"A1:D4\",\"rows\":4,\"cols\":4,\"values\":[[\"时间（s）\",\"贴身侧温度（℃）\",\"阈值时刻（s）\",\"阈值温度（℃）\"],[0,37,103.4915847342144,15],[0.25,36.999999993994805,115.66576634720914,10],[0.5,36.9999992348085,null,null]]}\n{\"kind\":\"table\",\"sheet\":\"两问对比\",\"address\":\"A1:G4\",\"rows\":4,\"cols\":7,\"values\":[[\"扫描速率（K/min）\",\"问题一 t₁₅（s）\",\"问题二 t₁₅（s）\",\"问题一 t₁₀（s）\",\"问题二 t₁₀（s）\",\"t₁₅缩短幅度（%）\",\"t₁₀缩短幅度（%）\"],[2,520.9025878318307,192.02800925434013,558.2067266858874,204.2621942219772,63.13552404229275,63.40742874334456],[5,273.9084019945055,103.4915847342144,311.15808969030354,115.66576634720914,62.21671771270076,62.82733112858111],[10,191.6423419379491,74.03513620319117,228.86375804984027,86.16747506666174,61.368069574539724,62.34988195557953]]}\nPASS：降温过程464点；两问对比3工况；全部阈值、潜热和缩短幅度已核对；未渲染。\n",
+  "stderr_tail": ""
+}
