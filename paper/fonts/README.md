@@ -1,14 +1,16 @@
-# Bundled CJK fallback fonts
+# Bundled CJK fonts
 
-Place these two files here:
+This directory vendors the Fandol Song faces used by the paper shell:
 
-- `FandolSong-Regular.otf`
-- `FandolSong-Bold.otf`
+- `FandolSong-Bold.otf` — the actual bold face for Chinese Song-style text;
+- `FandolSong-Regular.otf` — portable regular fallback only when `SimSun` is unavailable.
 
-The paper preamble uses this order:
+The intended typography is:
 
-1. Windows `SimSun` when available;
-2. the repository-local Fandol OTF files in this directory;
-3. TeX Live's installed Fandol family as a final fallback.
+1. English letters and numbers: `Times New Roman` (fallback: TeX Gyre Termes);
+2. Chinese regular Song-style text: Windows `SimSun` when available;
+3. Chinese `\songti\bfseries`: repository-local `FandolSong-Bold.otf`;
+4. machines without `SimSun`: repository-local FandolSong Regular + Bold;
+5. if repository fonts are absent, TeX Live's installed Fandol family is the final fallback.
 
-This avoids TeX Live/fontconfig differences around `BoldFont=...otf` file-name resolution.
+Keep the upstream Fandol license when redistributing the OTF files.
