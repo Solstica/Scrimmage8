@@ -10,26 +10,26 @@
 \SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
 \SetKw{KwRet}{Return}
 \SetKw{KwCont}{continue}
-\caption{Dual-threshold discrete-thickness enumeration algorithm}
+\caption{双阈值离散厚度枚举算法}
 \label{alg:q3-enumeration}
-\KwIn{DSC scan rate $\beta_{\mathrm{DSC}}$, exothermic curve $(T,p(T))$, Q1 calibrated model parameters}
-\KwInit{Candidate set $\mathcal N=\{0,1,2,3\}$, time step $\Delta t=0.25\ \mathrm{s}$, mode number $M=40$}
-\KwOut{For each $n\in\mathcal N$: $t_{15}(n),t_{10}(n),t_W(n),t_{\mathrm{eff},15}(n),t_{\mathrm{eff},10}(n)$; optimal layer counts $n_{15}^*$, $n_{10}^*$}
+\KwIn{DSC扫描速率$\beta_{\rm DSC}$、放热曲线$(T,p(T))$及问题一校准后的传热模型参数}
+\KwInit{候选集合$\mathcal N=\{0,1,2,3\}$，时间步$\Delta t=0.25\ \mathrm{s}$，模态数$M=40$}
+\KwOut{各$n\in\mathcal N$的$t_{15}(n),t_{10}(n),t_W(n),t_{\rm eff,15}(n),t_{\rm eff,10}(n)$及最优层数$n_{15}^*,n_{10}^*$}
 
-Compute $d_3(n)=0.3(1+n)\times10^{-3}\ \mathrm{m}$ for each $n\in\mathcal N$\;
-Compute clothing mass $m_c(n)=A(\rho_1d_1+\rho_2d_2+\rho_3d_3(n))$\;
-Compute weight-limit time $t_W(n)=20[40-m_c(n)]$\;
+对每个$n\in\mathcal N$计算$d_3(n)=0.3(1+n)\times10^{-3}\ \mathrm{m}$\;
+计算服装质量$m_c(n)=A(\rho_1d_1+\rho_2d_2+\rho_3d_3(n))$\;
+计算负重限制时间$t_W(n)=20[40-m_c(n)]$\;
 \For{each $n\in\mathcal N$}{
-  Initialize temperature field to $37\,^\circ\mathrm{C}$ and irreversible phase-change progress $\xi\gets0$\;
+  初始化温度场为$37\,^\circ\mathrm{C}$，不可逆相变进度$\xi\leftarrow0$\;
   \While{$T_1(0,t)>10\,^\circ\mathrm{C}$ and $t<3600\ \mathrm{s}$}{
-    Update convective coefficient $h\gets2.38\left(T_3(L,t)+40\right)^{1.25}$\;
-    Evaluate effective heat capacity $c_{2,\mathrm{eff}}$ from DSC data and current $\xi$\;
-    Advance modal solution by one implicit step; update modal coefficients and mean temperatures\;
-    $t\gets t+\Delta t$\;
+    更新外侧自然对流边界$-k_3T_{3,x}=2.38[T_3(L,t)+40]^{1.25}$\;
+    由DSC数据与当前$\xi$计算功能层有效比热$c_{2,\rm eff}$\;
+    推进一个时间步的模态解，并更新模态系数、平均温度和相变进度\;
+    $t\leftarrow t+\Delta t$\;
   }
-  Interpolate $t_{15}(n)$ and $t_{10}(n)$ as the first times $T_1(0,t)$ reaches $15\,^\circ\mathrm{C}$ and $10\,^\circ\mathrm{C}$\;
-  Compute $t_{\mathrm{eff},\theta}(n)=\min\{t_\theta(n),t_W(n)\}$, $\theta\in\{15,10\}$\;
+  插值得到$T_1(0,t)$首次达到$15\,^\circ\mathrm{C}$与$10\,^\circ\mathrm{C}$的时刻$t_{15}(n),t_{10}(n)$\;
+  计算$t_{\rm eff,\theta}(n)=\min\{t_\theta(n),t_W(n)\}$，$\theta\in\{15,10\}$\;
 }
-Select $n_\theta^*=\arg\max_{n\in\mathcal N} t_{\mathrm{eff},\theta}(n)$ for $\theta\in\{15,10\}$\;
-\KwRet $n_{15}^*$, $n_{10}^*$, $d_3(n_\theta^*)$, $t_{\mathrm{eff},15}^*$, $t_{\mathrm{eff},10}^*$, full candidate table\;
+对$\theta\in\{15,10\}$选择$n_\theta^*=\arg\max_{n\in\mathcal N}t_{\rm eff,\theta}(n)$\;
+\KwRet{$n_{15}^*,n_{10}^*,d_3(n_\theta^*),t_{\rm eff,15}^*,t_{\rm eff,10}^*$及候选方案结果}\;
 \end{algorithm}
