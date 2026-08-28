@@ -138,6 +138,11 @@ def main() -> None:
             errors.append(f"{rel}: 发现不存在的 TeX 命令 \\beginingroup，应为 \\begingroup")
         if re.search(r"(?m)^\s*\\\\begin\{", t):
             errors.append(f"{rel}: 发现行首双反斜杠 \\\\begin{{...}}，可能导致 There's no line here to end")
+        if r"\SetKwWhile" in t:
+            errors.append(
+                f"{rel}: algorithm2e 不支持 \\SetKwWhile；自定义 while 请使用 "
+                r"\SetKwFor{While}{while}{do}{end while}"
+            )
 
         for token in ("??", "[?]", "TODO", "FIXME"):
             if token in t:
