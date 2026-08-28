@@ -123,7 +123,7 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 在每轮二分中取$\alpha_M=(\alpha_L+\alpha_U)/2$，将功能层有效比热更新为$c_{2,\rm eff}^{n,(\alpha_M)}=c_2+\alpha_ML_{\rm pcm}w(\bar T_2^n)$，相应热扩散率为$k_2/[\rho_2c_{2,\rm eff}^{n,(\alpha_M)}]$，再调用问题一传热正演模型求$t_{\rm eff,\theta}^{(4)}(\alpha_M)$。若中点达到目标，则更新上界；否则更新下界。当$\alpha_U-\alpha_L\le\varepsilon_\alpha$时取$\alpha^*=\alpha_U$。完整步骤见算法\ref{alg:q4-bisection}。
 
-\input{modules/50_q4/paper/q4_algorithm.tex}
+\input{\ProjectRoot/modules/50_q4/paper/q4_algorithm.tex}
 
 \subsection{求解结果与分析}
 
