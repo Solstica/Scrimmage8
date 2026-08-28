@@ -15,6 +15,15 @@
 
 附件明确规定测试时假设人体温度保持$37\,^{\circ}\mathrm C$，因此本问将人体视为恒温热源。题目给出的$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$阈值用于评价人体受冷程度；在人体本体保持$37\,^{\circ}\mathrm C$的试验假设下，以内层织物贴近人体一侧的温度$T_{\rm in}(t)=T_1(0,t)$作为人体表面所处接触界面的等效评价温度。人体--织物之间的空气对流作用于该界面，$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$阈值直接施加于该界面温度$T_{\rm in}(t)$上。
 
+第一问的整体求解流程见图\ref{fig:q1-flow}：由附件DSC数据构造固化进度并据此得到有效比热，在人体恒温与服装外表面自然对流边界下，对微小时间段采用拓展分离变量法推进三层温度场并更新界面斜率，直至贴身侧温度首次降至阈值后插值输出$t_{15},t_{10}$。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/q1_flow.png}
+\caption{第一问求解流程}
+\label{fig:q1-flow}
+\end{figure}
+
 \subsection{预备工作}
 
 \noindent\textbf{1. 几何与材料参数}\par
@@ -185,15 +194,6 @@ h_e(t)=2.38\bigl[T_3(L,t)-T_\infty\bigr]^{0.25}.
 
 \subsection{模型求解}
 
-第一问的整体求解流程见图\ref{fig:q1-flow}：由附件DSC数据构造固化进度并据此得到有效比热，在人体恒温与服装外表面自然对流边界下，对微小时间段采用拓展分离变量法推进三层温度场并更新界面斜率，直至贴身侧温度首次降至阈值后插值输出$t_{15},t_{10}$。
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/q1_flow.png}
-\caption{第一问求解流程}
-\label{fig:q1-flow}
-\end{figure}
-
 \noindent\textbf{1. 微小时间段拓展分离变量方法}\par
 
 沿用层合材料微小时间段拓展分离变量方法\cite{li2018extended,li2021protective}。将时间轴划分为$t_n\le t\le t_{n+1}$，令局部时间$\tau=t-t_n$、$\Delta t=t_{n+1}-t_n$。在一个足够小的时间段内，将两个材料界面温度近似为
@@ -346,8 +346,11 @@ k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t).
 \centering
 \caption{不同扫描速率假设下的潜热与阈值时间}
 \label{tab:q1-time-result}
+\begingroup
+\rowcolors{2}{gray!10}{white}
 \begin{tabular}{cccc}
 \toprule
+\rowcolor{CumcmLightBlue}
 $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ \\
 \midrule
 2  & 611.564 & 520.903 & 558.207 \\
@@ -355,6 +358,7 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 10 & 122.313 & 191.642 & 228.864 \\
 \bottomrule
 \end{tabular}
+\endgroup
 \end{table}
 
 基准工况的温度场、温度响应与固化进度见图\ref{fig:q1-thermal-solidification}。左图给出沿厚度方向的温度演化，白色虚线为两个材料界面，白色实线为$15/20/25\,^{\circ}\mathrm C$等温线，展示各层温度梯度与内外温差；右上给出贴身侧、功能层均温与外表面温度的时间响应，标出$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的首次到达时刻；右下给出功能层固化进度，黑色竖虚线为首次固化完成的网格时刻，约在$268.5\ \mathrm{s}$。
@@ -393,8 +397,11 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 \centering
 \caption{衣料初始温度对阈值时间的影响}
 \label{tab:q1-initial-temperature}
-\begin{tabular}{cccc}
+\begingroup
+\rowcolors{2}{gray!10}{white}
+\begin{tabular}{ccccc}
 \toprule
+\rowcolor{CumcmLightBlue}
 $T_0\,(^{\circ}\mathrm C)$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ & 相对$37\,^{\circ}\mathrm C$变化（$t_{15}/t_{10}$） \\
 \midrule
 27 & 236.644 & 273.894 & $-13.60\%/-11.98\%$ \\
@@ -403,6 +410,7 @@ $T_0\,(^{\circ}\mathrm C)$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ & �
 37 & 273.908 & 311.158 & $0.00\%/0.00\%$ \\
 \bottomrule
 \end{tabular}
+\endgroup
 \end{table}
 
 预冷工况下，人体恒温边界先向内层织物供热，使$T_{\rm in}$在最初约$2$--$3\ \mathrm{s}$内轻微回升，随后外界散热占主导并持续下降。衣料初温由$37\,^{\circ}\mathrm C$降至$27\,^{\circ}\mathrm C$时，$t_{15}$由$273.908\ \mathrm{s}$缩短为$236.644\ \mathrm{s}$，$t_{10}$由$311.158\ \mathrm{s}$缩短为$273.894\ \mathrm{s}$，相对降幅分别为$13.60\%$和$11.98\%$。因此实验前衣料温度是短时坚持时间的重要输入；$T_0=37\,^{\circ}\mathrm C$是基准假设，其结果不应解释为对任意服装预热状态均适用，也不将$T_0=37\,^{\circ}\mathrm C$表述为附件事实。
