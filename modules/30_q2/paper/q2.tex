@@ -28,7 +28,7 @@
 
 \noindent\textbf{1. 外表面对流系数确定}\par
 
-本问以冷环境标准ISO 11079:2007\cite{iso11079}的边界空气层热阻关系确定主外侧换热系数。对环境空气速度$v_a$，有
+本问采用冷环境标准ISO 11079:2007\cite{iso11079}的边界空气层热阻关系，并在题设忽略辐射、等有效面积的简化下换算为等效外侧换热系数。对环境空气速度$v_a$，有
 \begin{equation}
 I_{a,r}=0.092\exp(-0.15v_a)-0.0045\ \mathrm{(m^2\cdot K)/W}.
 \label{eq:q2-iar}
@@ -38,20 +38,20 @@ I_{a,r}=0.092\exp(-0.15v_a)-0.0045\ \mathrm{(m^2\cdot K)/W}.
 h_e=18.46\ \mathrm{W/(m^2\cdot K)}.
 \label{eq:q2-he-iso}
 \end{equation}
-进入室外瞬间服装与环境最大温差为$77\ \mathrm K$，由附件自然对流关系得到$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，低于上述有风换热系数；随衣表温度下降，自然支路进一步减小，因此主计算采用固定$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。
+进入室外瞬间服装与环境最大温差为$77\ \mathrm K$，由附件自然对流关系得到$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，低于上述有风换热系数；随衣表温度下降，自然支路进一步减小，因此基准计算采用固定$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。
 
 为评估外对流相关式选择对结果的影响，另保留PMV对照关系\cite{iso7730}
 \begin{equation}
 h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\},
 \label{eq:q2-hout-pmv}
 \end{equation}
-以及Kuwabara等\cite{kuwabara2005}的室外风经验关系$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$，仅用于灵敏度对照。
+以及Kuwabara等\cite{kuwabara2005}的室外风经验关系$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$，用于灵敏度对照。
 
 \noindent\textbf{2. 人体侧换热参数确定}\par
 
 附件将轻微运动状态对应的人体--内层织物换热系数给为$h_b=4.0\ \mathrm{W/(m^2\cdot K)}$。人体温度仍取$T_b=37\,^{\circ}\mathrm C$，故人体侧换热边界由该状态参数直接确定。
 
-\subsection{有风轻微运动条件下三层防护服瞬态传热模型}
+\subsection{有风轻微运动条件下的三层非稳态导热模型}
 
 \noindent\textbf{1. 控制方程}\par
 
@@ -88,7 +88,7 @@ L_{\rm pcm}=\frac{60A_{\rm DSC}}{\beta_{\rm DSC}}
 
 \noindent\textbf{3. 环境侧边界}\par
 
-有风主模型采用
+有风基准模型采用
 \begin{equation}
 -k_3T_{3,x}(L,t)=18.46\,[T_3(L,t)-T_\infty]
 =18.46\,[T_3(L,t)+40].
@@ -109,7 +109,7 @@ T_2(x_2,t)&=T_3(x_2,t),& k_2T_{2,x}(x_2,t)&=k_3T_{3,x}(x_2,t).
 \end{equation}
 评价温度定义为$T_{\rm in}(t)=T_1(0,t)$。
 
-综上，我们建立有风轻微运动条件下三层防护服瞬态传热模型。
+综上，我们建立有风轻微运动条件下的三层非稳态导热模型。
 
 \noindent\textbf{5. 模型汇总}\par
 \begin{equation}
@@ -139,17 +139,17 @@ T_2(x_2,t)&=T_3(x_2,t),& k_2T_{2,x}(x_2,t)&=k_3T_{3,x}(x_2,t).
 \end{equation}
 第二层采用Dirichlet--Dirichlet正弦展开，并按当前功能层平均温度和相变进度更新热扩散率$\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$。两处界面段末热流连续条件构成关于$\beta_{12}^n,\beta_{23}^n$的$2\times2$线性方程组，求得界面斜率后推进到下一时间段。
 
-正式计算取$\Delta t=0.25\ \mathrm s$、每层$M=40$个模态和160点Gauss积分；阈值穿越时刻在相邻时间点间线性插值。完整步骤见算法\ref{alg:q2-thermal}。
+计算取$\Delta t=0.25\ \mathrm s$、每层$M=40$个模态和160点Gauss积分；阈值穿越时刻在相邻时间点间线性插值。完整步骤见算法\ref{alg:q2-thermal}。
 
 \input{\ProjectRoot/modules/30_q2/paper/q2_algorithm.tex}
 
 \subsection{求解结果与分析}
 
-基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，主模型得到$t_{15}^{(2)}=103.492\ \mathrm s$、$t_{10}^{(2)}=115.666\ \mathrm s$，因此实验者约在$103.49\ \mathrm s$后应返回室内。三种扫描速率下的主模型结果见表\ref{tab:q2-results-main}和图\ref{fig:q2-cooling}。
+基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，ISO 11079简化边界得到$t_{15}^{(2)}=103.492\ \mathrm s$、$t_{10}^{(2)}=115.666\ \mathrm s$，因此实验者约在$103.49\ \mathrm s$后应返回室内。基准及两组敏感性扫描速率下的结果见表\ref{tab:q2-results-main}和图\ref{fig:q2-cooling}。
 
 \begin{table}[!htbp]
 \centering
-\caption{ISO 11079主外边界下问题二阈值时间}
+\caption{ISO 11079简化边界下问题二阈值时间}
 \label{tab:q2-results-main}
 \begingroup
 \rowcolors{2}{gray!10}{white}
@@ -166,9 +166,9 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \endgroup
 \end{table}
 
-相较问题一同一$\beta_{\rm DSC}=5\ \mathrm{K/min}$工况的$t_{15}=273.908\ \mathrm s$，问题二返回时间明显缩短。该差异由外部有风边界和轻微运动人体侧换热边界共同造成，不将其解释为单一风速因素的独立贡献。
+相较问题一同一$\beta_{\rm DSC}=5\ \mathrm{K/min}$工况的$t_{15}=273.908\ \mathrm s$，问题二返回时间明显缩短，反映外部风致换热与轻微运动引起的人体侧换热增强的共同作用。
 
-图\ref{fig:q2-cooling}给出基准工况下贴身侧温度$T_1(0,t)$随时间的下降过程：温度由初始$37\,^{\circ}\mathrm C$单调降低，首次到达$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的时刻分别对应$t_{15}=103.49\ \mathrm s$、$t_{10}=115.67\ \mathrm s$，其中$t_{15}$为题设返回室内判据。对比图\ref{fig:q2-compare}中两问在各扫描速率下的阈值时间，问题二相对问题一整体提前，且$10\ \mathrm{K/min}$高扫描速率工况下差距更为集中；该对比反映两种题设边界条件的综合差异，不作单一风速因素的因果表述。
+图\ref{fig:q2-cooling}给出基准工况下贴身侧温度$T_1(0,t)$随时间的下降过程：温度由初始$37\,^{\circ}\mathrm C$单调降低，首次到达$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的时刻分别对应$t_{15}=103.49\ \mathrm s$、$t_{10}=115.67\ \mathrm s$，其中$t_{15}$为题设返回室内判据。图\ref{fig:q2-compare}进一步比较两问在各扫描速率下的阈值时间，问题二相对问题一整体提前，体现两种题设边界条件对传热过程的综合影响。
 
 \begin{figure}[!htbp]
 \centering
@@ -198,7 +198,7 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 
 \subsection{灵敏度分析}
 
-外对流相关式是问题二的主要边界不确定来源。表\ref{tab:q2-results-sens}给出ISO 11079主关系、PMV对照关系和Kuwabara经验关系的计算结果，图\ref{fig:q2-boundary-sensitivity}展示三种关系在各扫描速率下的相对变化。
+外对流相关式是问题二的主要边界不确定来源。表\ref{tab:q2-results-sens}给出ISO 11079简化关系、PMV对照关系和Kuwabara经验关系的计算结果，图\ref{fig:q2-boundary-sensitivity}展示三种关系在各扫描速率下的相对变化。
 
 \begin{table}[!htbp]
 \centering
@@ -225,9 +225,9 @@ Kuwabara经验关系 & 21.95 & 10 & 63.977 & 74.242 \\
 \endgroup
 \end{table}
 
-以ISO 11079主关系为基准，PMV对照关系对应的阈值时间约提前$10.2\%$--$10.8\%$，Kuwabara经验关系约提前$13.6\%$--$14.4\%$。三种关系在相同DSC工况下的最大绝对差异约为$28\ \mathrm s$，说明外侧换热相关式的选择会对返回时间产生实质影响。
+以ISO 11079简化关系为基准，PMV对照关系对应的阈值时间约提前$10.2\%$--$10.8\%$，Kuwabara经验关系约提前$13.6\%$--$14.4\%$。三种关系在相同DSC工况下的最大绝对差异约为$28\ \mathrm s$，说明外侧换热相关式的选择会对返回时间产生实质影响。
 
-DSC扫描速率同样显著影响绝对时间。在$\beta_{\rm DSC}=2$--$10\ \mathrm{K/min}$范围内，ISO主模型的$t_{15}^{(2)}$由$192.03\ \mathrm s$降至$74.04\ \mathrm s$，因此$\beta_{\rm DSC}=5\ \mathrm{K/min}$只作为基准假设报告，同时保留上述参数敏感性。
+DSC扫描速率同样显著影响绝对时间。在$\beta_{\rm DSC}=2$--$10\ \mathrm{K/min}$范围内，ISO 11079简化关系下的$t_{15}^{(2)}$由$192.03\ \mathrm s$降至$74.04\ \mathrm s$，因此$\beta_{\rm DSC}=5\ \mathrm{K/min}$作为基准假设报告，并保留$2$和$10\ \mathrm{K/min}$两组敏感性结果。
 
 \begin{figure}[!htbp]
 \centering
@@ -239,6 +239,6 @@ DSC扫描速率同样显著影响绝对时间。在$\beta_{\rm DSC}=2$--$10\ \ma
 
 \subsection{数值收敛与复算检验}
 
-以ISO 11079主模型的$\beta_{\rm DSC}=5\ \mathrm{K/min}$为基准，将模态时间步由$0.25\ \mathrm s$减半至$0.125\ \mathrm s$后，$t_{15}$与$t_{10}$分别变化约$0.0127\%$和$0.0154\%$；模态数由40增加至60后，两阈值变化约$0.2843\%$和$0.2776\%$。对三种外对流关系与三组$\beta_{\rm DSC}$组成的9个工况，独立隐式有限体积法与模态结果的阈值偏差均不超过$1.2146\%$；ISO主关系、$5\ \mathrm{K/min}$工况的有限体积时间步和网格加密最大变化为$0.0036\%$。
+以ISO 11079简化关系的$\beta_{\rm DSC}=5\ \mathrm{K/min}$为基准，将模态时间步由$0.25\ \mathrm s$减半至$0.125\ \mathrm s$后，$t_{15}$与$t_{10}$分别变化约$0.0127\%$和$0.0154\%$；模态数由40增加至60后，两阈值变化约$0.2843\%$和$0.2776\%$。对三种外对流关系与三组$\beta_{\rm DSC}$组成的9个工况，独立隐式有限体积法与模态结果的阈值偏差均不超过$1.2146\%$；ISO简化关系、$5\ \mathrm{K/min}$工况的有限体积时间步和网格加密最大变化为$0.0036\%$。
 
-上述检验表明当前离散设置下阈值时间已具有稳定的数值一致性：收敛方向自洽，且独立有限体积复算的阈值偏差远小于不同外对流相关式之间的结果差异。这些结论为数值离散一致性与复算一致性检验，不构成对模型物理适用性或超出当前参数范围外推的实验验证。
+上述检验表明当前离散设置下阈值时间具有稳定的数值一致性，且独立有限体积复算的阈值偏差明显小于不同外对流相关式之间的结果差异。由此可确认当前参数范围内的数值离散稳定性与独立复算一致性，模型的物理适用范围则由题设工况及采用的换热关系共同限定。
