@@ -21,7 +21,7 @@
 
 \noindent\textbf{1. 外表面对流系数}\par
 
-采用ISO 11079:2007\cite{iso11079}的边界空气层热阻关系
+采用近期IREQ冷环境研究对ISO 11079体系边界空气层热阻关系的复核\cite{alfano2025ireq}，取
 \begin{equation}
 I_{a,r}=0.092\exp(-0.15v_a)-0.0045\ \mathrm{(m^2\cdot K)/W}.
 \label{eq:q2-iar}
@@ -33,12 +33,12 @@ h_e=18.46\ \mathrm{W/(m^2\cdot K)}.
 \end{equation}
 进入室外瞬间服装与环境温差最大为$77\ \mathrm K$，由附件自然对流关系得到$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，明显低于上述有风换热系数，因此基准计算取固定$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。
 
-为考察相关式选择的影响，另取PMV对照关系\cite{iso7730}
+为考察相关式选择的影响，另取ISO 7730:2025\cite{iso7730}中的PMV对流换热关系
 \begin{equation}
 h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\},
 \label{eq:q2-hout-pmv}
 \end{equation}
-以及Kuwabara等\cite{kuwabara2005}的经验关系$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$，用于灵敏度对照。
+并保留原计算中的Kuwabara经验关系$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$作为较强换热扰动项。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$。ISO 7730:2025面向中等热环境，故PMV关系仅用于边界相关式敏感性比较，不作为$-40\,^{\circ}\mathrm C$极寒工况的主边界；近期非稳态湍流风热人偶研究也表明，对流换热系数对风场特征具有明显敏感性\cite{zhou2025wind}。
 
 \noindent\textbf{2. 人体侧换热系数}\par
 
