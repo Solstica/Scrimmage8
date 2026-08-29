@@ -19,21 +19,11 @@
 
 \noindent\textbf{1. DSC放热能力同比例增强}\par
 
-问题一已将附件DSC放热峰建立为有限不可逆相变过程。对基线校正后的放热峰$p(T)\ge0$，在固化温区$[T_f,T_s]$上定义归一化相变权重
+沿用问题一的校正放热峰$p(T)$和不可逆固化进度$\xi_{\rm DSC}(T)$，定义归一化相变权重
 \begin{equation}
 w(T)=\frac{p(T)}{\displaystyle\int_{T_f}^{T_s}p(\theta)\,\mathrm d\theta},
 \qquad \int_{T_f}^{T_s}w(T)\,\mathrm dT=1.
 \label{eq:q4-phase-weight}
-\end{equation}
-相对固化进度为
-\begin{equation}
-\xi_{\rm DSC}(T)=
-\begin{cases}
-0,&T\ge T_s,\\[1mm]
-\displaystyle\int_T^{T_s}w(\theta)\,\mathrm d\theta,&T_f<T<T_s,\\[2mm]
-1,&T\le T_f.
-\end{cases}
-\label{eq:q4-xi}
 \end{equation}
 题目要求各温度下放热能力按同一比例提高，因此取
 \begin{equation}
@@ -42,9 +32,9 @@ L_{\rm pcm}^{(\alpha)}=\alpha L_{\rm pcm},\qquad
 c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T).
 \label{eq:q4-scale-relations}
 \end{equation}
-同比例缩放保持$w(T)$和$\xi_{\rm DSC}(T)$的温度分布形状不变，仅改变相变温区内的总潜热尺度；固化进度继续按历史最大值更新。
+同比例强化保持相变温区及固化进度分布不变，只改变总潜热和相应有效比热幅值。
 
-图\ref{fig:q4-material}以温度、放热倍率与有效比热$c_{2,\rm eff}^{(\alpha)}(T)$三者的关系说明同比例增强的作用。主图为温度--倍率--有效比热热图，下方叠加$\alpha=1$、$\alpha=1.863$、$\alpha=2.090$三个代表性求解倍率的温度切片，右侧给出峰温$T=20.622\,^{\circ}\mathrm C$处峰值有效比热随倍率的变化。各切片峰温保持与原始DSC放热峰一致，有效比热峰值随放热倍率增大而提高。
+图\ref{fig:q4-material}展示温度、放热倍率与有效比热之间的关系。各倍率下峰温保持在原DSC放热峰附近，而有效比热峰值随$\alpha$增大而提高。
 
 \begin{figure}[!htbp]
 \centering
@@ -55,7 +45,7 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T).
 
 \noindent\textbf{2. 给定$\alpha$的传热正演}\par
 
-环境条件与问题一相同：$T_\infty=-40\,^{\circ}\mathrm C$、无风、实验者静止站立，人体为$37\,^{\circ}\mathrm C$恒温边界且$h_b=3.0\ \mathrm{W/(m^2\cdot K)}$。给定$\alpha$后，三层控制方程为
+环境条件、初始条件与两侧边界均沿用问题一，三层恢复原始厚度。给定$\alpha$后，仅将功能层有效比热替换为$c_{2,\rm eff}^{(\alpha)}(T)$，即
 \begin{equation}
 \left\{
 \begin{aligned}
@@ -66,38 +56,30 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T).
 \right.
 \label{eq:q4-governing}
 \end{equation}
-人体侧和环境侧边界分别为
+其中人体侧和环境侧边界分别为
 \begin{equation}
 -k_1T_{1,x}(0,t)=3.0[37-T_1(0,t)],\qquad
 -k_3T_{3,x}(L,t)=2.38[T_3(L,t)+40]^{1.25}.
 \label{eq:q4-boundaries}
 \end{equation}
-两处材料界面满足温度和热流连续，三层初始温度均取$37\,^{\circ}\mathrm C$。
 
-\noindent\textbf{3. 坚持时间函数}\par
+\noindent\textbf{3. 有效持续时间}\par
 
-定义贴身侧评价温度$T_{\rm in}^{(\alpha)}(t)=T_1(0,t;\alpha)$。对$\theta\in\{15,10\}\,^{\circ}\mathrm C$，热安全时间定义为
+定义贴身侧评价温度$T_{\rm in}^{(\alpha)}(t)=T_1(0,t;\alpha)$，对$\theta\in\{15,10\}\,^{\circ}\mathrm C$有
 \begin{equation}
-t_{T,\theta}^{(4)}(\alpha)
-=\inf\{t>0:T_{\rm in}^{(\alpha)}(t)\le\theta\}.
-\label{eq:q4-thermal-time}
-\end{equation}
-本问固定原始厚度，因此负重上限$t_W^{(4)}$与$\alpha$无关，实际有效持续时间为
-\begin{equation}
-t_{\rm eff,\theta}^{(4)}(\alpha)
-=\min\{t_{T,\theta}^{(4)}(\alpha),t_W^{(4)}\}.
+t_{T,\theta}^{(4)}(\alpha)=\inf\{t>0:T_{\rm in}^{(\alpha)}(t)\le\theta\},
+\qquad
+t_{\rm eff,\theta}^{(4)}(\alpha)=\min\{t_{T,\theta}^{(4)}(\alpha),t_W^{(4)}\}.
 \label{eq:q4-effective-time}
 \end{equation}
-问题三在同一$(\beta_{\rm DSC},\theta)$场景下的最优有效持续时间记为$t_{3,\theta}^*(\beta_{\rm DSC})$，作为问题四的目标性能。
+原始厚度下$t_W^{(4)}$与$\alpha$无关；问题三同一$(\beta_{\rm DSC},\theta)$场景的最优有效持续时间$t_{3,\theta}^*(\beta_{\rm DSC})$作为目标性能。
 
 \subsection{相变材料热传导参数反问题模型}
 
 \noindent\textbf{1. 决策变量}\par
-
 决策变量为放热能力倍率$\alpha\ge1$。
 
 \noindent\textbf{2. 目标函数}\par
-
 最小化放热能力提高比例：
 \begin{equation}
 \min_{\alpha}\quad \alpha-1.
@@ -105,23 +87,19 @@ t_{\rm eff,\theta}^{(4)}(\alpha)
 \end{equation}
 
 \noindent\textbf{3. 约束条件}\par
-
-对于给定$(\beta_{\rm DSC},\theta)$，强化后的实际有效持续时间不得低于问题三同场景最优值，即
+对于给定$(\beta_{\rm DSC},\theta)$，强化后的有效持续时间需达到问题三同场景最优值：
 \begin{equation}
-t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
-\ge t_{3,\theta}^*(\beta_{\rm DSC}),\qquad \alpha\ge1.
+t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})\ge t_{3,\theta}^*(\beta_{\rm DSC}),\qquad \alpha\ge1.
 \label{eq:q4-time-constraint}
 \end{equation}
 
-
 \noindent\textbf{4. 模型汇总}\par
-综上，我们建立最小放热能力提高比例模型。
+综上，我们建立以最小放热强化率为目标的相变材料热传导参数反问题模型。
 \vspace{-0.3\baselineskip}
 \begin{equation}
 \min_{\alpha\ge1}\quad \alpha-1
 \label{eq:q4-summary-obj}
 \end{equation}
-
 \begin{equation}
 \mathrm{s.t.}\quad
 \left\{
@@ -136,9 +114,9 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 \subsection{模型求解}
 
-设计变量为单变量。对搜索区间进行放热倍率预采样后，计算结果表明$t_{T,\theta}^{(4)}(\alpha)$随$\alpha$单调不减，据此采用“可行性检查 + 上界扩张 + 二分搜索”求最小可行倍率。首先检查固定负重上限是否满足$t_W^{(4)}\ge t_{3,\theta}^*$；随后计算$\alpha=1$的原材料工况，若已满足目标，则直接取$\alpha^*=1$。其余场景从$\alpha_L=1$开始扩张上界$\alpha_U$，直至得到下界不可行、上界可行的夹逼区间。
+对搜索区间进行倍率预采样后，$t_{T,\theta}^{(4)}(\alpha)$随$\alpha$单调不减，因此采用“可行性检查 + 上界扩张 + 二分搜索”反求最小可行倍率。先检验$t_W^{(4)}\ge t_{3,\theta}^*$及$\alpha=1$是否已达标；若需强化，则从$\alpha_L=1$向上扩张$\alpha_U$直至形成不可行—可行区间。
 
-在每轮二分中取$\alpha_M=(\alpha_L+\alpha_U)/2$，将功能层有效比热更新为$c_{2,\rm eff}^{n,(\alpha_M)}=c_2+\alpha_ML_{\rm pcm}w(\bar T_2^n)$，相应热扩散率为$k_2/[\rho_2c_{2,\rm eff}^{n,(\alpha_M)}]$，再调用问题一传热正演模型求$t_{\rm eff,\theta}^{(4)}(\alpha_M)$。若中点达到目标，则更新上界；否则更新下界。当$\alpha_U-\alpha_L\le\varepsilon_\alpha$时取$\alpha^*=\alpha_U$。完整步骤见算法\ref{alg:q4-bisection}。
+二分过程中取$\alpha_M=(\alpha_L+\alpha_U)/2$，按式\eqref{eq:q4-scale-relations}更新功能层有效比热并调用问题一正演模型。若$t_{\rm eff,\theta}^{(4)}(\alpha_M)$达到目标则更新上界，否则更新下界；当$\alpha_U-\alpha_L\le\varepsilon_\alpha$时取$\alpha^*=\alpha_U$。完整步骤见算法\ref{alg:q4-bisection}。
 
 \input{\ProjectRoot/modules/50_q4/paper/q4_algorithm.tex}
 
@@ -146,7 +124,7 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 \noindent\textbf{1. 求解结果}\par
 
-基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个温度阈值对应的最小放热能力提高比例分别为$86.328\%$和$108.984\%$。原始厚度对应的固定负重上限为$t_W^{(4)}=784.916\ \mathrm s$。在$\beta_{\rm DSC}=2$和$10\ \mathrm{K/min}$两组敏感性工况下，所需强化比例随扫描速率变化，结果见表\ref{tab:q4-results}。
+基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个评价阈值对应的最小放热能力提高比例分别为$86.328\%$和$108.984\%$。原始厚度下固定负重上限为$t_W^{(4)}=784.916\ \mathrm s$，基准及两组敏感性结果见表\ref{tab:q4-results}。
 
 \begin{table}[!htbp]
 \centering
@@ -159,31 +137,29 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 \rowcolor{CumcmLightBlue}
 $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\min}$(\%) & $t_T^{(4)}$(s) & $t_{\rm eff}^{(4)}$(s) & 活动约束 \\
 \midrule
-5.0  & 15 & 1.863281 & 86.328 & 416.043 & 416.043 & 热安全 \\
-5.0  & 10 & 2.089844 & 108.984 & 490.645 & 490.645 & 热安全 \\
-2.0  & 15 & 1.437866 & 43.787 & 701.204 & 701.204 & 热安全 \\
-2.0  & 10 & 1.525940 & 52.594 & 774.808 & 774.808 & 热安全 \\
+5.0 & 15 & 1.863281 & 86.328 & 416.043 & 416.043 & 热安全 \\
+5.0 & 10 & 2.089844 & 108.984 & 490.645 & 490.645 & 热安全 \\
+2.0 & 15 & 1.437866 & 43.787 & 701.204 & 701.204 & 热安全 \\
+2.0 & 10 & 1.525940 & 52.594 & 774.808 & 774.808 & 热安全 \\
 10.0 & 15 & 2.572876 & 157.288 & 321.061 & 321.061 & 热安全 \\
 10.0 & 10 & 3.033752 & 203.375 & 396.274 & 396.274 & 热安全 \\
 \bottomrule
 \end{tabular}
 \endgroup
-\flushleft\footnotesize{注：活动约束指$t_{\rm eff,\theta}^{(4)}$由$t_{T,\theta}^{(4)}$或$t_W^{(4)}$中的较小者决定。}
+\flushleft\footnotesize{注：活动约束由$t_{T,\theta}^{(4)}$与$t_W^{(4)}$中的较小者决定。}
 \end{table}
 
 \noindent\textbf{2. 结果分析}\par
 
-基准工况下，问题三以$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$为评价边界时的目标有效持续时间分别为$416.04\ \mathrm s$和$490.64\ \mathrm s$，因此恢复原始厚度后，需要将功能层放热能力分别提高$86.328\%$和$108.984\%$才能达到相同目标。两种阈值下强化需求的差异由问题三目标时间和原始材料达阈时间共同决定。
+基准工况下，为达到问题三的$416.04\ \mathrm s$和$490.64\ \mathrm s$目标持续时间，恢复原始厚度后的功能层放热能力需分别提高$86.328\%$和$108.984\%$。两种阈值下的强化需求差异由目标持续时间与原始材料达阈时间共同决定。
 
-在$\beta_{\rm DSC}=2$和$10\ \mathrm{K/min}$两组敏感性工况下，较小扫描速率对应较大的反演潜热，因此达到同场景目标所需的强化倍率较低；当扫描速率由$2$增至$10\ \mathrm{K/min}$时，两种阈值下的最小提高比例均明显增大。该结果进一步表明DSC扫描速率假设是材料强化需求的重要不确定来源。
+在$2$和$10\ \mathrm{K/min}$敏感性工况下，较小扫描速率对应更大的反演潜热，因此达到同场景目标所需的强化倍率更低。扫描速率由$2$增至$10\ \mathrm{K/min}$时，两种阈值下的最小提高比例均显著增大，说明扫描速率假设是材料强化需求的重要不确定来源。
 
 \subsection{灵敏度分析}
 
 \noindent\textbf{1. 低扫描速率扩展诊断}\par
 
-为诊断低扫描速率、高反演潜热条件下的约束切换，将扫描速率扩展至$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75\ \mathrm{K/min}$。其中$0.5$和$1\ \mathrm{K/min}$两种阈值场景均有$\alpha^*=1$，原材料已达到问题三同场景目标；$1.25\ \mathrm{K/min}$附近两种阈值的活动约束开始分化，自$1.5\ \mathrm{K/min}$起两种阈值均由热安全约束控制。该扩展诊断用于刻画扫描速率缺失对强化需求和活动约束的影响。
-
-图\ref{fig:q4-dual}汇总基准、敏感性及低速扩展诊断场景下的最小提高比例，横轴对应离散计算场景。
+将扫描速率扩展至$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75\ \mathrm{K/min}$。其中$0.5$和$1\ \mathrm{K/min}$时原材料已达到问题三同场景目标；$1.25\ \mathrm{K/min}$附近两种阈值的活动约束开始分化，自$1.5\ \mathrm{K/min}$起均由热安全约束控制。图\ref{fig:q4-dual}给出基准、敏感性及扩展诊断场景下的强化需求。
 
 \begin{figure}[!htbp]
 \centering
@@ -194,6 +170,4 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 
 \noindent\textbf{2. 数值搜索与模态截断}\par
 
-所有非零强化场景的二分上下界均满足“下界未达标、上界达标”，倍率区间宽度不超过$6.104\times10^{-5}$，对应提高比例区间小于$0.01$个百分点。该容差用于控制最小可行倍率的数值搜索精度，材料性能精度仍取决于输入数据及模型参数。
-
-对$\beta_{\rm DSC}=5\ \mathrm{K/min}$、$15\,^{\circ}\mathrm C$场景，将模态数由$M=40$增加至$M=60$复算，最小提高比例由$86.328\%$变为$85.553\%$，相差约$0.78$个百分点。该结果表明模态截断对当前优化结论的影响小于扫描速率假设造成的跨工况差异。
+所有非零强化场景的最终二分区间宽度均不超过$6.104\times10^{-5}$，对应提高比例区间小于$0.01$个百分点。基准$5\ \mathrm{K/min}$、$15\,^{\circ}\mathrm C$场景中，将模态数由$M=40$增至$60$后，最小提高比例由$86.328\%$变为$85.553\%$，相差约$0.78$个百分点。数值搜索与模态截断带来的变化均小于扫描速率假设造成的跨工况差异。
