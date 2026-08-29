@@ -111,9 +111,9 @@ c_{2,\rm eff}(T)=c_2+L_{\rm pcm}\frac{p(T)}{\int_{T_f}^{T_s}p(\theta)\,\mathrm d
 \end{equation}
 定义$T_{\rm in}(t)=T_1(0,t)$，并以其首次达到$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$的时刻作为评价指标。
 
+综上，我们建立基于等效热容法的三层非稳态导热模型。
 
 \noindent\textbf{3. 模型汇总}\par
-综上，我们建立基于等效热容法的三层非稳态导热模型。
 \vspace{-0.3\baselineskip}
 {\boldmath
 \begin{equation}
@@ -199,20 +199,20 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 \endgroup
 \end{table}
 
-基准工况的温度场、温度响应与固化进度见图\ref{fig:q1-thermal-solidification}。温度梯度由人体侧向环境侧逐步建立，功能层固化进度在约$268.5\ \mathrm s$达到$1$。
+基准工况（$\beta_{\rm DSC}=5\ \mathrm{K/min}$）下三层温度场、贴身侧温度响应与固化进度见图\ref{fig:q1-thermal-solidification}。温度梯度由人体侧向环境侧逐步建立：内侧贴近恒温人体，温度下降缓慢；外侧直接面向$-40\,^{\circ}\mathrm C$环境，降温更快。功能层固化进度随温度降低单调上升，在约$268.5\ \mathrm s$达到$1$。
 
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/三层防护服传热与固化过程.png}
 \caption{基准工况下三层防护服的温度场、温度响应与固化进度}
 \label{fig:q1-thermal-solidification}
 \end{figure}
 
-图\ref{fig:q1-layer-temperature}进一步给出不同时刻沿厚度方向的温度分布，显示外侧降温更快且层间温差随时间增大。
+图\ref{fig:q1-layer-temperature}进一步给出若干时刻沿厚度方向的温度分布。各时刻温度自人体侧向环境侧单调下降，外侧降温更快且层间温差随时间增大；温度曲线在层界面处保持连续，与三层串联传热模型的界面衔接条件一致。
 
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/几个时间下衣服几层的温度图_python.png}
+\includegraphics[width=0.80\textwidth]{\ProjectRoot/modules/20_q1/figures/几个时间下衣服几层的温度图_python.png}
 \caption{不同时刻三层衣料沿厚度方向的温度分布}
 \label{fig:q1-layer-temperature}
 \end{figure}
@@ -223,11 +223,11 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 
 \subsection{灵敏度分析}
 
-分别考察DSC扫描速率与衣料初始温度对达阈时间的影响，结果见图\ref{fig:q1-sensitivity}。
+图\ref{fig:q1-sensitivity}汇总DSC扫描速率与衣料初始温度对达阈时间$t_{15},t_{10}$的影响：扫描速率仅改变单位质量潜热$L_{\rm pcm}$的绝对尺度，衣料初始温度则直接改变初始温度场。两者的影响幅度见图中曲线与表\ref{tab:q1-time-result}、表\ref{tab:q1-initial-temperature}，定量分析见下文。
 
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/敏感性分析.png}
+\includegraphics[width=0.80\textwidth]{\ProjectRoot/modules/20_q1/figures/敏感性分析.png}
 \caption{DSC扫描速率与衣料初温对达阈时间的影响}
 \label{fig:q1-sensitivity}
 \end{figure}
