@@ -15,30 +15,30 @@
 \path{modules/20_q1/code/check_q1.py} & 独立有限体积法复算程序：与主程序对比阈值时刻，并检查固化进度单调性与累计潜热上限。\\
 \path{modules/20_q1/code/check_q1_initial_temperature.py} & 衣料初温敏感性分析程序，输出不同初温下的阈值时刻。\\
 \path{modules/20_q1/code/check_q1_m60.py} & 模态截断数加密收敛性检查程序，对比模态数 40 与 60 的阈值时刻。\\
-\path{modules/20_q1/results/Q1_FINAL/01_正式结果.csv} & 问题一正式阈值时刻结果，含三档扫描速率对应的潜热、$t_{15}$ 与 $t_{10}$。\\
-\path{modules/20_q1/results/Q1_FINAL/04_有限体积检验.csv} & 独立有限体积法复算对比数据。\\
-\path{modules/20_q1/results/Q1_FINAL/04_验证结果.csv} & 时间步减半与模态数加密的数值收敛验证数据。\\
+\path{modules/20_q1/results/Q1_FINAL/01_}正式结果\texttt{.csv} & 问题一正式阈值时刻结果，含三档扫描速率对应的潜热、$t_{15}$ 与 $t_{10}$。\\
+\path{modules/20_q1/results/Q1_FINAL/04_}有限体积检验\texttt{.csv} & 独立有限体积法复算对比数据。\\
+\path{modules/20_q1/results/Q1_FINAL/04_}验证结果\texttt{.csv} & 时间步减半与模态数加密的数值收敛验证数据。\\
 \path{modules/20_q1/tables/q1_initial_temperature_sensitivity.csv} & 衣料初温敏感性数据，用于正文灵敏度分析。\\
 
 \multicolumn{2}{l}{\textbf{问题二}}\\
 \path{modules/30_q2/code/q2.py} & 问题二主求解程序：沿用问题一正演框架，替换人体侧与外侧对流边界，计算有风轻微运动条件下的阈值时刻。\\
-\path{modules/30_q2/code/外对流核算.py} & 外对流相关式敏感性核算程序：比较 ISO 11079 简化、PMV 与 Kuwabara 三种关系的阈值时刻。\\
-\path{modules/30_q2/code/外对流有限体积验证.py} & 外对流条件下独立有限体积法复算验证程序。\\
-\path{modules/30_q2/results/外对流核算.csv} & 三种外对流关系下各扫描速率的阈值时刻与相对变化。\\
-\path{modules/30_q2/results/外对流有限体积验证.csv} & 外对流条件下有限体积复算对比数据。\\
-\path{modules/30_q2/results/主模型历程.json} & 问题二主模型贴身侧温度历程数据，用于温度曲线绘制。\\
+\path{modules/30_q2/code/}外对流核算\texttt{.py} & 外对流相关式敏感性核算程序：比较 IREQ 简化、PMV 与 Kuwabara 三种关系的阈值时刻。\\
+\path{modules/30_q2/code/}外对流有限体积验证\texttt{.py} & 外对流条件下独立有限体积法复算验证程序。\\
+\path{modules/30_q2/results/}外对流核算\texttt{.csv} & 三种外对流关系下各扫描速率的阈值时刻与相对变化。\\
+\path{modules/30_q2/results/}外对流有限体积验证\texttt{.csv} & 外对流条件下有限体积复算对比数据。\\
+\path{modules/30_q2/results/}主模型历程\texttt{.json} & 问题二主模型贴身侧温度历程数据，用于温度曲线绘制。\\
 
 \multicolumn{2}{l}{\textbf{问题三}}\\
 \path{modules/40_q3/code/q3.py} & 厚度优化主求解程序：离散涂层数枚举、热安全时间与负重允许时间计算、有效持续时间筛选。\\
 \path{modules/40_q3/code/check_q3.py} & 候选方案可行性与数值残差检查程序。\\
-\path{modules/40_q3/results/正式运行_20260827/问题三最优方案.csv} & 问题三最优涂层方案结果，含各扫描速率下新增层数与有效持续时间。\\
-\path{modules/40_q3/results/正式运行_20260827/问题三候选方案.csv} & 各候选方案在三档扫描速率下的热安全时间、负重时间与有效时间。\\
+\path{modules/40_q3/results/}正式运行\texttt{\_20260827/}问题三最优方案\texttt{.csv} & 问题三最优涂层方案结果，含各扫描速率下新增层数与有效持续时间。\\
+\path{modules/40_q3/results/}正式运行\texttt{\_20260827/}问题三候选方案\texttt{.csv} & 各候选方案在三档扫描速率下的热安全时间、负重时间与有效时间。\\
 
 \multicolumn{2}{l}{\textbf{问题四}}\\
 \path{modules/50_q4/code/q4.py} & 最小放热能力提高比例反求程序：二分搜索确定最小倍率，继承问题三候选方案与阈值。\\
 \path{modules/50_q4/code/check_q4.py} & 数值参数与边界条件一致性检查程序。\\
 \path{modules/50_q4/results/q4_result.csv} & 问题四最小放热能力提高比例与对应有效持续时间结果。\\
-\path{modules/50_q4/results/双阈值结果.csv} & 双阈值场景下的放热能力提高比例与提升幅度结果。\\
+\path{modules/50_q4/results/}双阈值结果\texttt{.csv} & 双阈值场景下的放热能力提高比例与提升幅度结果。\\
 \bottomrule
 \end{longtable}
 \endgroup
