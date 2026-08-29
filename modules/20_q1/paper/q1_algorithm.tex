@@ -1,26 +1,21 @@
 \begin{algorithm}[!htbp]
 \caption{恒温人体边界下的微小时间段分离变量求解流程}
 \label{alg:q1-thermal}
-\KwIn{三层厚度与热物性参数，人体恒温$T_b=37\,^{\circ}\mathrm C$，人体侧对流换热$h_b=3.0\,\mathrm{W/(m^2\cdot K)}$，环境温度$T_\infty=-40\,^{\circ}\mathrm C$，基线校正后的DSC曲线$p(T)$，扫描速率$\beta_{\rm DSC}$，时间步$\Delta t$，模态截断数$M$}
-\KwOut{三层温度场$T_i(x,t)$、贴身侧温度$T_{\rm in}(t)=T_1(0,t)$及阈值时间$t_{15},t_{10}$}
-对附件DSC曲线采用温区两端点连线作为操作基线，计算$A_{\rm DSC}=\int p(T)\,\mathrm dT$\;
-由$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$得到单位质量总潜热，基准取$\beta_{\rm DSC}=5\ \mathrm{K/min}$\;
-由归一化累计面积构造固化进度$\xi_{\rm DSC}(T)$及其导数$-\mathrm d\xi_{\rm DSC}/\mathrm dT$\;
-初始化$T_i(x,0)=37\,^{\circ}\mathrm C$、固化进度$\xi(x,0)=0$，令$n\gets0$\;
+\KwIn{三层几何与热物性参数，$T_b=37\,^{\circ}\mathrm C$，$h_b=3.0\,\mathrm{W/(m^2\cdot K)}$，$T_\infty=-40\,^{\circ}\mathrm C$，校正DSC曲线$p(T)$，$\beta_{\rm DSC}$，$\Delta t$，$M$}
+\KwOut{$T_i(x,t)$，$T_{\rm in}(t)$及$t_{15},t_{10}$}
+计算$A_{\rm DSC}=\int p(T)\,\mathrm dT$、$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$及$\xi_{\rm DSC}(T)$\;
+初始化$T_i(x,0)=37\,^{\circ}\mathrm C$，$\xi^0=0$，$n\gets0$\;
 \While{$T_{\rm in}(t_n)>10\,^{\circ}\mathrm C$}{
-  计算功能层平均温度$\bar T_2^n$及候选固化进度$\xi_{\rm trial}=\xi_{\rm DSC}(\bar T_2^n)$\;
+  计算$\bar T_2^n$与$\xi_{\rm trial}=\xi_{\rm DSC}(\bar T_2^n)$\;
   \eIf{$\xi_{\rm trial}>\xi^n$}{
-    固化继续推进，取$c_{2,\rm eff}^n=c_2-L_{\rm pcm}\xi'_{\rm DSC}(\bar T_2^n)$并令$\xi^{n+1}=\xi_{\rm trial}$\;
+    $c_{2,\rm eff}^n\gets c_2-L_{\rm pcm}\xi'_{\rm DSC}(\bar T_2^n)$，$\xi^{n+1}\gets\xi_{\rm trial}$\;
   }{
-    无新增固化，取$c_{2,\rm eff}^n=c_2$并令$\xi^{n+1}=\xi^n$\;
+    $c_{2,\rm eff}^n\gets c_2$，$\xi^{n+1}\gets\xi^n$\;
   }
-  计算$\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$，固化进度取历史最大值以保证相变不可逆\;
-  由当前外表面温度更新$h_e^n=2.38[T_3(L,t_n)-T_\infty]^{0.25}$，并在当前时间段内视为常数\;
-  令$T_{12},T_{23}$在当前微小时间段内线性变化，未知斜率为$\beta_{12}^n,\beta_{23}^n$，人体边界$T_b$保持常数\;
-  第一层采用Robin--Dirichlet本征展开，第二层采用Dirichlet--Dirichlet正弦展开，第三层采用Dirichlet--Robin本征展开\;
-  由两个材料界面在$\tau=\Delta t$处的热流连续条件联立求解$\beta_{12}^n,\beta_{23}^n$\;
-  由各层模态解析式推进温度场至$t_{n+1}$，并更新$T_{\rm in}(t_{n+1})$\;
-  若$T_{\rm in}$首次越过$15\,^{\circ}\mathrm C$或$10\,^{\circ}\mathrm C$，在相邻时间点间插值确定$t_{15}$或$t_{10}$\;
+  更新$\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$及$h_e^n=2.38[T_3(L,t_n)-T_\infty]^{0.25}$\;
+  线性近似$T_{12},T_{23}$，三层分别作Robin--Dirichlet、Dirichlet--Dirichlet与Dirichlet--Robin本征展开\;
+  由两处段末热流连续条件求$\beta_{12}^n,\beta_{23}^n$，推进温度场至$t_{n+1}$\;
+  若$T_{\rm in}$首次越过$15\,^{\circ}\mathrm C$或$10\,^{\circ}\mathrm C$，线性插值得$t_{15}$或$t_{10}$\;
   $n\gets n+1$\;
 }
 \Return{$T_i(x,t)$, $T_{\rm in}(t)$, $t_{15}$, $t_{10}$}\;
