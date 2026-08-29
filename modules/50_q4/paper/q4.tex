@@ -2,15 +2,15 @@
 
 \subsection{问题的描述与分析}
 
-问题四承接问题三的室外工况，以问题三在相同DSC扫描速率和相同温度阈值下得到的最优有效持续时间作为性能基准。为比较结构增厚与材料性能强化两种设计路径，本问恢复原始三层厚度作为结构基准，并保持材料支出不变，即$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3=0.3\ \mathrm{mm}$，通过提高中间功能层单位质量放热能力达到目标坚持时间。服装面积、质量和材料费用均保持原设计。
+问题四承接问题三的室外工况，以问题三在相同DSC扫描速率和相同温度阈值下得到的最优有效持续时间作为性能基准。本问保持原始三层厚度$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3=0.3\ \mathrm{mm}$与材料支出不变，仅通过提高中间功能层单位质量放热能力达到目标坚持时间，服装面积、质量和材料费用均保持原设计。
 
-令$\alpha\ge1$表示新功能材料相对于原材料的放热能力倍率，所求提高比例为$r=\alpha-1$，最终以$100r\%$报告。本问需在给定$(\beta_{\rm DSC},\theta)$场景下反求满足问题三目标时间的最小$\alpha$。
+令$\alpha\ge1$表示新功能材料相对于原材料的放热能力倍率，所求提高比例为$r=\alpha-1$，最终以$100r\%$报告。本问需在给定$(\beta_{\rm DSC},\theta)$场景下反求满足问题三目标时间的最小可行放热倍率$\alpha$，以提高比例尽可能小。
 
-本问整体求解流程如图\ref{fig:q4-flow}所示。对每个扫描速率与温度阈值场景，首先进行负重可行性检查，随后依次判断原材料是否已达标、是否需要二分搜索，最终输出最小放热倍率、提高比例与实际有效持续时间。
+针对上述任务建立相变材料热传导参数反问题模型，以最小提高比例为优化目标，以强化后的有效持续时间不低于问题三同场景最优值为约束。整体求解流程如图\ref{fig:q4-flow}所示：对每个扫描速率与温度阈值场景，首先进行负重可行性检查，随后依次判断原材料是否已达标、是否需要二分搜索，最终输出最小放热倍率、提高比例与实际有效持续时间。
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\FigureFlowWidth]{\ProjectRoot/modules/50_q4/figures/q4_flow.png}
+\includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/50_q4/figures/q4_flow.png}
 \caption{问题四热传导参数反问题求解流程}
 \label{fig:q4-flow}
 \end{figure}
@@ -93,9 +93,10 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})\ge t_{3,\theta}^*(\beta_{\rm DS
 \label{eq:q4-time-constraint}
 \end{equation}
 
+
+
 \noindent\textbf{4. 模型汇总}\par
 综上，我们建立以最小放热强化率为目标的相变材料热传导参数反问题模型。
-\vspace{-0.3\baselineskip}
 \begin{equation}
 \min_{\alpha\ge1}\quad \alpha-1
 \label{eq:q4-summary-obj}
