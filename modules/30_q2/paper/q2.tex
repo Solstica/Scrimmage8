@@ -6,7 +6,6 @@
 
 相比问题一，本问新增的两个散热通道共同决定阈值穿越的早晚：外部风增强服装外侧的对流换热，轻微运动增强人体侧的对流换热，二者都以对流边界的形式进入三层传热系统。中间功能层的有限、不可逆相变潜热在降温初期延缓内部温度下降，该缓冲作用在边界条件变化下仍然成立，故相变本构沿用问题一。另一方面，输出只关心$T_{\rm in}$首次达到某阈值的时刻，相较完整温度历程，它对边界参数取值和数值时刻的分辨要求更高，因此在求解中需要对阈值穿越做更精细的捕捉。
 
-
 图\ref{fig:q2-flow}给出推进求解的总体流程：先确定外侧有风与人体侧轻微运动两组边界参数，再建立三层瞬态传热系统并推进求解，最后对阈值穿越时刻线性插值得到$t_{15},t_{10}$。后文依次完成预备工作、主模型建立、模型求解与结果分析。
 
 \begin{figure}[!htbp]
@@ -47,16 +46,50 @@ $h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别�
 
 \subsection{有风轻微运动条件下的三层非稳态导热模型}
 
-问题二沿用问题一的三层控制方程、相变等效热容、初始条件及层间连续条件，仅重新确定两侧Robin边界。功能层仍采用问题一的归一化放热权重$w(T)$及不可逆固化历史约束，因此改变风速和人体运动状态只改变边界换热，不改变相变本构关系。轻微运动人体侧和有风环境侧分别为
+\noindent\textbf{1. 状态方程与相变本构}\par
+
+问题二沿用问题一的三层几何结构及材料热物性。织物层和隔热层仍满足一维非稳态导热方程，功能层采用问题一建立的不可逆相变等效热容模型，即
+\begin{equation}
+\rho_i c_i\frac{\partial T_i}{\partial t}=k_i\frac{\partial^2T_i}{\partial x^2},\quad i=1,3,
+\qquad
+\rho_2 c_{2,\rm eff}(T_2)\frac{\partial T_2}{\partial t}=k_2\frac{\partial^2T_2}{\partial x^2},
+\label{eq:q2-governing}
+\end{equation}
+其中
+\begin{equation}
+c_{2,\rm eff}(T)=c_2+L_{\rm pcm}w(T),
+\qquad
+L_{\rm pcm}=\frac{60A_{\rm DSC}}{\beta_{\rm DSC}}.
+\label{eq:q2-ceff}
+\end{equation}
+归一化放热权重$w(T)$及不可逆固化历史约束均沿用问题一，因此本问新增的风速与轻微运动只改变边界换热，不改变相变本构关系。取$5\ \mathrm{K/min}$为基准扫描速率，$2$和$10\ \mathrm{K/min}$为敏感性工况。
+
+\noindent\textbf{2. 有风轻微运动边界与界面条件}\par
+
+由预备工作得到人体侧换热系数$h_b=4.0\ \mathrm{W/(m^2\cdot K)}$，环境侧基准换热系数$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。因此两侧Robin边界为
 \begin{equation}
 -k_1T_{1,x}(0,t)=4.0[37-T_1(0,t)],
 \qquad
 -k_3T_{3,x}(L,t)=18.46[T_3(L,t)+40].
 \label{eq:q2-boundaries}
 \end{equation}
-相变潜热仍由$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$确定，取$5\ \mathrm{K/min}$为基准扫描速率，$2$和$10\ \mathrm{K/min}$为敏感性工况。
-
-
+忽略层间接触热阻，在$x=x_1,x_2$处保持温度与热流连续：
+\begin{equation}
+\left\{
+\begin{aligned}
+&T_1(x_1,t)=T_2(x_1,t),\qquad k_1T_{1,x}(x_1,t)=k_2T_{2,x}(x_1,t),\\
+&T_2(x_2,t)=T_3(x_2,t),\qquad k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t).
+\end{aligned}
+\right.
+\label{eq:q2-interface}
+\end{equation}
+进入低温环境瞬间仍取$T_i(x,0)=37\,^{\circ}\mathrm C$。定义贴身侧温度$T_{\rm in}(t)=T_1(0,t)$，相应阈值时刻为
+\begin{equation}
+t_{\theta}^{(2)}=\inf\{t>0:T_{\rm in}(t)\le\theta\},
+\qquad \theta\in\{15,10\}\,^{\circ}\mathrm C.
+\label{eq:q2-threshold}
+\end{equation}
+其中$t_{15}^{(2)}$作为实验者应返回室内的时间。
 
 \noindent\textbf{3. 模型汇总}\par
 综上，我们建立有风轻微运动条件下的三层非稳态导热模型。
@@ -71,7 +104,8 @@ $h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别�
 &-k_3T_{3,x}(L,t)=18.46[T_3(L,t)+40],\\
 &T_1(x_1,t)=T_2(x_1,t),\quad k_1T_{1,x}(x_1,t)=k_2T_{2,x}(x_1,t),\\
 &T_2(x_2,t)=T_3(x_2,t),\quad k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t),\\
-&T_i(x,0)=37\,^{\circ}\mathrm C,\quad i=1,2,3,\qquad T_{\rm in}(t)=T_1(0,t).
+&T_i(x,0)=37\,^{\circ}\mathrm C,\quad i=1,2,3,\\
+&T_{\rm in}(t)=T_1(0,t),\qquad t_{\theta}^{(2)}=\inf\{t>0:T_{\rm in}(t)\le\theta\}.
 \end{split}
 \right.
 \label{eq:q2-model-summary}
