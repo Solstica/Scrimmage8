@@ -9,7 +9,7 @@
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\FigureMechanismWidth]{\ProjectRoot/modules/30_q2/figures/示意图2.jpg}
-\caption{问题二物理场景与三层防护结构示意。人体恒温源、相变功能层、内外两侧对流边界及评价温度$T_1(0,t)$的位置关系。}
+\caption{问题二物理场景与三层防护结构示意}
 \label{fig:q2-scenario}
 \end{figure}
 \FloatBarrier
@@ -19,7 +19,7 @@
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\FigureFlowWidth]{\ProjectRoot/modules/30_q2/figures/q2_flow.png}
-\caption{问题二建模与求解总体流程。}
+\caption{问题二建模与求解总体流程}
 \label{fig:q2-flow}
 \end{figure}
 \FloatBarrier
@@ -112,10 +112,9 @@ T_2(x_2,t)&=T_3(x_2,t),& k_2T_{2,x}(x_2,t)&=k_3T_{3,x}(x_2,t).
 综上，我们建立有风轻微运动条件下三层防护服瞬态传热模型。
 
 \noindent\textbf{5. 模型汇总}\par
-{\boldmath
 \begin{equation}
 \left\{
-\begin{aligned}
+\begin{split}
 &\rho_i c_iT_{i,t}=k_iT_{i,xx},\quad i=1,3,\\
 &\rho_2 c_{2,\mathrm{eff}}(T_2)T_{2,t}=k_2T_{2,xx},\\
 &c_{2,\mathrm{eff}}(T)=c_2+L_{\rm pcm}w(T),\qquad L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC},\\
@@ -125,10 +124,10 @@ T_2(x_2,t)&=T_3(x_2,t),& k_2T_{2,x}(x_2,t)&=k_3T_{3,x}(x_2,t).
 &T_2(x_2,t)=T_3(x_2,t),\quad k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t),\\
 &T_i(x,0)=37\,^{\circ}\mathrm C,\quad i=1,2,3,\\
 &T_{\rm in}(t)=T_1(0,t).
-\end{aligned}
+\end{split}
 \right.
 \label{eq:q2-model-summary}
-\end{equation}}
+\end{equation}
 
 \subsection{模型求解}
 
@@ -146,7 +145,7 @@ T_2(x_2,t)&=T_3(x_2,t),& k_2T_{2,x}(x_2,t)&=k_3T_{3,x}(x_2,t).
 
 \subsection{求解结果与分析}
 
-基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，主模型得到$t_{15}^{(2)}=103.492\ \mathrm s$、$t_{10}^{(2)}=115.666\ \mathrm s$，因此实验者约在$103.49\ \mathrm s$后应返回室内。三种扫描速率下的主模型结果见表\ref{tab:q2-results-main}和图\ref{fig:q2-threshold-time}。
+基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，主模型得到$t_{15}^{(2)}=103.492\ \mathrm s$、$t_{10}^{(2)}=115.666\ \mathrm s$，因此实验者约在$103.49\ \mathrm s$后应返回室内。三种扫描速率下的主模型结果见表\ref{tab:q2-results-main}和图\ref{fig:q2-cooling}。
 
 \begin{table}[!htbp]
 \centering
@@ -169,17 +168,37 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 
 相较问题一同一$\beta_{\rm DSC}=5\ \mathrm{K/min}$工况的$t_{15}=273.908\ \mathrm s$，问题二返回时间明显缩短。该差异由外部有风边界和轻微运动人体侧换热边界共同造成，不将其解释为单一风速因素的独立贡献。
 
+图\ref{fig:q2-cooling}给出基准工况下贴身侧温度$T_1(0,t)$随时间的下降过程：温度由初始$37\,^{\circ}\mathrm C$单调降低，首次到达$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的时刻分别对应$t_{15}=103.49\ \mathrm s$、$t_{10}=115.67\ \mathrm s$，其中$t_{15}$为题设返回室内判据。对比图\ref{fig:q2-compare}中两问在各扫描速率下的阈值时间，问题二相对问题一整体提前，且$10\ \mathrm{K/min}$高扫描速率工况下差距更为集中；该对比反映两种题设边界条件的综合差异，不作单一风速因素的因果表述。
+
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/预览/阈值时间.png}
-\caption{不同DSC工况下问题二贴身侧服装温度的阈值时间。}
-\label{fig:q2-threshold-time}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/降温过程.png}
+\caption{问题二基准工况贴身侧温度随时间的变化}
+\label{fig:q2-cooling}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/结果对比：两问阈值时间.png}
+\caption{问题一与问题二阈值时间对比}
+\label{fig:q2-compare}
+\end{figure}
+\FloatBarrier
+
+图\ref{fig:q2-profile}展示ISO主模型$5\ \mathrm{K/min}$工况四个时刻沿厚度方向的温度剖面，用以观察热量由人体侧向外侧传递过程中各层温度梯度的演化。随着时间推移，外侧织物与层间界面的温度梯度最先形成，内部功能层及贴身侧温度的变化存在时间滞后，说明相变功能层在降温初期延缓了内部温度的下降。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/q2几个时间下衣服几层的温度图.png}
+\caption{ISO主模型多时刻温度剖面}
+\label{fig:q2-profile}
 \end{figure}
 \FloatBarrier
 
 \subsection{灵敏度分析}
 
-外对流相关式是问题二的主要边界不确定来源。表\ref{tab:q2-results-sens}给出ISO 11079主关系、PMV对照关系和Kuwabara经验关系的计算结果。
+外对流相关式是问题二的主要边界不确定来源。表\ref{tab:q2-results-sens}给出ISO 11079主关系、PMV对照关系和Kuwabara经验关系的计算结果，图\ref{fig:q2-boundary-sensitivity}展示三种关系在各扫描速率下的相对变化。
 
 \begin{table}[!htbp]
 \centering
@@ -212,8 +231,8 @@ DSC扫描速率同样显著影响绝对时间。在$\beta_{\rm DSC}=2$--$10\ \ma
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/预览/边界敏感性.png}
-\caption{外对流关系对阈值时间的影响。以同一DSC工况下的ISO 11079主关系为基准，负值表示阈值时间提前。}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/外边界敏感性.png}
+\caption{外对流相关式对阈值时间的敏感性}
 \label{fig:q2-boundary-sensitivity}
 \end{figure}
 \FloatBarrier
@@ -222,12 +241,4 @@ DSC扫描速率同样显著影响绝对时间。在$\beta_{\rm DSC}=2$--$10\ \ma
 
 以ISO 11079主模型的$\beta_{\rm DSC}=5\ \mathrm{K/min}$为基准，将模态时间步由$0.25\ \mathrm s$减半至$0.125\ \mathrm s$后，$t_{15}$与$t_{10}$分别变化约$0.0127\%$和$0.0154\%$；模态数由40增加至60后，两阈值变化约$0.2843\%$和$0.2776\%$。对三种外对流关系与三组$\beta_{\rm DSC}$组成的9个工况，独立隐式有限体积法与模态结果的阈值偏差均不超过$1.2146\%$；ISO主关系、$5\ \mathrm{K/min}$工况的有限体积时间步和网格加密最大变化为$0.0036\%$。
 
-上述检验表明当前离散设置下阈值时间已具有稳定的数值一致性。独立有限体积复算结果见图\ref{fig:q2-numerical-validation}。
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/预览/数值验证.png}
-\caption{独立有限体积复核与离散参数加密检查。}
-\label{fig:q2-numerical-validation}
-\end{figure}
-\FloatBarrier
+上述检验表明当前离散设置下阈值时间已具有稳定的数值一致性：收敛方向自洽，且独立有限体积复算的阈值偏差远小于不同外对流相关式之间的结果差异。这些结论为数值离散一致性与复算一致性检验，不构成对模型物理适用性或超出当前参数范围外推的实验验证。
