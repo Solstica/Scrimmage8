@@ -44,12 +44,12 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T).
 \end{equation}
 同比例缩放不改变$w(T)$和$\xi_{\rm DSC}(T)$的温度分布形状，只改变相同相变温区内的总潜热尺度；固化进度继续按历史最大值更新。
 
-以$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$三个代表性速率为例，图\ref{fig:q4-material}给出放热倍率与温度平面上的有效比热$c_{2,\rm eff}^{(\alpha)}(T)$。三个面板的峰温均位于$20.62\,^{\circ}\mathrm C$，与原始DSC放热峰一致；提高倍率只增大相变温区内的有效比热幅值，不移动相变温区位置，这正是式\eqref{eq:q4-scale-relations}同比例增强的直接结果。
+图\ref{fig:q4-material}以温度、放热倍率与有效比热$c_{2,\rm eff}^{(\alpha)}(T)$三者的关系说明同比例增强的作用。主图为温度--倍率--有效比热热图，颜色越亮表示相变温区内的有效比热越高；下方叠加$\alpha=1$、$\alpha=1.863$、$\alpha=2.090$三个真实求解倍率的温度切片，右侧给出峰温$T=20.622\,^{\circ}\mathrm C$处峰值有效比热随倍率的变化。三条切片的峰温均与原始DSC放热峰一致，提高倍率只增大相变温区内的幅值而不移动峰位，这正是式\eqref{eq:q4-scale-relations}同比例增强的直接结果。
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/相变响应.png}
-\caption{代表性扫描速率下有效比热随温度与放热倍率的变化}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/相变联合图.png}
+\caption{放热倍率下有效比热本构响应及峰温倍率响应}
 \label{fig:q4-material}
 \end{figure}
 
@@ -147,12 +147,12 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两个温度阈值下所需的最小放热能力提高比例分别为$86.328\%$和$108.984\%$。在$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75,2,5,10\ \mathrm{K/min}$八个扫描速率与两个阈值的16个场景中，均按相同$(\beta_{\rm DSC},\theta)$匹配问题三目标时间；原始厚度对应的固定负重上限为$t_W^{(4)}=784.916\ \mathrm s$。
 
-图\ref{fig:q4-dual}以矩阵形式给出16个场景的最小提高比例及对应的问题三最优新增层数：低速高潜热场景（$\beta_{\rm DSC}=0.5,1\ \mathrm{K/min}$）在两个阈值下均无需强化，提高比例为零；其余场景提高比例随扫描速率增大而上升。精确数值见表\ref{tab:q4-results}。
+图\ref{fig:q4-dual}以两幅单行热图对比两种阈值下8个扫描速率场景的最小提高比例，并标注问题三对应的最优新增层数。色标越偏红表示达到目标所需的放热能力提高比例越大：$\beta_{\rm DSC}=0.5,1\ \mathrm{K/min}$的低速高潜热场景在两种阈值下均无需强化，提高比例为零；其余场景提高比例随扫描速率增大而上升。横轴为离散求解场景，相邻色块不代表连续临界曲线，精确数值见表\ref{tab:q4-results}。
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/双阈值需求.png}
-\caption{各扫描速率与温度阈值场景的最小放热能力提高比例及对应最优新增层数}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/强化需求热图.png}
+\caption{两种温度阈值下最小放热能力提高比例热图}
 \label{fig:q4-dual}
 \end{figure}
 
@@ -193,25 +193,18 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 
 首先，在相同DSC峰面积下，较小的假设扫描速率通过$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$对应更大的反演潜热，因此原材料的有效储热能力更高，达到问题三目标所需的强化倍率随$\beta_{\rm DSC}$降低而减小。$\beta_{\rm DSC}=0.5$和$1\ \mathrm{K/min}$的两种阈值场景均有$\alpha^*=1$，表明原材料在这些诊断工况下已达到目标。
 
-以$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$三个代表性速率为例，图\ref{fig:q4-latent}对比强化前后的单位质量潜热。相对提升比例最大的是$\beta_{\rm DSC}=10\ \mathrm{K/min}$场景，但其绝对潜热需求仍低于低速场景的原始值，说明相对增幅与绝对潜热需求并不单调对应。
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\FigureMechanismWidth]{\ProjectRoot/modules/50_q4/figures/潜热需求.png}
-\caption{代表性扫描速率下强化前后的单位质量潜热}
-\label{fig:q4-latent}
-\end{figure}
+以$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$三个代表性速率为例，强化前后的单位质量潜热对比显示：相对提升比例最大的是$\beta_{\rm DSC}=10\ \mathrm{K/min}$场景，但其绝对潜热需求仍低于低速场景的原始值，说明相对增幅与绝对潜热需求并不单调对应。
 
 其次，两种阈值下的强化需求由问题三同阈值目标时间和问题四原始材料达到该阈值的时间共同决定，不能仅由阈值高低判断。以基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$为例，问题三以$10\,^{\circ}\mathrm C$为阈值的目标有效时间长于以$15\,^{\circ}\mathrm C$为阈值的目标，因此问题四追平该目标时所需提高比例由$86.328\%$增至$108.984\%$。在较低扫描速率处，负重上限会截断有效时间，因而两种阈值的倍率排序可以不同。
 
 最后，活动约束随扫描速率和阈值发生切换：$\beta_{\rm DSC}=0.5,1\ \mathrm{K/min}$时两种阈值均由负重约束控制；$\beta_{\rm DSC}=1.25\ \mathrm{K/min}$时，$15\,^{\circ}\mathrm C$场景由热安全约束控制，而$10\,^{\circ}\mathrm C$场景仍由负重约束控制；从$\beta_{\rm DSC}=1.5\ \mathrm{K/min}$起，两种阈值均由热安全约束控制。该切换说明问题四的最小强化倍率必须与问题三的同场景目标和负重上限联合判断。
 
-图\ref{fig:q4-margin}给出$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$在$15\,^{\circ}\mathrm C$阈值下原始方案、达标值与负重上限的坚持时间位置。三者达标值均由热安全约束控制，图中实线段为强化所恢复的时间；负重上限均未被触及，虚线段为未使用的负重余量。
+图\ref{fig:q4-margin}以“原始—达标—负重上限”三种方案状态为横轴，给出各扫描速率下实际坚持时间的轨迹，左侧为$15\,^{\circ}\mathrm C$阈值、右侧为$10\,^{\circ}\mathrm C$阈值；下方显示完整范围，上方放大接近负重上限的区间。原始状态到达标值的上升表示强化后的实际改善，达标值到负重上限的距离表示尚未触及的工程约束裕量；负重上限不表示一定能够继续兑现的收益。
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\FigureMechanismWidth]{\ProjectRoot/modules/50_q4/figures/约束裕量.png}
-\caption{代表性扫描速率下原始方案、达标值与负重上限的坚持时间位置}
+\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/约束轨迹图.png}
+\caption{各扫描速率下原始、达标与负重上限状态的坚持时间轨迹}
 \label{fig:q4-margin}
 \end{figure}
 
