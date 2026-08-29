@@ -2,10 +2,7 @@
 
 \subsection{问题的描述与分析}
 
-\subsection{问题的描述与分析}
-
 问题一要求预测静止、无风、$-40\,^{\circ}\mathrm C$环境下人体—三层防护服系统贴身侧温度首次降至$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$的时刻$t_{15},t_{10}$。核心难点是功能层相变潜热的非线性等效热容，且DSC放热峰面积未标定扫描速率，潜热绝对尺度不确定，需作为输入参数处理。为此，先由DSC构造固化进度和有效比热，再建立基于等效热容法的三层非稳态导热模型，在人体恒温与自然对流边界下，采用拓展分离变量法逐时间步推进温度场并插值输出阈值时刻，整体流程见图\ref{fig:q1-flow}。
-
 
 \begin{figure}[!htbp]
 \centering
@@ -19,19 +16,16 @@
 
 \noindent\textbf{1. 几何与材料参数}\par
 
-三层厚度分别记为$d_1,d_2,d_3$，层间位置为$x_1=d_1$、$x_2=d_1+d_2$，总厚度$L=d_1+d_2+d_3$。附件给出$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3=0.3\ \mathrm{mm}$，三层热物性分别记为$\rho_i,c_i,k_i$。近期多层防护服研究亦将多层织物间的热量传递作为核心建模对象\cite{yang2025multilayer}。
-
-人体—防护服—环境的传热结构与坐标系见图\ref{fig:q1-schematic}。
-
-\begin{figure}[!htbp]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.70\textwidth]{\ProjectRoot/modules/20_q1/figures/示意图1.jpg}
+\includegraphics[width=0.62\textwidth]{\ProjectRoot/modules/20_q1/figures/示意图1.jpg}
 \caption{人体—三层防护服—环境传热结构与坐标系示意}
 \label{fig:q1-schematic}
 \end{figure}
 
+三层厚度分别记为$d_1,d_2,d_3$，层间位置为$x_1=d_1$、$x_2=d_1+d_2$，总厚度$L=d_1+d_2+d_3$。附件给出$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3=0.3\ \mathrm{mm}$，三层热物性分别记为$\rho_i,c_i,k_i$。
+
 由图\ref{fig:q1-schematic}可见，热流由恒温人体依次穿过织物层、功能层和隔热层传向低温环境；本文以贴身侧界面温度$T_{\rm in}=T_1(0,t)$作为人体冷暴露程度的评价量。
-\FloatBarrier
 
 人体有效表面积按附件Stevenson公式$A_b=0.0061h+0.0128w-0.1529$计算，代入$h=170\ \mathrm{cm}$、$w=60\ \mathrm{kg}$得$A_b=1.6521\ \mathrm{m^2}$，取防护服有效传热面积$A=A_b$。人体温度按附件条件固定为
 \begin{equation}
@@ -41,7 +35,7 @@ T_b=37\,^{\circ}\mathrm C.
 
 \noindent\textbf{2. DSC相变数据处理}\par
 
-附件DSC数据覆盖$14.050$--$26.018\,^{\circ}\mathrm C$，相变区间表现为负峰，本文统一取放热幅值为正，令$p_{\rm raw}(T)=-1000\times\mathrm{DSC}(T)$。放热主峰位于$20.622\,^{\circ}\mathrm C$。采用温区两端点连线作为操作基线，校正后放热功率非负，峰面积为$A_{\rm DSC}=20385.458\ \mathrm{W\cdot K/kg}$。该基线选择直接决定由DSC数据反演的绝对潜热尺度。严寒环境复温装备研究表明，相变材料在低温相变时释放的热量可用于维持人体周围热环境\cite{wang2025coldrewarm}。
+附件DSC数据覆盖$14.050$--$26.018\,^{\circ}\mathrm C$，相变区间表现为负峰，本文统一取放热幅值为正，令$p_{\rm raw}(T)=-1000\times\mathrm{DSC}(T)$。放热主峰位于$20.622\,^{\circ}\mathrm C$。采用温区两端点连线作为操作基线，校正后放热功率非负，峰面积为$A_{\rm DSC}=20385.458\ \mathrm{W\cdot K/kg}$。该基线选择直接决定由DSC数据反演的绝对潜热尺度。
 
 为展示基线校正和固化进度的构造结果，图\ref{fig:q1-dsc-calibration}(a)给出原始放热功率、操作基线与校正结果，图\ref{fig:q1-dsc-calibration}(b)给出由校正峰归一化累计面积得到的固化进度。
 
@@ -143,7 +137,7 @@ c_{2,\rm eff}(T)=c_2+L_{\rm pcm}\frac{p(T)}{\int_{T_f}^{T_s}p(\theta)\,\mathrm d
 
 \noindent\textbf{1. 微小时间段参数冻结}\par
 
-为求解多层瞬态导热问题，本文采用分段参数冻结与分层本征展开相结合的拓展分离变量框架。近期多层瞬态导热研究表明，分离变量与本征展开方法可有效处理层合介质的瞬态温度场\cite{jain2024multilayer}。将时间轴划分为$t_n\le t\le t_{n+1}$，局部时间$\tau=t-t_n$。每个微时间段内将两处界面温度近似为
+为求解多层瞬态导热问题，本文采用分段参数冻结与分层本征展开相结合的拓展分离变量框架\cite{jain2024multilayer}。将时间轴划分为$t_n\le t\le t_{n+1}$，局部时间$\tau=t-t_n$。每个微时间段内将两处界面温度近似为
 \begin{equation}
 T_{12}(\tau)\approx T_{12}^n+\beta_{12}^n\tau,\qquad
 T_{23}(\tau)\approx T_{23}^n+\beta_{23}^n\tau.
@@ -185,7 +179,7 @@ k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t)
 
 \noindent\textbf{1. 求解结果}\par
 
-基准扫描速率$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，$T_{\rm in}(t)$首次降至$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$的时刻分别为$t_{15}=273.908\ \mathrm s$和$t_{10}=311.158\ \mathrm s$，即正常户外工作时间约$4.57\ \mathrm{min}$，危险暴露时间约$5.19\ \mathrm{min}$。计算取$\Delta t=0.25\ \mathrm s$、$M=40$，基准及两组敏感性结果见表\ref{tab:q1-time-result}。
+\textbf{基准工况下，贴身侧温度在$273.91\ \mathrm s$时降至$15\,^{\circ}\mathrm C$，在$311.16\ \mathrm s$时降至$10\,^{\circ}\mathrm C$，对应正常户外工作时间约$4.57\ \mathrm{min}$、危险暴露时间约$5.19\ \mathrm{min}$。}计算取$\Delta t=0.25\ \mathrm s$、$M=40$，基准及两组敏感性结果见表\ref{tab:q1-time-result}。
 
 \begin{table}[!htbp]
 \centering
@@ -232,7 +226,7 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 
 \noindent\textbf{2. 结果分析}\par
 
-固化完成时刻约为$268.5\ \mathrm s$，比$t_{15}$提前约$5.4\ \mathrm s$，说明达到工作困难阈值前功能层潜热已基本释放完毕；此后温度变化主要由材料显热、层间导热及边界换热共同控制。
+\textbf{功能层约在$268.5\ \mathrm s$完成固化，仅比$15\,^{\circ}\mathrm C$工作困难阈值提前约$5.4\ \mathrm s$，说明相变潜热覆盖了主要防护阶段。}固化结束后潜热项不再贡献，温度变化主要由材料显热、层间导热及边界换热共同控制。
 
 \subsection{灵敏度分析}
 
@@ -278,6 +272,6 @@ $T_0\,(^{\circ}\mathrm C)$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ & �
 
 衣料初温由$37\,^{\circ}\mathrm C$降至$27\,^{\circ}\mathrm C$时，$t_{15}$和$t_{10}$分别缩短$13.60\%$和$11.98\%$。较低初温下人体恒温边界先对内层织物短暂供热，随后外界散热占主导；因此衣料初温也是短时防护时间的重要输入。
 
-\subsection{数值收敛与复算检验}
+\noindent\textbf{3. 数值稳定性检验}\par
 
-基准工况下时间步减半后$t_{15},t_{10}$分别变化$0.0019\%$和$0.0010\%$，模态数增至$60$后变化$0.291\%$和$0.283\%$。独立隐式有限体积法复算三组工况，与模态法的阈值时间偏差为$0.81\%$--$0.99\%$。数值离散影响明显小于扫描速率引起的跨工况差异，当前设置具有良好的数值稳定性与复算一致性。
+时间步减半与模态数增至$60$后，阈值时间变化均不超过$0.3\%$；独立隐式有限体积法复算三组工况，与模态法的阈值时间偏差为$0.81\%$--$0.99\%$。这些数值离散影响明显小于DSC扫描速率造成的跨工况差异，故不会改变上述主要结论。
