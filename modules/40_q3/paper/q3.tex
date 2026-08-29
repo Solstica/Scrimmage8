@@ -14,6 +14,7 @@
 \caption{问题三的求解流程}
 \label{fig:q3-flow}
 \end{figure}
+\FloatBarrier
 
 \subsection{PDE约束离散优化模型}
 
@@ -149,7 +150,7 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 
 基准及两组敏感性工况下，热安全约束均先于负重约束达到，最优解位于预算允许的厚度边界。其中$\beta_{\rm DSC}=2\ \mathrm{K/min}$、$n=3$、$10\,^{\circ}\mathrm C$阈值下$t_{10}=774.808\ \mathrm s$，与$t_W=775.994\ \mathrm s$仅差约$1.19\ \mathrm s$，已接近两类约束的交汇区域。
 
-图\ref{fig:q3-eff-panorama}以热图形式汇总全部候选方案的有效持续时间：横轴为新增层数，纵轴为扫描速率，颜色深浅表示有效持续时间长短。各扫描速率下最优层数均对应最深的色块，且随扫描速率降低，有效持续时间整体增大，最优方案的位置保持稳定。
+为比较全部离散厚度方案在不同扫描速率下的有效持续时间，图\ref{fig:q3-eff-panorama}以新增层数为横轴、扫描速率为纵轴，并用颜色表示有效持续时间。
 
 \begin{figure}[!htbp]
 \centering
@@ -158,7 +159,10 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \label{fig:q3-eff-panorama}
 \end{figure}
 
-有效持续时间由热安全时间与负重时间的较小值决定。图\ref{fig:q3-tradeoff}将两类时间并列展示：随新增层数增加，隔热增厚使热安全时间上升，而服装增重使负重时间下降，两者构成竞争关系；在当前参数范围内热安全约束先达到，$n=3$对应收益占主导的离散最优。
+由图\ref{fig:q3-eff-panorama}可见，在$2,5,10\ \mathrm{K/min}$三组工况下，新增层数增加均使有效持续时间提高，且$n=3$对应各行中的最大值；随扫描速率降低，整体有效持续时间同步增加，但最优层数保持不变。
+\FloatBarrier
+
+为解释$n=3$为何成为当前离散域内的最优方案，图\ref{fig:q3-tradeoff}进一步比较热安全时间与负重允许时间随新增层数的变化。
 
 \begin{figure}[!htbp]
 \centering
@@ -166,15 +170,15 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \caption{不同扫描速率下离散新增层数对应的热安全时间与负重时间}
 \label{fig:q3-tradeoff}
 \end{figure}
+
+由图\ref{fig:q3-tradeoff}可见，隔热层增厚使热安全时间持续上升，而服装增重使负重允许时间缓慢下降；在$n=0\sim3$的预算可行域内，热安全约束仍先于负重约束达到，因此增厚带来的热防护收益占主导，最优方案落在预算允许的最大层数$n=3$。
 \FloatBarrier
 
 两种评价阈值在基准及两组敏感性工况下给出相同的最优层数，但对应有效持续时间不同，说明评价标准变化主要影响性能指标而未改变当前最优结构。
 
 \subsection{灵敏度分析}
 
-为考察更宽参数范围内的约束竞争，将扫描速率扩展至$\beta_{\rm DSC}=0.5,1.0,1.25,1.5,1.75\ \mathrm{K/min}$。随扫描速率降低，反演潜热增大，热安全时间逐渐接近并超过负重时间，从而出现最优层数切换。$15\,^{\circ}\mathrm C$阈值下$0\to1$、$1\to2$、$2\to3$的切换位置约为$1.22,1.36,1.54\ \mathrm{K/min}$，$10\,^{\circ}\mathrm C$阈值下约为$1.29,1.48,1.72\ \mathrm{K/min}$。
-
-图\ref{fig:q3-layer-state}给出两种阈值下最优新增层数随扫描速率的分段变化。
+为考察更宽参数范围内的约束竞争，将扫描速率扩展至$\beta_{\rm DSC}=0.5,1.0,1.25,1.5,1.75\ \mathrm{K/min}$。随着扫描速率降低、反演潜热增大，热安全时间逐渐接近负重时间，最优新增层数开始发生切换。图\ref{fig:q3-layer-state}给出两种阈值下最优层数的分段变化。
 
 \begin{figure}[!htbp]
 \centering
@@ -182,6 +186,8 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \caption{两种阈值下最优新增层数随扫描速率的状态带与切换区间}
 \label{fig:q3-layer-state}
 \end{figure}
+
+由图\ref{fig:q3-layer-state}可见，$15\,^{\circ}\mathrm C$阈值下$0\to1$、$1\to2$、$2\to3$的切换位置约为$1.22,1.36,1.54\ \mathrm{K/min}$，$10\,^{\circ}\mathrm C$阈值下约为$1.29,1.48,1.72\ \mathrm{K/min}$。这说明在高潜热区域，继续增厚带来的热安全收益逐渐受到负重损失制约，最优结构不再固定在预算上界。
 \FloatBarrier
 
 六处层数切换位置经半时间步长复核后方向均保持不变。切换区域对应的反演潜热约为$712$--$1004\ \mathrm{kJ/kg}$，表明在高潜热区间内隔热收益与增重损失的竞争会改变最优离散结构。
