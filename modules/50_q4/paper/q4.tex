@@ -138,7 +138,7 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 \label{tab:q4-results}
 \begingroup
 \rowcolors{2}{gray!10}{white}
-\begin{tabular}{ccccccc}
+\begin{tabularx}{\textwidth}{XXXXXXX}  % 7列均分
 \toprule
 \rowcolor{cyan!50!blue!30}
 $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\min}$(\%) & $t_T^{(4)}$(s) & $t_{\rm eff}^{(4)}$(s) & 活动约束 \\
@@ -150,8 +150,9 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 10.0 & 15 & 2.572876 & 157.288 & 321.061 & 321.061 & 热安全 \\
 10.0 & 10 & 3.033752 & 203.375 & 396.274 & 396.274 & 热安全 \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \endgroup
+\smallskip
 \flushleft\footnotesize{注：活动约束由$t_{T,\theta}^{(4)}$与$t_W^{(4)}$中的较小者决定。}
 \end{table}
 
@@ -172,7 +173,7 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.44\textwidth]{\ProjectRoot/modules/50_q4/figures/强化需求热图.png}
-\caption{基准、敏感性及扩展诊断场景下的最小放热能力提高比例}
+\caption{双阈值下的放热强化需求}
 \label{fig:q4-dual}
 \end{figure}
 
