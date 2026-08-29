@@ -1,30 +1,46 @@
 \section*{附录：程序及结果文件说明}
 \addcontentsline{toc}{section}{附录：程序及结果文件说明}
 
-\textbf{附录模式按当年提交规则选择。}
-
-\noindent\textbf{模式 A：另交程序文件。}\quad 正文附录列出实际使用的程序入口、功能和关键输出，不重复粘贴整套工程代码。
+本论文的程序以独立源文件随论文一并提交。附录按问题列出实际使用的核心求解程序、独立验证程序与关键结果文件，各文件与正文的对应关系如下；正文中的正式数值均取自下列结果文件。
 
 \begingroup\small\sloppy
-\begin{longtable}{p{.38\textwidth}p{.52\textwidth}}
+\begin{longtable}{p{.36\textwidth}p{.54\textwidth}}
 \toprule
 文件 & 功能\\\midrule
 \endfirsthead
 \toprule 文件 & 功能\\\midrule\endhead
-\path{modules/20_q1/code/solve_q1.py} & 问题一模型求解与主要结果导出。\\
-\path{modules/20_q1/results/registry.csv} & 问题一结果状态、来源与复核记录。\\
-\path{scripts/final_preflight.py} & 终稿引用、结果状态与 LaTeX 日志检查。\\
+
+\multicolumn{2}{l}{\textbf{问题一}}\\
+\path{modules/20_q1/code/q1.py} & 三层防护服瞬态传热主求解程序：DSC 数据读取与端点线性基线校正、固化进度与有效比热构造、微小时间段拓展分离变量法推进、贴身侧阈值穿越时刻插值输出。\\
+\path{modules/20_q1/code/check_q1.py} & 独立有限体积法复算程序：与主程序对比阈值时刻，并检查固化进度单调性与累计潜热上限。\\
+\path{modules/20_q1/code/check_q1_initial_temperature.py} & 衣料初温敏感性分析程序，输出不同初温下的阈值时刻。\\
+\path{modules/20_q1/code/check_q1_m60.py} & 模态截断数加密收敛性检查程序，对比模态数 40 与 60 的阈值时刻。\\
+\path{modules/20_q1/results/Q1_FINAL/01_正式结果.csv} & 问题一正式阈值时刻结果，含三档扫描速率对应的潜热、$t_{15}$ 与 $t_{10}$。\\
+\path{modules/20_q1/results/Q1_FINAL/04_有限体积检验.csv} & 独立有限体积法复算对比数据。\\
+\path{modules/20_q1/results/Q1_FINAL/04_验证结果.csv} & 时间步减半与模态数加密的数值收敛验证数据。\\
+\path{modules/20_q1/tables/q1_initial_temperature_sensitivity.csv} & 衣料初温敏感性数据，用于正文灵敏度分析。\\
+
+\multicolumn{2}{l}{\textbf{问题二}}\\
+\path{modules/30_q2/code/q2.py} & 问题二主求解程序：沿用问题一正演框架，替换人体侧与外侧对流边界，计算有风轻微运动条件下的阈值时刻。\\
+\path{modules/30_q2/code/外对流核算.py} & 外对流相关式敏感性核算程序：比较 ISO 11079 简化、PMV 与 Kuwabara 三种关系的阈值时刻。\\
+\path{modules/30_q2/code/外对流有限体积验证.py} & 外对流条件下独立有限体积法复算验证程序。\\
+\path{modules/30_q2/results/外对流核算.csv} & 三种外对流关系下各扫描速率的阈值时刻与相对变化。\\
+\path{modules/30_q2/results/外对流有限体积验证.csv} & 外对流条件下有限体积复算对比数据。\\
+\path{modules/30_q2/results/主模型历程.json} & 问题二主模型贴身侧温度历程数据，用于温度曲线绘制。\\
+
+\multicolumn{2}{l}{\textbf{问题三}}\\
+\path{modules/40_q3/code/q3.py} & 厚度优化主求解程序：离散涂层数枚举、热安全时间与负重允许时间计算、有效持续时间筛选。\\
+\path{modules/40_q3/code/check_q3.py} & 候选方案可行性与数值残差检查程序。\\
+\path{modules/40_q3/results/正式运行_20260827/问题三最优方案.csv} & 问题三最优涂层方案结果，含各扫描速率下新增层数与有效持续时间。\\
+\path{modules/40_q3/results/正式运行_20260827/问题三候选方案.csv} & 各候选方案在三档扫描速率下的热安全时间、负重时间与有效时间。\\
+
+\multicolumn{2}{l}{\textbf{问题四}}\\
+\path{modules/50_q4/code/q4.py} & 最小放热能力提高比例反求程序：二分搜索确定最小倍率，继承问题三候选方案与阈值。\\
+\path{modules/50_q4/code/check_q4.py} & 数值参数与边界条件一致性检查程序。\\
+\path{modules/50_q4/results/q4_result.csv} & 问题四最小放热能力提高比例与对应有效持续时间结果。\\
+\path{modules/50_q4/results/双阈值结果.csv} & 双阈值场景下的放热能力提高比例与提升幅度结果。\\
 \bottomrule
 \end{longtable}
 \endgroup
 
-\noindent\textbf{模式 B：只提交 PDF，且代码附录不计正文页数。}\quad 将每问最终实际运行的核心程序直接收入附录。优先使用 \verb|\lstinputlisting| 从模块唯一代码源读取，避免手工复制后与正式代码不一致。例如：
-
-\begin{lstlisting}[language=TeX,caption={只交PDF时的完整代码附录写法}]
-\lstinputlisting[
-  language=Python,
-  caption={问题一核心求解程序}
-]{\ProjectRoot/modules/20_q1/code/solve_q1.py}
-\end{lstlisting}
-
-正式比赛只能二选一：若采用模式 B，应补齐各问最终求解、场景分析和约束检验所需的核心程序；不要放废弃版本、调试日志或与正文结果无关的脚本。
+以上各问主求解程序均输出阈值时刻与数值残差检查量，正文中的关键结果可由所列结果文件直接复算得到。
