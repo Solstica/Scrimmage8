@@ -12,7 +12,6 @@
 \caption{问题二物理场景与三层防护结构示意}
 \label{fig:q2-scenario}
 \end{figure}
-\FloatBarrier
 
 图\ref{fig:q2-flow}给出问题二建模与求解的总体流程：先分别确定外侧有风对流系数与人体侧换热参数并建立三层传热模型，再通过微小时间段拓展分离变量法推进求解，最后对阈值穿越时刻做线性插值并比较不同外对流相关式的敏感性。
 
@@ -38,11 +37,11 @@ I_{a,r}=0.092\exp(-0.15v_a)-0.0045\ \mathrm{(m^2\cdot K)/W}.
 h_e=18.46\ \mathrm{W/(m^2\cdot K)}.
 \label{eq:q2-he-iso}
 \end{equation}
-该值高于同温差下附件自然对流关系给出的最大值，因此作为有风工况的基准外侧换热系数。
+进入室外瞬间服装与环境温差最大为$77\ \mathrm K$，由附件自然对流关系得到$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，明显低于上述有风换热系数，因此基准计算取固定$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。
 
 为考察相关式选择的影响，另取PMV对照关系\cite{iso7730}
 \begin{equation}
-h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\}
+h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\},
 \label{eq:q2-hout-pmv}
 \end{equation}
 以及Kuwabara等\cite{kuwabara2005}的经验关系$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$，用于灵敏度对照。
@@ -53,7 +52,7 @@ h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\
 
 \subsection{有风轻微运动条件下的三层非稳态导热模型}
 
-问题二沿用问题一的三层控制方程、相变等效热容、初始条件及层间连续条件，仅重新确定两侧Robin边界。轻微运动人体侧和有风环境侧分别为
+问题二沿用问题一的三层控制方程、相变等效热容、初始条件及层间连续条件，仅重新确定两侧Robin边界。功能层仍采用问题一的归一化放热权重$w(T)$及不可逆固化历史约束，因此改变风速和人体运动状态只改变边界换热，不改变相变本构关系。轻微运动人体侧和有风环境侧分别为
 \begin{equation}
 -k_1T_{1,x}(0,t)=4.0[37-T_1(0,t)],
 \qquad
@@ -89,7 +88,7 @@ h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\
 \tan(\lambda_{3,m}d_3)=-\frac{k_3\lambda_{3,m}}{18.46}.
 \label{eq:q2-eigen}
 \end{equation}
-两处界面段末热流连续条件仍形成关于$\beta_{12}^n,\beta_{23}^n$的$2\times2$线性方程组。计算取$\Delta t=0.25\ \mathrm s$、每层$M=40$个模态和160点Gauss积分，阈值时刻通过相邻时间点线性插值得到。完整步骤见算法\ref{alg:q2-thermal}。
+第二层仍按当前平均温度更新$c_{2,\rm eff}^n$和热扩散率$\alpha_2^n$，两处界面段末热流连续条件形成关于$\beta_{12}^n,\beta_{23}^n$的$2\times2$线性方程组。计算取$\Delta t=0.25\ \mathrm s$、每层$M=40$个模态和160点Gauss积分，阈值时刻通过相邻时间点线性插值得到。完整步骤见算法\ref{alg:q2-thermal}。
 
 \input{\ProjectRoot/modules/30_q2/paper/q2_algorithm.tex}
 
@@ -126,7 +125,6 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \caption{问题二基准工况贴身侧温度随时间的变化}
 \label{fig:q2-cooling}
 \end{figure}
-\FloatBarrier
 
 \begin{figure}[!htbp]
 \centering
@@ -134,7 +132,6 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \caption{问题一与问题二阈值时间对比}
 \label{fig:q2-compare}
 \end{figure}
-\FloatBarrier
 
 图\ref{fig:q2-profile}展示不同时刻沿厚度方向的温度场，外侧温度下降更快，三层温度梯度随暴露时间逐步建立。
 
