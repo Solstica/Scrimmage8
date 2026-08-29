@@ -15,23 +15,56 @@
 \label{fig:q3-flow}
 \end{figure}
 
-\subsection{预备工作}
+\subsection{PDE约束离散优化模型}
 
-\noindent\textbf{1. 材料费用约束}\par
+\noindent\textbf{1. 决策变量与预算可行域}\par
 
-沿用问题一的有效传热面积$A=1.6521\ \mathrm{m^2}$。内层织物和最外隔热层的单位质量价格分别为$p_1=1000\ \mathrm{yuan/kg}$和$p_3=300\ \mathrm{yuan/kg}$，中间功能层价格为$10\ \mathrm{yuan/m^2}$。原防护服材料费用为
+以新增最外层涂层数
+\begin{equation}
+n\in\mathbb Z_{\ge0},\qquad d_3(n)=0.3(1+n)\ \mathrm{mm}
+\label{eq:q3-decision}
+\end{equation}
+作为离散决策变量。沿用问题一的有效传热面积$A=1.6521\ \mathrm{m^2}$，原防护服材料费用为
 \begin{equation}
 C_0=A\rho_1d_1p_1+10A+A\rho_3d_3(0)p_3\approx301.67\ \mathrm{yuan}.
 \label{eq:q3-base-cost}
 \end{equation}
-每增加一层$0.3\ \mathrm{mm}$最外涂层，增加质量$\Delta m\approx0.148689\ \mathrm{kg}$、费用$\Delta C\approx44.61\ \mathrm{yuan}$。由$C_0+n\Delta C\le1.5C_0$得
+其中$p_1=1000\ \mathrm{yuan/kg}$、$p_3=300\ \mathrm{yuan/kg}$。每增加一层$0.3\ \mathrm{mm}$最外涂层，增加质量$\Delta m\approx0.148689\ \mathrm{kg}$、费用$\Delta C\approx44.61\ \mathrm{yuan}$。由预算约束
 \begin{equation}
-n\le\left\lfloor\frac{0.5C_0}{\Delta C}\right\rfloor=3,
-\label{eq:q3-budget-nmax}
+C_0+n\Delta C\le1.5C_0
+\label{eq:q3-budget}
 \end{equation}
-故候选集合为$n\in\{0,1,2,3\}$，对应最外层厚度$0.3,0.6,0.9,1.2\ \mathrm{mm}$。
+得到$n\le3$，故实际可行域为
+\begin{equation}
+\mathcal N=\{0,1,2,3\}.
+\label{eq:q3-feasible-set}
+\end{equation}
 
-\noindent\textbf{2. 随站立时间衰减的负重约束}\par
+\noindent\textbf{2. 厚度决策对应的PDE状态约束}\par
+
+给定$n\in\mathcal N$后，外层厚度$d_3(n)$改变第三层传热域，从而改变贴身侧温度响应。记方案$n$下三层温度场为$T_i^{(n)}(x,t)$，其状态方程为
+\begin{equation}
+\left\{
+\begin{aligned}
+&\rho_i c_i\frac{\partial T_i^{(n)}}{\partial t}
+=k_i\frac{\partial^2T_i^{(n)}}{\partial x^2},\qquad i=1,3,\\
+&\rho_2c_{2,\mathrm{eff}}(T_2^{(n)})\frac{\partial T_2^{(n)}}{\partial t}
+=k_2\frac{\partial^2T_2^{(n)}}{\partial x^2},\\
+&-k_1T_{1,x}^{(n)}(0,t)=h_b[T_b-T_1^{(n)}(0,t)],\\
+&-k_3T_{3,x}^{(n)}(L_n,t)=2.38[T_3^{(n)}(L_n,t)+40]^{1.25},
+\end{aligned}
+\right.
+\label{eq:q3-pde-state}
+\end{equation}
+其中$L_n=d_1+d_2+d_3(n)$，初始条件、两处界面的温度连续与热流连续条件以及功能层不可逆相变关系均沿用问题一。由该PDE正演得到贴身侧温度$T_1^{(n)}(0,t)$，并定义热安全时间
+\begin{equation}
+t_{\theta}(n)=\inf\{t>0:T_1^{(n)}(0,t)\le\theta\},
+\qquad \theta\in\{15,10\}\,^{\circ}\mathrm C.
+\label{eq:q3-thermal-time}
+\end{equation}
+因此，厚度$n$首先通过PDE状态方程改变$t_\theta(n)$，再进入优化目标。
+
+\noindent\textbf{3. 负重约束与有效持续时间}\par
 
 方案$n$下服装质量为
 \begin{equation}
@@ -40,42 +73,29 @@ m_c(n)=A\left[\rho_1d_1+\rho_2d_2+\rho_3d_3(n)\right].
 \end{equation}
 本文将题目中的“最大承受重量”理解为站立过程中实验者所支撑的总质量，因此将$m_h=60\ \mathrm{kg}$计入承重约束：
 \begin{equation}
-m_h+m_c(n)\le100-0.05t,
+m_h+m_c(n)\le100-0.05t.
 \label{eq:q3-weight-constraint}
 \end{equation}
-由此得到负重约束允许的最长站立时间
+由此得到负重条件允许的最长站立时间
 \begin{equation}
 t_W(n)=20[40-m_c(n)].
 \label{eq:q3-weight-time}
 \end{equation}
-新增层数增加时，隔热能力提高而$t_W(n)$下降，两者共同决定有效持续时间。
-
-\noindent\textbf{3. 厚度变化后的传热正演}\par
-
-对任意候选$n$，取$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3(n)=0.3(1+n)\ \mathrm{mm}$，其瞬态传热方程及两侧边界均沿用问题一，仅以新的$d_3(n)$更新总厚度和第三层传热域。记贴身侧温度$T_1^{(n)}(0,t)$首次达到阈值$\theta\in\{15,10\}\,^{\circ}\mathrm C$的时间为
+热安全时间随隔热层增厚而增加，而负重允许时间随服装质量增加而缩短。故对每个阈值定义有效持续时间
 \begin{equation}
-t_{\theta}(n)=\inf\{t>0:T_1^{(n)}(0,t)\le\theta\}.
-\label{eq:q3-thermal-time}
-\end{equation}
-
-\subsection{PDE约束离散优化模型}
-
-\noindent\textbf{1. 决策变量}\par
-决策变量为新增最外层涂层数$n\in\{0,1,2,3\}$，对应$d_3(n)=0.3(1+n)\ \mathrm{mm}$。
-
-\noindent\textbf{2. 目标函数}\par
-对$\theta\in\{15,10\}\,^{\circ}\mathrm C$定义
-\begin{equation}
-t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\},
+t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\}.
 \label{eq:q3-effective-time}
 \end{equation}
-并最大化有效持续时间。
 
-\noindent\textbf{3. 约束条件}\par
-材料费用满足$C_0+n\Delta C\le1.5C_0$；负重满足$m_h+m_c(n)\le100-0.05t_{\rm eff,\theta}(n)$；热安全时间$t_\theta(n)$由问题一瞬态传热模型正演得到。
+\noindent\textbf{4. 目标函数与模型汇总}\par
 
-\noindent\textbf{4. 模型汇总}\par
-综上，我们建立以最大有效持续时间为目标的PDE约束离散优化模型。
+优化目标是在预算可行域内选择$n$，使热安全与负重两类限制共同作用下的有效持续时间最大，即
+\begin{equation}
+n_\theta^*=\arg\max_{n\in\mathcal N}t_{\rm eff,\theta}(n),
+\qquad \theta\in\{15,10\}.
+\label{eq:q3-objective}
+\end{equation}
+综上，问题三构成一个以离散厚度为决策变量、以三层非稳态传热PDE为状态约束、以有效持续时间最大化为目标的PDE约束离散优化模型：
 \vspace{-0.3\baselineskip}
 {\boldmath
 \begin{equation}
@@ -89,9 +109,12 @@ t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\},
 \begin{aligned}
 &n\in\{0,1,2,3\},\qquad d_3(n)=0.3(1+n)\ \mathrm{mm},\\
 &C_0+n\Delta C\le1.5C_0,\\
-&m_c(n)=A[\rho_1d_1+\rho_2d_2+\rho_3d_3(n)],\\
-&m_h+m_c(n)\le100-0.05t_{\rm eff,\theta}(n),\\
+&\rho_i c_iT_{i,t}^{(n)}=k_iT_{i,xx}^{(n)},\quad i=1,3,\\
+&\rho_2c_{2,\mathrm{eff}}(T_2^{(n)})T_{2,t}^{(n)}=k_2T_{2,xx}^{(n)},\\
+&-k_1T_{1,x}^{(n)}(0,t)=h_b[T_b-T_1^{(n)}(0,t)],\\
+&-k_3T_{3,x}^{(n)}(L_n,t)=2.38[T_3^{(n)}(L_n,t)+40]^{1.25},\\
 &t_\theta(n)=\inf\{t>0:T_1^{(n)}(0,t)\le\theta\},\\
+&m_h+m_c(n)\le100-0.05t_{\rm eff,\theta}(n),\\
 &t_W(n)=20[40-m_c(n)],\qquad t_{\rm eff,\theta}(n)=\min\{t_\theta(n),t_W(n)\}.
 \end{aligned}
 \right.
@@ -100,7 +123,7 @@ t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\},
 
 \subsection{模型求解}
 
-候选集合仅含四个离散方案，采用枚举法逐一正演。对每个$n$计算$t_{15}(n),t_{10}(n)$和$t_W(n)$，分别得到两种阈值下的$t_{\rm eff,\theta}(n)$，再选取最大值对应的层数。完整步骤见算法\ref{alg:q3-enumeration}。
+候选集合仅含四个离散方案，采用枚举法逐一正演。对每个$n$先按式\eqref{eq:q3-pde-state}求解温度场，得到$t_{15}(n),t_{10}(n)$，再计算$t_W(n)$与两种阈值下的$t_{\rm eff,\theta}(n)$，最后选取目标函数最大的层数。完整步骤见算法\ref{alg:q3-enumeration}。
 
 \input{\ProjectRoot/modules/40_q3/paper/q3_algorithm.tex}
 
