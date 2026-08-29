@@ -42,7 +42,7 @@ T_b=37\,^{\circ}\mathrm C.
 
 原始曲线两端点热流分别为$403.86\ \mathrm{W/kg}$和$400.42\ \mathrm{W/kg}$。本模型直接采用温区两端点连线作为操作基线，校正后全部357个数据点非负，校正峰面积为$A_{\rm DSC}=20385.458\ \mathrm{W\cdot K/kg}$。该基线规则是显式建模假设，不同的基线选择会直接影响由DSC数据反推的绝对潜热值。
 
-图\ref{fig:q1-dsc-calibration}(a)对比原始放热功率、端点线性基线与校正放热功率，横轴为温度，功率单位为$\mathrm{W/kg}$，三组系列仅表示同一条DSC曲线在校正前后的不同形式，不是第二个物理自变量；图\ref{fig:q1-dsc-calibration}(b)给出由校正峰归一化累计面积构造的相对固化进度，温度由约$26\,^{\circ}\mathrm C$降至$14\,^{\circ}\mathrm C$时$\xi_{\rm DSC}$由$0$增至$1$，横轴反向表示冷却过程，该图不是时间曲线。
+图\ref{fig:q1-dsc-calibration}(a)展示原始放热功率、端点线性基线与校正后放热功率；图\ref{fig:q1-dsc-calibration}(b)展示由校正放热峰归一化累计面积得到的相对固化进度随温度的变化，温度由约$26\,^{\circ}\mathrm C$降至$14\,^{\circ}\mathrm C$时$\xi_{\rm DSC}$由$0$增至$1$。
 
 \begin{figure}[!htbp]
 \centering
@@ -63,7 +63,7 @@ T_b=37\,^{\circ}\mathrm C.
 \label{fig:q1-dsc-calibration}
 \end{figure}
 
-\subsection{人体—三层防护服耦合瞬态传热模型}
+\subsection{基于等效热容法的三层非稳态导热模型}
 
 \noindent\textbf{1. 三层瞬态导热控制方程}\par
 
@@ -155,7 +155,7 @@ T_i(x,0)=37\,^{\circ}\mathrm C,\quad i=1,2,3.
 h_e(t)=2.38\bigl[T_3(L,t)-T_\infty\bigr]^{0.25}.
 \label{eq:q1-hout}
 \end{equation}
-这里$2.38$仅为无风自然对流经验关系中的系数，完整的表面对流换热系数是式\eqref{eq:q1-hout}所定义的$h_e(t)$。问题一没有外加风速，空气运动由衣表与环境之间的温差产生，故该经验式不显式含空气风速，自然对流强弱通过$T_3(L,t)-T_\infty$体现。
+这里$2.38$为无风自然对流经验关系中的系数，完整表面对流换热系数由式\eqref{eq:q1-hout}给出。问题一无外加风速，自然对流强弱由衣表与环境的温差$T_3(L,t)-T_\infty$决定。
 
 于是外侧Robin边界为
 \begin{equation}
@@ -165,10 +165,8 @@ h_e(t)=2.38\bigl[T_3(L,t)-T_\infty\bigr]^{0.25}.
 \label{eq:q1-outer-robin}
 \end{equation}
 
-
-
 \noindent\textbf{5. 模型汇总}\par
-综上，我们建立人体—三层防护服耦合瞬态传热模型。
+综上，我们建立基于等效热容法的三层非稳态导热模型。
 {\boldmath
 \begin{equation}
 \left\{
@@ -205,13 +203,13 @@ T_{23}(\tau)&\approx T_{23}^n+\beta_{23}^n\tau.
 \end{aligned}
 \label{eq:q1-interface-linear}
 \end{equation}
-其中$\beta_{12}^n,\beta_{23}^n$为当前时间段待求斜率，人体边界温度$T_b=37\,^{\circ}\mathrm C$不参与线性外推。
+其中$\beta_{12}^n,\beta_{23}^n$为当前时间段待求斜率，人体边界温度$T_b=37\,^{\circ}\mathrm C$保持恒定。
 
-功能层以时间段起点的层平均温度
+数值求解中，每个微时间段以功能层起点平均温度
 \begin{equation}
 \bar T_2^n=\frac{1}{d_2}\int_{x_1}^{x_2}T_2(x,t_n)\,\mathrm dx
 \end{equation}
-更新有效比热，并在当前时间段内视为常数：
+表征当前相变状态，并将相应等效比热冻结为常数：
 \begin{equation}
 c_{2,\rm eff}^n=c_{2,\rm eff}(\bar T_2^n),
 \qquad
@@ -326,12 +324,12 @@ B_{i,m}(\tau)
 \begin{equation}
 \boldsymbol\beta^n=(\beta_{12}^n,\beta_{23}^n)^\mathsf T.
 \end{equation}
-两个材料界面的热流连续恰好提供两个方程：
+两个材料界面的热流连续提供两个闭合方程：
 \begin{equation}
 k_1T_{1,x}(x_1,t)=k_2T_{2,x}(x_1,t),\qquad
 k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t).
 \end{equation}
-数值实现中在当前时间段末端$\tau=\Delta t$配点满足上述两式，即可求出$\beta_{12}^n,\beta_{23}^n$，随后由式\eqref{eq:q1-mode-solution}推进完整温度场至$t_{n+1}$。人体恒温边界不引入额外未知斜率，两个界面热流连续条件恰好闭合全部待定量。
+数值实现中在当前时间段末端$\tau=\Delta t$配点满足上述两式，即可求出$\beta_{12}^n,\beta_{23}^n$，随后由式\eqref{eq:q1-mode-solution}推进完整温度场至$t_{n+1}$。
 
 \input{\ProjectRoot/modules/20_q1/paper/q1_algorithm.tex}
 
@@ -341,7 +339,7 @@ k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t).
 
 基准扫描速率$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，贴身侧温度$T_{\rm in}(t)$首次降至$15\,^{\circ}\mathrm C$的时刻为$t_{15}=273.908\ \mathrm{s}$，首次降至$10\,^{\circ}\mathrm C$的时刻为$t_{10}=311.158\ \mathrm{s}$。因此问题一给出的可持续正常户外工作时间为$273.908\ \mathrm{s}$（约$4.57\ \mathrm{min}$），危险暴露时间为$311.158\ \mathrm{s}$（约$5.19\ \mathrm{min}$）。
 
-正式模态计算取$\Delta t=0.25\ \mathrm{s}$、$M=40$。三组扫描速率下的潜热与阈值时间见表\ref{tab:q1-time-result}。
+计算取$\Delta t=0.25\ \mathrm{s}$、$M=40$。基准及两组敏感性扫描速率下的潜热与阈值时间见表\ref{tab:q1-time-result}。
 
 \begin{table}[!htbp]
 \centering
@@ -382,11 +380,11 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 
 \noindent\textbf{2. 结果分析}\par
 
-固化进程先于评价阈值完成：模型首次固化完成的网格时刻约为$268.5\ \mathrm{s}$，而$T_{\rm in}$在$273.908\ \mathrm{s}$首次降至$15\,^{\circ}\mathrm C$，两者相差约$5.4\ \mathrm{s}$，说明功能层相变放热在贴身侧达到工作困难阈值前已基本释放完毕，此后的降温主要由显热散热承担。
+固化进程先于评价阈值完成：模型首次固化完成的网格时刻约为$268.5\ \mathrm{s}$，而$T_{\rm in}$在$273.908\ \mathrm{s}$首次降至$15\,^{\circ}\mathrm C$，两者相差约$5.4\ \mathrm{s}$，说明功能层相变放热在贴身侧达到工作困难阈值前已基本释放完毕；此后潜热项不再贡献，温度变化主要由材料显热、层间导热及边界换热共同控制。
 
 \subsection{灵敏度分析}
 
-为考察建模假设与输入参数对达阈时间的影响，分别对DSC扫描速率与衣料初始温度做敏感性分析，结果见图\ref{fig:q1-sensitivity}。左面板固定衣料初温$37\,^{\circ}\mathrm C$，比较$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$；右面板固定$\beta_{\rm DSC}=5\ \mathrm{K/min}$，比较衣料初温$T_0=27,30,33,37\,^{\circ}\mathrm C$。橙色为$t_{15}$，蓝色为$t_{10}$，单位均为$\mathrm{s}$；两面板纵轴范围不同，不能按视觉斜率比较两种输入的敏感性大小，图中只连接已计算的工况，连线不表示新增工况或拟合结果。
+为考察建模假设与输入参数对达阈时间的影响，分别对DSC扫描速率与衣料初始温度做敏感性分析，结果见图\ref{fig:q1-sensitivity}。左面板固定衣料初温$37\,^{\circ}\mathrm C$，比较$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$；右面板固定$\beta_{\rm DSC}=5\ \mathrm{K/min}$，比较衣料初温$T_0=27,30,33,37\,^{\circ}\mathrm C$。橙色为$t_{15}$，蓝色为$t_{10}$，单位均为$\mathrm{s}$；两面板采用各自纵轴尺度，用于展示对应输入变化下的已计算工况。
 
 \begin{figure}[!htbp]
 \centering
@@ -397,7 +395,7 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 
 \noindent\textbf{1. DSC 扫描速率假设}\par
 
-由于附件未给出扫描速率，基准结果依赖$\beta_{\rm DSC}=5\ \mathrm{K/min}$这一显式建模假设。将扫描速率改为$2\ \mathrm{K/min}$与$10\ \mathrm{K/min}$后（表\ref{tab:q1-time-result}），$L_{\rm pcm}$分别变为$611.564\ \mathrm{kJ/kg}$与$122.313\ \mathrm{kJ/kg}$，$t_{15}$变为$520.903\ \mathrm{s}$与$191.642\ \mathrm{s}$。相对于基准$273.908\ \mathrm{s}$，$t_{15}$的变化幅度为$+90.2\%$与$-30.0\%$。因此缺失的扫描速率会显著改变坚持时间，基准结果应与敏感性范围同时报告，不能视为与实验条件无关的唯一值。
+由于附件未给出扫描速率，基准结果依赖$\beta_{\rm DSC}=5\ \mathrm{K/min}$这一显式建模假设。将扫描速率改为$2\ \mathrm{K/min}$与$10\ \mathrm{K/min}$后（表\ref{tab:q1-time-result}），$L_{\rm pcm}$分别变为$611.564\ \mathrm{kJ/kg}$与$122.313\ \mathrm{kJ/kg}$，$t_{15}$变为$520.903\ \mathrm{s}$与$191.642\ \mathrm{s}$。相对于基准$273.908\ \mathrm{s}$，$t_{15}$的变化幅度为$+90.2\%$与$-30.0\%$。因此缺失的扫描速率会显著改变坚持时间，基准结果应与敏感性范围同时报告，以反映实验条件缺失带来的不确定性。
 
 \noindent\textbf{2. 衣料初始温度}\par
 
@@ -423,8 +421,8 @@ $T_0\,(^{\circ}\mathrm C)$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ & �
 \endgroup
 \end{table}
 
-预冷工况下，人体恒温边界先向内层织物供热，使$T_{\rm in}$在最初约$2$--$3\ \mathrm{s}$内轻微回升，随后外界散热占主导并持续下降。衣料初温由$37\,^{\circ}\mathrm C$降至$27\,^{\circ}\mathrm C$时，$t_{15}$由$273.908\ \mathrm{s}$缩短为$236.644\ \mathrm{s}$，$t_{10}$由$311.158\ \mathrm{s}$缩短为$273.894\ \mathrm{s}$，相对降幅分别为$13.60\%$和$11.98\%$。因此实验前衣料温度是短时坚持时间的重要输入；$T_0=37\,^{\circ}\mathrm C$是基准假设，其结果不应解释为对任意服装预热状态均适用，也不将$T_0=37\,^{\circ}\mathrm C$表述为附件事实。
+较低衣料初始温度工况下，人体恒温边界先向内层织物供热，使$T_{\rm in}$在最初约$2$--$3\ \mathrm{s}$内轻微回升，随后外界散热占主导并持续下降。衣料初温由$37\,^{\circ}\mathrm C$降至$27\,^{\circ}\mathrm C$时，$t_{15}$由$273.908\ \mathrm{s}$缩短为$236.644\ \mathrm{s}$，$t_{10}$由$311.158\ \mathrm{s}$缩短为$273.894\ \mathrm{s}$，相对降幅分别为$13.60\%$和$11.98\%$。因此实验前衣料温度是短时坚持时间的重要输入；$T_0=37\,^{\circ}\mathrm C$为本文基准初始温度假设，上述时间结果对应这一初始状态。
 
 \subsection{数值收敛与复算检验}
 
-基准工况下将时间步减半后，$t_{15}$与$t_{10}$的相对变化分别为$0.0019\%$和$0.0010\%$；将模态数增至$60$后变化分别为$0.291\%$和$0.283\%$。采用单元级不可逆相变的隐式有限体积法复算三组工况，阈值时间与模态法相差$0.81\%$--$0.99\%$，且有限体积时间步减半、网格加密后结果基本不变。上述结果说明数值离散误差对阈值时间的影响可忽略，模型求解具备数值收敛与复算一致性。
+基准工况下将时间步减半后，$t_{15}$与$t_{10}$的相对变化分别为$0.0019\%$和$0.0010\%$；将模态数增至$60$后变化分别为$0.291\%$和$0.283\%$。采用单元级不可逆相变的隐式有限体积法复算三组工况，阈值时间与模态法相差$0.81\%$--$0.99\%$，且有限体积时间步减半、网格加密后结果基本不变。上述结果表明，当前离散设置下的数值误差明显小于DSC扫描速率假设引起的跨工况差异，阈值时间具有良好的数值稳定性与复算一致性。
