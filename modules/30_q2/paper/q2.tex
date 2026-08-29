@@ -28,14 +28,14 @@ I_{a,r}=0.092\exp(-0.15v_a)-0.0045\ \mathrm{(m^2\cdot K)/W}.
 h_e=18.46\ \mathrm{W/(m^2\cdot K)}.
 \label{eq:q2-he-iso}
 \end{equation}
-该值高于附件自然对流关系给出的瞬时最大值$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，故作为基准有风边界。
+该值高于附件自然对流关系给出的瞬时最大值$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，因此本文在$3\ \mathrm{m/s}$有风条件下取$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。
 
-外侧边界敏感性另取ISO 7730:2025\cite{iso7730}中的PMV对流关系
+为考察外侧换热关系选择对结果的影响，另取ISO 7730:2025\cite{iso7730}中的PMV对流关系
 \begin{equation}
 h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\},
 \label{eq:q2-hout-pmv}
 \end{equation}
-以及Kuwabara经验关系\cite{kuwabara2005} $h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下二者分别为$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$，仅用于敏感性对照。
+以及Kuwabara经验关系\cite{kuwabara2005} $h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下二者分别为$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$，用于比较不同外侧换热关系对返回时间的影响。
 
 \noindent\textbf{2. 人体侧换热系数}\par
 
@@ -59,7 +59,7 @@ c_{2,\rm eff}(T)=c_2+L_{\rm pcm}w(T),
 L_{\rm pcm}=\frac{60A_{\rm DSC}}{\beta_{\rm DSC}}.
 \label{eq:q2-ceff}
 \end{equation}
-取$5\ \mathrm{K/min}$为基准扫描速率，$2$和$10\ \mathrm{K/min}$为敏感性工况。
+扫描速率取$5\ \mathrm{K/min}$计算主要结果，并另取$2$和$10\ \mathrm{K/min}$考察扫描速率变化的影响。
 
 \noindent\textbf{2. 边界条件修正}\par
 
@@ -127,11 +127,11 @@ t_{\theta}^{(2)}=\inf\{t>0:T_{\rm in}(t)\le\theta\},
 
 \subsection{求解结果与分析}
 
-\textbf{基准工况下，实验者约在$103.49\ \mathrm s$后应返回室内，较静止无风工况提前约$170.42\ \mathrm s$；$115.67\ \mathrm s$后贴身侧温度降至$10\,^{\circ}\mathrm C$。}基准及两组敏感性结果见表\ref{tab:q2-results-main}。
+\textbf{在$3\ \mathrm{m/s}$有风、人体轻微运动且扫描速率取$5\ \mathrm{K/min}$时，实验者约在$103.49\ \mathrm s$后应返回室内，较问题一静止无风条件提前约$170.42\ \mathrm s$；$115.67\ \mathrm s$后贴身侧温度降至$10\,^{\circ}\mathrm C$。}$2$、$5$、$10\ \mathrm{K/min}$三种扫描速率下的结果见表\ref{tab:q2-results-main}。
 
 \begin{table}[!htbp]
 \centering
-\caption{基准有风边界下问题二阈值时间}
+\caption{$3\ \mathrm{m/s}$有风条件下问题二阈值时间}
 \label{tab:q2-results-main}
 \begingroup
 \rowcolors{2}{gray!10}{white}
@@ -148,12 +148,12 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \endgroup
 \end{table}
 
-为观察基准工况下贴身侧温度的连续下降过程，绘制图\ref{fig:q2-cooling}。
+为观察扫描速率取$5\ \mathrm{K/min}$时贴身侧温度的连续下降过程，绘制图\ref{fig:q2-cooling}。
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.44\textwidth]{\ProjectRoot/modules/30_q2/figures/降温过程.png}
-\caption{问题二基准工况贴身侧温度随时间的变化}
+\caption{扫描速率取$5\ \mathrm{K/min}$时贴身侧温度随时间的变化}
 \label{fig:q2-cooling}
 \end{figure}
 
@@ -169,7 +169,7 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \label{fig:q2-compare}
 \end{figure}
 
-由图\ref{fig:q2-compare}可见，在$2,5,10\ \mathrm{K/min}$三组扫描速率下，问题二的两类阈值时间均明显短于问题一，且这一趋势在不同潜热尺度下保持一致，说明边界换热增强是防护时间缩短的稳定主效应。
+由图\ref{fig:q2-compare}可见，在$2,5,10\ \mathrm{K/min}$三种扫描速率下，问题二的两类阈值时间均明显短于问题一，且这一趋势在不同潜热尺度下保持一致，说明边界换热增强是防护时间缩短的稳定主效应。
 \FloatBarrier
 
 为考察有风条件下各层温度梯度的建立过程，图\ref{fig:q2-profile}给出不同时刻沿厚度方向的温度场。
@@ -187,7 +187,7 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 
 \noindent\textbf{1. 外侧换热关系敏感性}\par
 
-为检验外侧换热关系选择是否改变问题二的主要判断，表\ref{tab:q2-results-sens}保留基准关系的三档扫描速率，并对PMV与Kuwabara关系仅列基准$5\ \mathrm{K/min}$工况；图\ref{fig:q2-boundary-sensitivity}用于观察整体趋势。
+为检验外侧换热关系选择是否改变问题二的主要判断，本文采用的IREQ关系列出$2$、$5$、$10\ \mathrm{K/min}$三种扫描速率，PMV与Kuwabara关系仅比较$5\ \mathrm{K/min}$时的结果；图\ref{fig:q2-boundary-sensitivity}用于观察整体趋势。
 
 \begin{table}[!htbp]
 \centering
@@ -216,9 +216,9 @@ Kuwabara经验关系 & 21.95 & 5 & 89.084 & 99.393 \\
 \label{fig:q2-boundary-sensitivity}
 \end{figure}
 
-由图\ref{fig:q2-boundary-sensitivity}及表\ref{tab:q2-results-sens}可见，在基准$5\ \mathrm{K/min}$工况下，相对ISO 11079简化关系，PMV与Kuwabara关系使两级阈值时间分别提前约$10.5\%$和$14.0\%$；三种关系均保持“有风轻微运动显著缩短防护时间”的结论，因此边界关系选择影响具体数值而不改变问题二的主要判断。
+由图\ref{fig:q2-boundary-sensitivity}及表\ref{tab:q2-results-sens}可见，当扫描速率取$5\ \mathrm{K/min}$时，相对ISO 11079简化关系，PMV与Kuwabara关系使两级阈值时间分别提前约$10.5\%$和$14.0\%$；三种关系均保持“有风轻微运动显著缩短防护时间”的结论，因此边界关系选择影响具体数值而不改变问题二的主要判断。
 \FloatBarrier
 
 \noindent\textbf{2. 数值稳定性检验}\par
 
-时间步减半和模态数由40增至60后，阈值时间变化均不超过$0.3\%$；独立隐式有限体积法复算的最大偏差为$1.2146\%$。这些数值差异小于边界关系与扫描速率带来的工况差异，不改变“基准工况约$103.49\ \mathrm s$后应返回室内”的主结论。
+时间步减半和模态数由40增至60后，阈值时间变化均不超过$0.3\%$；独立隐式有限体积法复算的最大偏差为$1.2146\%$。这些数值差异小于不同边界关系和扫描速率造成的结果差异，不改变“$3\ \mathrm{m/s}$有风、轻微运动且扫描速率取$5\ \mathrm{K/min}$时约$103.49\ \mathrm s$后应返回室内”的主要结论。
