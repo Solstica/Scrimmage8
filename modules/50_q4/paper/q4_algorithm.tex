@@ -11,34 +11,19 @@
 \SetKw{KwRet}{Return}
 \caption{问题四最小放热倍率二分搜索}
 \label{alg:q4-bisection}
-\KwIn{场景$(\beta_{\rm DSC},\theta,t_{3,\theta}^*)$，负重上限$t_W^{(4)}$，倍率容差$\varepsilon_\alpha$，潜热$L_{\rm pcm}(\beta_{\rm DSC})$}
-\KwInit{$\alpha_L\leftarrow1$，$\alpha_U\leftarrow2$}
-\KwOut{最小放热倍率$\alpha^*$、提高比例$r_{\min}=100(\alpha^*-1)\%$及实际持续时间$t_{\rm eff,\theta}^{(4)}(\alpha^*)$}
-
-\If{$t_W^{(4)}<t_{3,\theta}^*$}{
-  \KwRet{负重上限不足，当前场景无可行解}\;
-}
-调用问题一传热正演模型计算$t_{T,\theta}^{(4)}(1)$，并取$t_{\rm eff,\theta}^{(4)}(1)=\min\{t_{T,\theta}^{(4)}(1),t_W^{(4)}\}$\;
-\If{$t_{\rm eff,\theta}^{(4)}(1)\ge t_{3,\theta}^*$}{
-  \KwRet{$\alpha^*=1$，$r_{\min}=0$，$t_{\rm eff,\theta}^{(4)}(1)$}\;
-}
-调用问题一传热正演模型计算$t_{\rm eff,\theta}^{(4)}(\alpha_U)$\;
-\While{$t_{\rm eff,\theta}^{(4)}(\alpha_U)<t_{3,\theta}^*$}{
-  $\alpha_L\leftarrow\alpha_U$\;
-  $\alpha_U\leftarrow2\alpha_U$\;
-  调用问题一传热正演模型计算$t_{\rm eff,\theta}^{(4)}(\alpha_U)$\;
+\KwIn{$\beta_{\rm DSC},\theta,t_{3,\theta}^*$，$t_W^{(4)}$，$\varepsilon_\alpha$，$L_{\rm pcm}$}
+\KwInit{$\alpha_L\leftarrow1$，$\alpha_U\leftarrow2$；定义$F(\alpha)=\min\{t_{T,\theta}^{(4)}(\alpha),t_W^{(4)}\}$}
+\KwOut{$\alpha^*$、$r_{\min}=100(\alpha^*-1)\%$及$F(\alpha^*)$}
+\If{$t_W^{(4)}<t_{3,\theta}^*$}{\KwRet{无可行解}\;}
+计算$F(1)$；\If{$F(1)\ge t_{3,\theta}^*$}{\KwRet{$\alpha^*=1$，$r_{\min}=0$，$F(1)$}\;}
+计算$F(\alpha_U)$\;
+\While{$F(\alpha_U)<t_{3,\theta}^*$}{
+  $\alpha_L\leftarrow\alpha_U$，$\alpha_U\leftarrow2\alpha_U$；计算$F(\alpha_U)$\;
 }
 \While{$\alpha_U-\alpha_L>\varepsilon_\alpha$}{
-  $\alpha_M\leftarrow(\alpha_L+\alpha_U)/2$\;
-  调用问题一传热正演模型计算$t_{T,\theta}^{(4)}(\alpha_M)$，并取$t_{\rm eff,\theta}^{(4)}(\alpha_M)=\min\{t_{T,\theta}^{(4)}(\alpha_M),t_W^{(4)}\}$\;
-  \If{$t_{\rm eff,\theta}^{(4)}(\alpha_M)\ge t_{3,\theta}^*$}{
-    $\alpha_U\leftarrow\alpha_M$\;
-  }
-  \Else{
-    $\alpha_L\leftarrow\alpha_M$\;
-  }
+  $\alpha_M\leftarrow(\alpha_L+\alpha_U)/2$；计算$F(\alpha_M)$\;
+  \eIf{$F(\alpha_M)\ge t_{3,\theta}^*$}{$\alpha_U\leftarrow\alpha_M$\;}{$\alpha_L\leftarrow\alpha_M$\;}
 }
-$\alpha^*\leftarrow\alpha_U$\;
-调用问题一传热正演模型复算$t_{\rm eff,\theta}^{(4)}(\alpha^*)$\;
-\KwRet{$\alpha^*$，$100(\alpha^*-1)\%$，$t_{\rm eff,\theta}^{(4)}(\alpha^*)$}\;
+$\alpha^*\leftarrow\alpha_U$；复算$F(\alpha^*)$\;
+\KwRet{$\alpha^*$，$100(\alpha^*-1)\%$，$F(\alpha^*)$}\;
 \end{algorithm}
