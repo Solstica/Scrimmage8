@@ -17,51 +17,40 @@
 
 \noindent\textbf{1. 材料费用约束}\par
 
-沿用问题一的有效传热面积$A=A_b=1.6521\ \mathrm{m^2}$。内层织物和最外隔热层的单位质量价格分别为$p_1=1000\ \mathrm{yuan/kg}$和$p_3=300\ \mathrm{yuan/kg}$，中间功能层价格为$10\ \mathrm{yuan/m^2}$。原防护服材料费用为
+沿用问题一的有效传热面积$A=1.6521\ \mathrm{m^2}$。内层织物和最外隔热层的单位质量价格分别为$p_1=1000\ \mathrm{yuan/kg}$和$p_3=300\ \mathrm{yuan/kg}$，中间功能层价格为$10\ \mathrm{yuan/m^2}$。原防护服材料费用为
 \begin{equation}
 C_0=A\rho_1d_1p_1+10A+A\rho_3d_3(0)p_3\approx301.67\ \mathrm{yuan}.
 \label{eq:q3-base-cost}
 \end{equation}
-每增加一层$0.3\ \mathrm{mm}$最外涂层，增加质量$\Delta m\approx0.148689\ \mathrm{kg}$，对应费用$\Delta C\approx44.61\ \mathrm{yuan}$。由$C_0+n\Delta C\le1.5C_0$得到
+每增加一层$0.3\ \mathrm{mm}$最外涂层，增加质量$\Delta m\approx0.148689\ \mathrm{kg}$、费用$\Delta C\approx44.61\ \mathrm{yuan}$。由$C_0+n\Delta C\le1.5C_0$得
 \begin{equation}
 n\le\left\lfloor\frac{0.5C_0}{\Delta C}\right\rfloor=3,
 \label{eq:q3-budget-nmax}
 \end{equation}
-因此候选集合为$n\in\{0,1,2,3\}$，最外层厚度分别为$0.3,0.6,0.9,1.2\ \mathrm{mm}$。
+故候选集合为$n\in\{0,1,2,3\}$，对应最外层厚度$0.3,0.6,0.9,1.2\ \mathrm{mm}$。
 
 \noindent\textbf{2. 随站立时间衰减的负重约束}\par
 
-方案$n$下的服装质量为
+方案$n$下服装质量为
 \begin{equation}
 m_c(n)=A\left[\rho_1d_1+\rho_2d_2+\rho_3d_3(n)\right].
 \label{eq:q3-clothing-mass}
 \end{equation}
-题目给出实验者初始最大承受重量$100\ \mathrm{kg}$，且每增加$10\ \mathrm s$站立时间，最大承受重量下降$0.5\ \mathrm{kg}$。本文将“最大承受重量”理解为站立过程中实验者所支撑的总质量，因此将实验者自身质量$m_h=60\ \mathrm{kg}$计入承重约束，可行性条件为
+本文将题目中的“最大承受重量”理解为站立过程中实验者所支撑的总质量，因此将$m_h=60\ \mathrm{kg}$计入承重约束：
 \begin{equation}
-m_h+m_c(n)\le100-0.05t.
+m_h+m_c(n)\le100-0.05t,
 \label{eq:q3-weight-constraint}
 \end{equation}
-由此得到仅由负重能力决定的最长站立时间
+由此得到负重约束允许的最长站立时间
 \begin{equation}
-t_W(n)=20\left[40-m_c(n)\right].
+t_W(n)=20[40-m_c(n)].
 \label{eq:q3-weight-time}
 \end{equation}
-随着新增层数增加，热阻增加有利于延缓降温，而$t_W(n)$随服装质量增加而下降，两者共同决定最终有效持续时间。
+新增层数增加时，隔热能力提高而$t_W(n)$下降，两者共同决定有效持续时间。
 
-\noindent\textbf{3. 厚度变化后的传热正演关系}\par
+\noindent\textbf{3. 厚度变化后的传热正演}\par
 
-对任意候选$n$，取$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3(n)=0.3(1+n)\ \mathrm{mm}$，并沿用问题一的三层瞬态传热模型：
-\begin{equation}
-\left\{
-\begin{aligned}
-\rho_1c_1T_{1,t}&=k_1T_{1,xx},\\
-\rho_2c_{2,\rm eff}T_{2,t}&=k_2T_{2,xx},\\
-\rho_3c_3T_{3,t}&=k_3T_{3,xx}.
-\end{aligned}
-\right.
-\label{eq:q3-governing}
-\end{equation}
-人体侧边界为$-k_1T_{1,x}(0,t)=3.0[37-T_1(0,t)]$，外侧自然对流边界为$-k_3T_{3,x}(L(n),t)=2.38[T_3(L(n),t)+40]^{1.25}$，两处材料界面满足温度和热流连续。记贴身侧温度$T_1^{(n)}(0,t)$首次达到阈值$\theta\in\{15,10\}\,^{\circ}\mathrm C$的时间为
+对任意候选$n$，取$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3(n)=0.3(1+n)\ \mathrm{mm}$，其瞬态传热方程及两侧边界均沿用问题一，仅以新的$d_3(n)$更新总厚度和第三层传热域。记贴身侧温度$T_1^{(n)}(0,t)$首次达到阈值$\theta\in\{15,10\}\,^{\circ}\mathrm C$的时间为
 \begin{equation}
 t_{\theta}(n)=\inf\{t>0:T_1^{(n)}(0,t)\le\theta\}.
 \label{eq:q3-thermal-time}
@@ -70,12 +59,10 @@ t_{\theta}(n)=\inf\{t>0:T_1^{(n)}(0,t)\le\theta\}.
 \subsection{PDE约束离散优化模型}
 
 \noindent\textbf{1. 决策变量}\par
-
 决策变量为新增最外层涂层数$n\in\{0,1,2,3\}$，对应$d_3(n)=0.3(1+n)\ \mathrm{mm}$。
 
 \noindent\textbf{2. 目标函数}\par
-
-对$\theta\in\{15,10\}\,^{\circ}\mathrm C$分别定义
+对$\theta\in\{15,10\}\,^{\circ}\mathrm C$定义
 \begin{equation}
 t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\},
 \label{eq:q3-effective-time}
@@ -83,32 +70,27 @@ t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\},
 并最大化有效持续时间。
 
 \noindent\textbf{3. 约束条件}\par
-
-材料费用满足$C_0+n\Delta C\le1.5C_0$；负重满足$m_h+m_c(n)\le100-0.05t_{\rm eff,\theta}(n)$；热安全时间$t_\theta(n)$由式\eqref{eq:q3-thermal-time}的瞬态传热正演确定。
-
+材料费用满足$C_0+n\Delta C\le1.5C_0$；负重满足$m_h+m_c(n)\le100-0.05t_{\rm eff,\theta}(n)$；热安全时间$t_\theta(n)$由问题一瞬态传热模型正演得到。
 
 \noindent\textbf{4. 模型汇总}\par
-综上，我们建立热安全—负重耦合离散厚度优化模型。
+综上，我们建立以最大有效持续时间为目标的PDE约束离散优化模型。
 \vspace{-0.3\baselineskip}
 {\boldmath
 \begin{equation}
 \max_{n}\quad t_{\rm eff,\theta}(n),\qquad \theta\in\{15,10\},
 \label{eq:q3-summary-obj}
 \end{equation}}
-
 {\boldmath
 \begin{equation}
 \mathrm{s.t.}\quad
 \left\{
 \begin{aligned}
-&n\in\{0,1,2,3\},\\
-&d_3(n)=0.3(1+n)\ \mathrm{mm},\\
+&n\in\{0,1,2,3\},\qquad d_3(n)=0.3(1+n)\ \mathrm{mm},\\
 &C_0+n\Delta C\le1.5C_0,\\
 &m_c(n)=A[\rho_1d_1+\rho_2d_2+\rho_3d_3(n)],\\
 &m_h+m_c(n)\le100-0.05t_{\rm eff,\theta}(n),\\
 &t_\theta(n)=\inf\{t>0:T_1^{(n)}(0,t)\le\theta\},\\
-&t_W(n)=20[40-m_c(n)],\\
-&t_{\rm eff,\theta}(n)=\min\{t_\theta(n),t_W(n)\}.
+&t_W(n)=20[40-m_c(n)],\qquad t_{\rm eff,\theta}(n)=\min\{t_\theta(n),t_W(n)\}.
 \end{aligned}
 \right.
 \label{eq:q3-summary-con}
@@ -116,15 +98,15 @@ t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\},
 
 \subsection{模型求解}
 
-候选集合仅含四个离散方案，因此采用枚举法求解。对每个$n$进行一次瞬态传热正演，同时提取$t_{15}(n)$和$t_{10}(n)$，再与$t_W(n)$比较得到两种阈值下的有效持续时间，并分别选择最大值对应的层数。完整过程见算法\ref{alg:q3-enumeration}。
+候选集合仅含四个离散方案，采用枚举法逐一正演。对每个$n$计算$t_{15}(n),t_{10}(n)$和$t_W(n)$，分别得到两种阈值下的$t_{\rm eff,\theta}(n)$，再选取最大值对应的层数。完整步骤见算法\ref{alg:q3-enumeration}。
 
 \input{\ProjectRoot/modules/40_q3/paper/q3_algorithm.tex}
 
-从模型结构可见，增加隔热厚度通常会提高$t_\theta(n)$，而$t_W(n)$随$n$严格下降，因此最优方案由热安全收益、负重损失和预算可行域共同决定，最终选择以四个离散候选的实际正演结果为准。
+增加隔热厚度会提高$t_\theta(n)$，而服装增重使$t_W(n)$下降，因此最优方案由热安全收益、负重损失与预算可行域共同决定。
 
 \subsection{求解结果与分析}
 
-基准扫描速率$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，两种评价阈值对应的最优方案均为$n^*=3$，即新增三层外涂层，最外层厚度为$1.2\ \mathrm{mm}$、总厚度为$2.3\ \mathrm{mm}$；$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$阈值下的最优有效持续时间分别为$416.04\ \mathrm s$和$490.64\ \mathrm s$。在$\beta_{\rm DSC}=2$和$10\ \mathrm{K/min}$两组敏感性工况下，最优层数仍保持$n^*=3$，对应结果见表\ref{tab:q3-optimum}。
+基准扫描速率$\beta_{\rm DSC}=5\ \mathrm{K/min}$下，两种评价阈值对应的最优方案均为$n^*=3$，即新增三层外涂层，最外层厚度为$1.2\ \mathrm{mm}$、总厚度为$2.3\ \mathrm{mm}$；$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$阈值下的最优有效持续时间分别为$416.04\ \mathrm s$和$490.64\ \mathrm s$。在$2$和$10\ \mathrm{K/min}$两组敏感性工况下，最优层数仍保持$n^*=3$，见表\ref{tab:q3-optimum}。
 
 \begin{table}[!htbp]
 \centering
@@ -147,9 +129,9 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \endgroup
 \end{table}
 
-在基准及两组敏感性工况下，热安全约束均先于负重约束达到，因此增厚的隔热收益仍占主导，最优解位于预算允许的厚度边界。其中$\beta_{\rm DSC}=2\ \mathrm{K/min}$、$n=3$、$10\,^{\circ}\mathrm C$阈值下$t_{10}=774.808\ \mathrm s$，而$t_W=775.994\ \mathrm s$，两者仅相差约$1.19\ \mathrm s$，表明该工况已经接近热安全与负重约束的交汇区域。
+基准及两组敏感性工况下，热安全约束均先于负重约束达到，最优解位于预算允许的厚度边界。其中$\beta_{\rm DSC}=2\ \mathrm{K/min}$、$n=3$、$10\,^{\circ}\mathrm C$阈值下$t_{10}=774.808\ \mathrm s$，与$t_W=775.994\ \mathrm s$仅差约$1.19\ \mathrm s$，已接近两类约束的交汇区域。
 
-图\ref{fig:q3-eff-panorama}汇总基准及敏感性工况下各候选方案的有效持续时间，图\ref{fig:q3-tradeoff}进一步展示隔热增厚带来的热安全收益与服装增重造成的负重损失。
+图\ref{fig:q3-eff-panorama}汇总各候选方案的有效持续时间，图\ref{fig:q3-tradeoff}展示隔热增厚收益与负重损失的竞争关系。
 
 \begin{figure}[!htbp]
 \centering
@@ -164,18 +146,15 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \caption{不同扫描速率下离散新增层数对应的热安全时间与负重时间}
 \label{fig:q3-tradeoff}
 \end{figure}
-
 \FloatBarrier
 
-两种阈值分别对应工作困难与生命危险两类评价边界。基准及两组敏感性工况下二者给出相同的最优层数，但有效持续时间不同，因此双阈值结果反映了评价标准变化对性能指标的影响。
+两种评价阈值在基准及两组敏感性工况下给出相同的最优层数，但对应有效持续时间不同，说明评价标准变化主要影响性能指标而未改变当前最优结构。
 
 \subsection{灵敏度分析}
 
-\noindent\textbf{1. 低扫描速率下的约束竞争}\par
+为考察更宽参数范围内的约束竞争，将扫描速率扩展至$\beta_{\rm DSC}=0.5,1.0,1.25,1.5,1.75\ \mathrm{K/min}$。随扫描速率降低，反演潜热增大，热安全时间逐渐接近并超过负重时间，从而出现最优层数切换。$15\,^{\circ}\mathrm C$阈值下$0\to1$、$1\to2$、$2\to3$的切换位置约为$1.22,1.36,1.54\ \mathrm{K/min}$，$10\,^{\circ}\mathrm C$阈值下约为$1.29,1.48,1.72\ \mathrm{K/min}$。
 
-为考察热安全与负重约束在更宽参数范围内的竞争关系，对$\beta_{\rm DSC}=0.5,1.0,1.25,1.5,1.75\ \mathrm{K/min}$进行了扩展诊断。结果表明，随着假设扫描速率降低、由$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$反演得到的潜热增大，热安全时间逐渐接近并超过负重时间，从而出现内部最优层数切换。$15\,^{\circ}\mathrm C$阈值下$0\to1$、$1\to2$、$2\to3$的切换区间分别位于约$1.22$、$1.36$、$1.54\ \mathrm{K/min}$附近；$10\,^{\circ}\mathrm C$阈值下对应位置约为$1.29$、$1.48$、$1.72\ \mathrm{K/min}$。这些区间用于评估缺失DSC扫描条件导致的优化结构不确定性。
-
-图\ref{fig:q3-layer-state}以状态带形式给出两种阈值下最优新增层数随扫描速率的分段变化及切换区间。
+图\ref{fig:q3-layer-state}给出两种阈值下最优新增层数随扫描速率的分段变化。
 
 \begin{figure}[!htbp]
 \centering
@@ -183,7 +162,6 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \caption{两种阈值下最优新增层数随扫描速率的状态带与切换区间}
 \label{fig:q3-layer-state}
 \end{figure}
-
 \FloatBarrier
 
-对检测到的六处层数切换位置采用半时间步长复核，切换方向均保持不变。切换区域对应的反演潜热约为$712$--$1004\ \mathrm{kJ/kg}$，明显高于本题基准工况的潜热水平，进一步表明模型中的隔热收益与增重损失存在明确竞争关系。
+六处层数切换位置经半时间步长复核后方向均保持不变。切换区域对应的反演潜热约为$712$--$1004\ \mathrm{kJ/kg}$，表明在高潜热区间内隔热收益与增重损失的竞争会改变最优离散结构。
