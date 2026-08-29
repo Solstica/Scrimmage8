@@ -21,7 +21,7 @@
 
 \noindent\textbf{1. 外表面对流系数}\par
 
-采用近期IREQ冷环境研究对ISO 11079体系边界空气层热阻关系的复核\cite{alfano2025ireq}，取
+采用近期IREQ冷环境研究给出的边界空气层热阻关系\cite{alfano2025ireq}，并按本文外侧风边界仅保留环境风速项，取$v_w=0$，得
 \begin{equation}
 I_{a,r}=0.092\exp(-0.15v_a)-0.0045\ \mathrm{(m^2\cdot K)/W}.
 \label{eq:q2-iar}
@@ -38,7 +38,8 @@ h_e=18.46\ \mathrm{W/(m^2\cdot K)}.
 h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\},
 \label{eq:q2-hout-pmv}
 \end{equation}
-并保留原计算中的Kuwabara经验关系$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$作为较强换热扰动项。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$。ISO 7730:2025面向中等热环境，故PMV关系仅用于边界相关式敏感性比较，不作为$-40\,^{\circ}\mathrm C$极寒工况的主边界；近期非稳态湍流风热人偶研究也表明，对流换热系数对风场特征具有明显敏感性\cite{zhou2025wind}。
+以及Kuwabara等基于室外风速范围热人偶试验得到的经验关系\cite{kuwabara2005}
+$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$。ISO 7730:2025面向中等热环境，故PMV关系仅用于边界相关式敏感性比较，不作为$-40\,^{\circ}\mathrm C$极寒工况的主边界。近期非稳态湍流风热人偶研究表明，对流换热系数会随风场特征变化\cite{zhou2025wind}；针对风环境冷防护服的数值研究也表明，风速会改变织物体系内部的热量与气流传递\cite{tu2025windy}。
 
 \noindent\textbf{2. 人体侧换热系数}\par
 
