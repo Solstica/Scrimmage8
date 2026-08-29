@@ -6,7 +6,6 @@
 \SetKwInput{KwIn}{Input}
 \SetKwInput{KwInit}{Initialize}
 \SetKwInput{KwOut}{Output}
-\SetKwFor{For}{for}{do}{end for}
 \SetKwFor{While}{while}{do}{end while}
 \SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{end if}
 \SetKw{KwRet}{Return}
@@ -14,25 +13,21 @@
 \SetKwFunction{InterpThresh}{InterpThresh}
 \caption{问题二微小时间段拓展分离变量法}
 \label{alg:q2-thermal}
-\KwIn{三层材料参数$\rho_i,c_i,k_i,d_i\;(i=1,2,3)$，DSC校正积分面积$A_{\rm DSC}$，扫描速率$\beta_{\rm DSC}$，人体侧换热系数$h_b=4.0\ \mathrm{W/(m^2\cdot K)}$，外侧换热系数$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$，环境温度$T_\infty=-40\,^{\circ}\mathrm C$，时间步$\Delta t=0.25\ \mathrm s$，模态数$M=40$，总时长$t_{\max}$}
-\KwInit{计算$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$及权重函数$w(T)$；预求第一层Robin--Dirichlet本征值与第三层Dirichlet--Robin本征值；令$T_i(x,0)=37\,^{\circ}\mathrm C$，$\xi\leftarrow0$，$n\leftarrow0$，$t_{15},t_{10}\leftarrow\varnothing$}
-\While{$n\Delta t<t_{\max}$ 且 $T_1(0,n\Delta t)>10\,^{\circ}\mathrm C$}{
-    由当前功能层平均温度与历史相变进度计算$c_{2,\rm eff}^n$，并更新$\alpha_2^n=k_2/(\rho_2c_{2,\rm eff}^n)$\;
-    将当前时间段内两处界面温度近似为线性变化，对三层分别构造本征模态展开\;
-    组装两处界面热流连续条件，形成$2\times2$线性方程组\;
-    $[\beta_{12}^n,\beta_{23}^n]^\top\leftarrow\SolveLinear(\cdot)$\;
-    由模态展开推进温度场至$t_{n+1}$，并按历史最大值更新不可逆固化进度$\xi$\;
-    \If{$\xi=1$}{
-        后续时间段取$c_{2,\rm eff}=c_2$\;
-    }
-    \If{$t_{15}=\varnothing$ 且 $T_1(0,t_{n+1})\le15\,^{\circ}\mathrm C$}{
-        $t_{15}\leftarrow\InterpThresh(T_1(0,t_n),T_1(0,t_{n+1}),n\Delta t,(n+1)\Delta t,15)$\;
-    }
-    \If{$t_{10}=\varnothing$ 且 $T_1(0,t_{n+1})\le10\,^{\circ}\mathrm C$}{
-        $t_{10}\leftarrow\InterpThresh(T_1(0,t_n),T_1(0,t_{n+1}),n\Delta t,(n+1)\Delta t,10)$\;
-    }
-    $n\leftarrow n+1$\;
+\KwIn{$\rho_i,c_i,k_i,d_i$，$A_{\rm DSC},\beta_{\rm DSC}$，$h_b=4.0$，$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$，$T_\infty=-40\,^{\circ}\mathrm C$，$\Delta t=0.25\ \mathrm s$，$M=40$}
+\KwInit{计算$L_{\rm pcm}$与$w(T)$并预求边界本征值；置$T_i(x,0)=37\,^{\circ}\mathrm C$，$\xi=0$，$n=0$，$t_{15},t_{10}=\varnothing$}
+\KwOut{$t_{15},t_{10}$及$T_i(x,t)$}
+\While{$T_1(0,t_n)>10\,^{\circ}\mathrm C$}{
+  由$\bar T_2^n$和历史$\xi$更新$c_{2,\rm eff}^n$与$\alpha_2^n$\;
+  线性近似两处界面温度，并构造三层本征展开\;
+  由热流连续条件解$[\beta_{12}^n,\beta_{23}^n]^\top\leftarrow\SolveLinear(\cdot)$\;
+  推进至$t_{n+1}$并按历史最大值更新$\xi$；若$\xi=1$，后续取$c_{2,\rm eff}=c_2$\;
+  \If{$t_{15}=\varnothing$ 且 $T_1(0,t_{n+1})\le15\,^{\circ}\mathrm C$}{
+    $t_{15}\leftarrow\InterpThresh(T_1(0,t_n),T_1(0,t_{n+1}),t_n,t_{n+1},15)$\;
+  }
+  \If{$t_{10}=\varnothing$ 且 $T_1(0,t_{n+1})\le10\,^{\circ}\mathrm C$}{
+    $t_{10}\leftarrow\InterpThresh(T_1(0,t_n),T_1(0,t_{n+1}),t_n,t_{n+1},10)$\;
+  }
+  $n\leftarrow n+1$\;
 }
-\KwRet{$t_{15}$、$t_{10}$及温度场$T_i(x,t)$}\;
-\KwOut{贴身侧温度首次达到$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$的时刻及对应温度场}
+\KwRet{$t_{15},t_{10},T_i(x,t)$}\;
 \end{algorithm}
