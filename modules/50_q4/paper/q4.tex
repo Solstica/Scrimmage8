@@ -14,6 +14,7 @@
 \caption{问题四热传导参数反问题求解流程}
 \label{fig:q4-flow}
 \end{figure}
+\FloatBarrier
 
 \subsection{相变材料热传导参数反问题模型}
 
@@ -35,7 +36,7 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T),
 \end{equation}
 由此，$\alpha$直接进入功能层PDE的有效热容系数；相变温区及固化进度分布保持不变，仅总潜热和有效比热幅值随$\alpha$改变。
 
-图\ref{fig:q4-material}展示温度、放热倍率与有效比热之间的关系。主图为温度—倍率—有效比热热图，下方叠加$\alpha=1$、$\alpha=1.863$、$\alpha=2.090$三个真实求解倍率的温度切片，右侧给出峰温$T=20.622\,^{\circ}\mathrm C$处峰值有效比热随倍率的变化。各倍率下峰温保持在原DSC放热峰附近，而有效比热峰值随$\alpha$增大而提高，说明同比例强化只放大相变温区内的本构响应幅值，不改变温区位置。
+为观察放热倍率对相变本构的影响，图\ref{fig:q4-material}给出温度—倍率—有效比热关系，并叠加$\alpha=1$、$\alpha=1.863$、$\alpha=2.090$三个代表性倍率的温度切片及峰值响应。
 
 \begin{figure}[!htbp]
 \centering
@@ -43,6 +44,9 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T),
 \caption{放热倍率下有效比热本构响应及峰温倍率响应}
 \label{fig:q4-material}
 \end{figure}
+
+由图\ref{fig:q4-material}可见，各倍率下有效比热峰均保持在原DSC放热峰$20.622\,^{\circ}\mathrm C$附近，而峰值随$\alpha$增大近似同比例提高。由此可见，本文的强化方式主要放大相变温区内的储热响应幅值，而不改变相变发生的温度位置，符合题目“各温度下同比例提高放热能力”的设定。
+\FloatBarrier
 
 \noindent\textbf{2. 参数到热响应的PDE正演映射}\par
 
@@ -93,10 +97,6 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 \label{eq:q4-time-constraint}
 \end{equation}
 原始厚度不变，因此$t_W^{(4)}$与$\alpha$无关；真正随$\alpha$变化的是由PDE状态方程确定的热安全时间$t_{T,\theta}^{(4)}(\alpha)$。
-
-
-
-
 
 \noindent\textbf{4. 模型汇总}\par
 综上，我们建立以最小放热强化率为目标的相变材料热传导参数反问题模型。
@@ -171,7 +171,7 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 
 将扫描速率扩展至$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75\ \mathrm{K/min}$。其中$0.5$和$1\ \mathrm{K/min}$时原材料已达到问题三同场景目标；$1.25\ \mathrm{K/min}$附近两种阈值的活动约束开始分化，自$1.5\ \mathrm{K/min}$起均由热安全约束控制。
 
-图\ref{fig:q4-dual}给出基准、敏感性及扩展诊断场景下的强化需求。图中横轴为离散扫描速率、纵轴为温度阈值，色标表示最小提高比例；低速场景色块保持浅色，随扫描速率增大色块逐渐加深，与活动约束的切换顺序一致。
+为直观展示强化需求随扫描速率和温度阈值的变化，图\ref{fig:q4-dual}以扫描速率为横轴、温度阈值为纵轴，并用色标表示最小放热能力提高比例。
 
 \begin{figure}[!htbp]
 \centering
@@ -179,6 +179,9 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 \caption{基准、敏感性及扩展诊断场景下的最小放热能力提高比例}
 \label{fig:q4-dual}
 \end{figure}
+
+由图\ref{fig:q4-dual}可见，低扫描速率下原材料储热能力较强，所需强化比例较低甚至为零；随扫描速率增大，色块逐渐加深，两种阈值对应的最小强化需求同步上升。该趋势与前述活动约束由负重限制向热安全限制转变的过程一致，也说明扫描速率假设会显著影响反演出的材料强化幅度。
+\FloatBarrier
 
 \noindent\textbf{2. 数值搜索与模态截断}\par
 
