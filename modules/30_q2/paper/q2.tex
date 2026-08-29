@@ -30,13 +30,12 @@ h_e=18.46\ \mathrm{W/(m^2\cdot K)}.
 \end{equation}
 进入室外瞬间服装与环境温差最大为$77\ \mathrm K$，由附件自然对流关系得到$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，明显低于上述有风换热系数，因此基准计算取固定$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。
 
-为考察相关式选择的影响，另取ISO 7730:2025\cite{iso7730}中的PMV对流换热关系
+为检验外侧换热关系选择对结果的影响，另采用ISO 7730:2025\cite{iso7730}中的PMV对流换热关系
 \begin{equation}
 h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\},
 \label{eq:q2-hout-pmv}
 \end{equation}
-以及Kuwabara等基于室外风速范围热人偶试验得到的经验关系\cite{kuwabara2005}
-$h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下，两者分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$。ISO 7730:2025面向中等热环境，故PMV关系仅用于边界相关式敏感性比较，不作为$-40\,^{\circ}\mathrm C$极寒工况的主边界。近期非稳态湍流风热人偶研究表明，对流换热系数会随风场特征变化\cite{zhou2025wind}；针对风环境冷防护服的数值研究也表明，风速会改变织物体系内部的热量与气流传递\cite{tu2025windy}。
+以及Kuwabara等热人偶试验得到的经验关系\cite{kuwabara2005} $h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$，二者在$v_a=3\ \mathrm{m/s}$下分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$。由于ISO 7730:2025面向中等热环境，PMV与Kuwabara关系均仅作为边界敏感性对照。
 
 \noindent\textbf{2. 人体侧换热系数}\par
 
@@ -64,7 +63,12 @@ L_{\rm pcm}=\frac{60A_{\rm DSC}}{\beta_{\rm DSC}}.
 
 \noindent\textbf{2. 有风轻微运动边界与界面条件}\par
 
-由预备工作得到人体侧换热系数$h_b=4.0\ \mathrm{W/(m^2\cdot K)}$，环境侧基准换热系数$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。因此两侧Robin边界为
+与问题一相比，本问真正改变的是两侧换热边界：轻微运动使人体侧换热系数由$3.0$增至$4.0\ \mathrm{W/(m^2\cdot K)}$，外侧则由随表面温度变化的自然对流改为有风等效换热系数$18.46\ \mathrm{W/(m^2\cdot K)}$，即
+\begin{equation}
+h_b:3.0\rightarrow4.0,\qquad h_e(T)\rightarrow18.46\ \mathrm{W/(m^2\cdot K)}.
+\label{eq:q2-boundary-change}
+\end{equation}
+因此两侧Robin边界为
 \begin{equation}
 -k_1T_{1,x}(0,t)=4.0[37-T_1(0,t)],
 \qquad
@@ -123,11 +127,11 @@ t_{\theta}^{(2)}=\inf\{t>0:T_{\rm in}(t)\le\theta\},
 
 \subsection{求解结果与分析}
 
-基准$\beta_{\rm DSC}=5\ \mathrm{K/min}$下得到$t_{15}^{(2)}=103.492\ \mathrm s$、$t_{10}^{(2)}=115.666\ \mathrm s$，因此实验者约在$103.49\ \mathrm s$后应返回室内。基准及两组敏感性结果见表\ref{tab:q2-results-main}。
+\textbf{基准工况下，实验者约在$103.49\ \mathrm s$后应返回室内，较静止无风工况提前约$170.42\ \mathrm s$；$115.67\ \mathrm s$后贴身侧温度降至$10\,^{\circ}\mathrm C$。}基准及两组敏感性结果见表\ref{tab:q2-results-main}。
 
 \begin{table}[!htbp]
 \centering
-\caption{ISO 11079简化边界下问题二阈值时间}
+\caption{基准有风边界下问题二阈值时间}
 \label{tab:q2-results-main}
 \begingroup
 \rowcolors{2}{gray!10}{white}
@@ -143,8 +147,6 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \end{tabularx}
 \endgroup
 \end{table}
-
-相较问题一同一$5\ \mathrm{K/min}$工况的$t_{15}=273.908\ \mathrm s$，返回时间明显缩短，反映外部风致换热与轻微运动引起的人体侧换热增强的共同作用。
 
 为观察基准工况下贴身侧温度的连续下降过程，绘制图\ref{fig:q2-cooling}。
 
@@ -167,12 +169,12 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \label{fig:q2-compare}
 \end{figure}
 
-由图\ref{fig:q2-compare}可见，在$2,5,10\ \mathrm{K/min}$三组扫描速率下，问题二的两类阈值时间均明显短于问题一，且这一趋势在不同潜热尺度下保持一致，说明外部风致换热与轻微运动共同缩短了有效防护时间。
+由图\ref{fig:q2-compare}可见，在$2,5,10\ \mathrm{K/min}$三组扫描速率下，问题二的两类阈值时间均明显短于问题一，且这一趋势在不同潜热尺度下保持一致，说明边界换热增强是防护时间缩短的稳定主效应。
 \FloatBarrier
 
 为考察有风条件下各层温度梯度的建立过程，图\ref{fig:q2-profile}给出不同时刻沿厚度方向的温度场。
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.44\textwidth]{\ProjectRoot/modules/30_q2/figures/温度剖面补充.png}
 \caption{不同时刻沿厚度方向的温度场}
@@ -180,11 +182,12 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \end{figure}
 
 由图\ref{fig:q2-profile}可见，外层直接承受冷风和低温环境作用，温度下降最快；随暴露时间增加，三层内部温度梯度逐步增大，而层间温度保持连续，与模型的界面连续条件相符。
-\FloatBarrier
 
 \subsection{灵敏度分析}
 
-外对流相关式是问题二的主要边界不确定来源。表\ref{tab:q2-results-sens}给出三种关系的计算结果，并通过图\ref{fig:q2-boundary-sensitivity}比较不同边界关系造成的阈值时间变化。
+\noindent\textbf{1. 外侧换热关系敏感性}\par
+
+为检验外侧换热关系选择是否改变问题二的主要判断，表\ref{tab:q2-results-sens}保留基准关系的三档扫描速率，并对PMV与Kuwabara关系仅列基准$5\ \mathrm{K/min}$工况；图\ref{fig:q2-boundary-sensitivity}用于观察整体趋势。
 
 \begin{table}[!htbp]
 \centering
@@ -200,12 +203,8 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 ISO 11079简化 & 18.46 & 2 & 192.028 & 204.262 \\
 ISO 11079简化 & 18.46 & 5 & 103.492 & 115.666 \\
 ISO 11079简化 & 18.46 & 10 & 74.035 & 86.167 \\
-PMV对照关系 & 20.96 & 2 & 171.403 & 182.234 \\
 PMV对照关系 & 20.96 & 5 & 92.670 & 103.439 \\
-PMV对照关系 & 20.96 & 10 & 66.481 & 77.207 \\
-Kuwabara经验关系 & 21.95 & 2 & 164.575 & 174.946 \\
 Kuwabara经验关系 & 21.95 & 5 & 89.084 & 99.393 \\
-Kuwabara经验关系 & 21.95 & 10 & 63.977 & 74.242 \\
 \bottomrule
 \end{tabularx}
 \endgroup
@@ -217,9 +216,9 @@ Kuwabara经验关系 & 21.95 & 10 & 63.977 & 74.242 \\
 \label{fig:q2-boundary-sensitivity}
 \end{figure}
 
-由图\ref{fig:q2-boundary-sensitivity}及表\ref{tab:q2-results-sens}可见，相对ISO 11079简化关系，PMV对照关系的阈值时间提前约$10.2\%$--$10.8\%$，Kuwabara经验关系提前约$13.6\%$--$14.4\%$，同一扫描速率下最大绝对差异约$28\ \mathrm s$。同时，ISO关系下$t_{15}^{(2)}$在$2$--$10\ \mathrm{K/min}$范围内由$192.03\ \mathrm s$降至$74.04\ \mathrm s$，说明扫描速率假设与外侧换热关系均会显著影响返回时间。
+由图\ref{fig:q2-boundary-sensitivity}及表\ref{tab:q2-results-sens}可见，在基准$5\ \mathrm{K/min}$工况下，相对ISO 11079简化关系，PMV与Kuwabara关系使两级阈值时间分别提前约$10.5\%$和$14.0\%$；三种关系均保持“有风轻微运动显著缩短防护时间”的结论，因此边界关系选择影响具体数值而不改变问题二的主要判断。
 \FloatBarrier
 
-\subsection{数值收敛与复算检验}
+\noindent\textbf{2. 数值稳定性检验}\par
 
-以ISO 11079简化关系、$\beta_{\rm DSC}=5\ \mathrm{K/min}$为基准，时间步由$0.25\ \mathrm s$减半至$0.125\ \mathrm s$后，$t_{15},t_{10}$变化$0.0127\%$和$0.0154\%$；模态数由40增至60后变化$0.2843\%$和$0.2776\%$。9个外对流与扫描速率组合中，独立隐式有限体积法与模态结果的阈值偏差均不超过$1.2146\%$，基准工况有限体积加密最大变化为$0.0036\%$。数值离散影响小于不同边界关系造成的结果差异，当前设置具有稳定的数值一致性与复算一致性。
+时间步减半和模态数由40增至60后，阈值时间变化均不超过$0.3\%$；独立隐式有限体积法复算的最大偏差为$1.2146\%$。这些数值差异小于边界关系与扫描速率带来的工况差异，不改变“基准工况约$103.49\ \mathrm s$后应返回室内”的主结论。
