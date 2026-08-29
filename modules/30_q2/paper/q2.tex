@@ -18,34 +18,34 @@
 
 \noindent\textbf{1. 外表面对流系数}\par
 
-采用近期IREQ冷环境研究给出的边界空气层热阻关系\cite{alfano2025ireq}，并按本文外侧风边界仅保留环境风速项，取$v_w=0$，得
+采用IREQ冷环境研究中的边界空气层热阻关系\cite{alfano2025ireq}，取$v_w=0$：
 \begin{equation}
 I_{a,r}=0.092\exp(-0.15v_a)-0.0045\ \mathrm{(m^2\cdot K)/W}.
 \label{eq:q2-iar}
 \end{equation}
-题面忽略辐射并按等有效面积简化，取$h_r=0$、$f_{\rm cl}=1$，于是$h_e=1/I_{a,r}$。在$v_a=3\ \mathrm{m/s}$下得到
+忽略辐射并取等有效面积，有$h_e=1/I_{a,r}$；当$v_a=3\ \mathrm{m/s}$时
 \begin{equation}
 h_e=18.46\ \mathrm{W/(m^2\cdot K)}.
 \label{eq:q2-he-iso}
 \end{equation}
-进入室外瞬间服装与环境温差最大为$77\ \mathrm K$，由附件自然对流关系得到$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，明显低于上述有风换热系数，因此基准计算取固定$h_e=18.46\ \mathrm{W/(m^2\cdot K)}$。
+该值高于附件自然对流关系给出的瞬时最大值$h_{\rm nat,max}\approx7.05\ \mathrm{W/(m^2\cdot K)}$，故作为基准有风边界。
 
-为检验外侧换热关系选择对结果的影响，另采用ISO 7730:2025\cite{iso7730}中的PMV对流换热关系
+外侧边界敏感性另取ISO 7730:2025\cite{iso7730}中的PMV对流关系
 \begin{equation}
 h_e^{\rm(PMV)}=\max\left\{2.38|T_3(L,t)-T_\infty|^{0.25},\ 12.1\sqrt{v_a}\right\},
 \label{eq:q2-hout-pmv}
 \end{equation}
-以及Kuwabara等热人偶试验得到的经验关系\cite{kuwabara2005} $h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$，二者在$v_a=3\ \mathrm{m/s}$下分别给出$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$。由于ISO 7730:2025面向中等热环境，PMV与Kuwabara关系均仅作为边界敏感性对照。
+以及Kuwabara经验关系\cite{kuwabara2005} $h_e^{\rm(Kuw)}=3.4+6.9v_a^{0.9}$。在$v_a=3\ \mathrm{m/s}$下二者分别为$20.96$和$21.95\ \mathrm{W/(m^2\cdot K)}$，仅用于敏感性对照。
 
 \noindent\textbf{2. 人体侧换热系数}\par
 
-附件给出轻微运动时人体--内层织物换热系数$h_b=4.0\ \mathrm{W/(m^2\cdot K)}$，人体温度仍取$T_b=37\,^{\circ}\mathrm C$。
+轻微运动时取$h_b=4.0\ \mathrm{W/(m^2\cdot K)}$，人体温度仍为$T_b=37\,^{\circ}\mathrm C$。
 
 \subsection{有风轻微运动条件下的三层非稳态导热模型}
 
-\noindent\textbf{1. 状态方程与相变本构}\par
+\noindent\textbf{1. 主体状态方程}\par
 
-问题二沿用问题一的三层几何结构及材料热物性。织物层和隔热层仍满足一维非稳态导热方程，功能层采用问题一建立的不可逆相变等效热容模型，即
+主体传热方程及相变本构沿用问题一：
 \begin{equation}
 \rho_i c_i\frac{\partial T_i}{\partial t}=k_i\frac{\partial^2T_i}{\partial x^2},\quad i=1,3,
 \qquad
@@ -59,23 +59,23 @@ c_{2,\rm eff}(T)=c_2+L_{\rm pcm}w(T),
 L_{\rm pcm}=\frac{60A_{\rm DSC}}{\beta_{\rm DSC}}.
 \label{eq:q2-ceff}
 \end{equation}
-归一化放热权重$w(T)$及不可逆固化历史约束均沿用问题一，因此本问新增的风速与轻微运动只改变边界换热，不改变相变本构关系。取$5\ \mathrm{K/min}$为基准扫描速率，$2$和$10\ \mathrm{K/min}$为敏感性工况。
+取$5\ \mathrm{K/min}$为基准扫描速率，$2$和$10\ \mathrm{K/min}$为敏感性工况。
 
-\noindent\textbf{2. 有风轻微运动边界与界面条件}\par
+\noindent\textbf{2. 边界条件修正}\par
 
-与问题一相比，本问真正改变的是两侧换热边界：轻微运动使人体侧换热系数由$3.0$增至$4.0\ \mathrm{W/(m^2\cdot K)}$，外侧则由随表面温度变化的自然对流改为有风等效换热系数$18.46\ \mathrm{W/(m^2\cdot K)}$，即
+问题二的核心变化为人体侧与环境侧换热增强：
 \begin{equation}
 h_b:3.0\rightarrow4.0,\qquad h_e(T)\rightarrow18.46\ \mathrm{W/(m^2\cdot K)}.
 \label{eq:q2-boundary-change}
 \end{equation}
-因此两侧Robin边界为
+相应两侧Robin边界为
 \begin{equation}
 -k_1T_{1,x}(0,t)=4.0[37-T_1(0,t)],
 \qquad
 -k_3T_{3,x}(L,t)=18.46[T_3(L,t)+40].
 \label{eq:q2-boundaries}
 \end{equation}
-忽略层间接触热阻，在$x=x_1,x_2$处保持温度与热流连续：
+层间温度与热流连续条件保持为
 \begin{equation}
 \left\{
 \begin{aligned}
@@ -85,16 +85,16 @@ h_b:3.0\rightarrow4.0,\qquad h_e(T)\rightarrow18.46\ \mathrm{W/(m^2\cdot K)}.
 \right.
 \label{eq:q2-interface}
 \end{equation}
-进入低温环境瞬间仍取$T_i(x,0)=37\,^{\circ}\mathrm C$。定义贴身侧温度$T_{\rm in}(t)=T_1(0,t)$，相应阈值时刻为
+初始条件仍为$T_i(x,0)=37\,^{\circ}\mathrm C$。定义$T_{\rm in}(t)=T_1(0,t)$及
 \begin{equation}
 t_{\theta}^{(2)}=\inf\{t>0:T_{\rm in}(t)\le\theta\},
 \qquad \theta\in\{15,10\}\,^{\circ}\mathrm C.
 \label{eq:q2-threshold}
 \end{equation}
-其中$t_{15}^{(2)}$作为实验者应返回室内的时间。
+其中$t_{15}^{(2)}$作为实验者返回室内的时间。
 
 \noindent\textbf{3. 模型汇总}\par
-综上，我们建立有风轻微运动条件下的三层非稳态导热模型。
+综上，问题二沿用问题一主体PDE与相变本构，并以修正后的两侧Robin边界构成有风轻微运动条件下的三层非稳态导热模型。
 \vspace{-0.3\baselineskip}
 \begin{equation}
 \left\{
