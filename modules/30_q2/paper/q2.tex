@@ -146,7 +146,7 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 
 相较问题一同一$5\ \mathrm{K/min}$工况的$t_{15}=273.908\ \mathrm s$，返回时间明显缩短，反映外部风致换热与轻微运动引起的人体侧换热增强的共同作用。
 
-在基准工况（ISO 11079 简化关系、$\beta_{\rm DSC}=5\ \mathrm{K/min}$）下，贴身侧温度随时间持续下降。图\ref{fig:q2-cooling}给出该下降过程，首次降至$15\,^{\circ}\mathrm C$的时刻即返回时间，见表\ref{tab:q2-results-main}。
+为观察基准工况下贴身侧温度的连续下降过程，绘制图\ref{fig:q2-cooling}。
 
 \begin{figure}[!htbp]
 \centering
@@ -154,9 +154,11 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \caption{问题二基准工况贴身侧温度随时间的变化}
 \label{fig:q2-cooling}
 \end{figure}
+
+由图\ref{fig:q2-cooling}可见，贴身侧温度随暴露时间持续下降，并依次穿过$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$两条评价阈值；对应穿越时刻与表\ref{tab:q2-results-main}中的$103.492\ \mathrm s$和$115.666\ \mathrm s$一致。
 \FloatBarrier
 
-图\ref{fig:q2-compare}对比问题一与问题二在不同扫描速率下的阈值时间。由于外部风与轻微运动增强了散热，问题二在各工况下均比问题一更早达到同一评价阈值。
+为比较有风轻微运动与静止无风两种边界条件对防护时间的影响，图\ref{fig:q2-compare}给出问题一与问题二在不同扫描速率下的阈值时间。
 
 \begin{figure}[!htbp]
 \centering
@@ -164,9 +166,11 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \caption{问题一与问题二阈值时间对比}
 \label{fig:q2-compare}
 \end{figure}
+
+由图\ref{fig:q2-compare}可见，在$2,5,10\ \mathrm{K/min}$三组扫描速率下，问题二的两类阈值时间均明显短于问题一，且这一趋势在不同潜热尺度下保持一致，说明外部风致换热与轻微运动共同缩短了有效防护时间。
 \FloatBarrier
 
-图\ref{fig:q2-profile}展示不同时刻沿厚度方向的温度场。外侧直接面向冷风与低温环境，降温更快；三层之间的温度梯度随暴露时间逐步建立。
+为考察有风条件下各层温度梯度的建立过程，图\ref{fig:q2-profile}给出不同时刻沿厚度方向的温度场。
 
 \begin{figure}[!htbp]
 \centering
@@ -174,11 +178,13 @@ $\beta_{\rm DSC}$/(K/min) & $L_{\rm pcm}$/(kJ/kg) & $t_{15}^{(2)}$/s & $t_{10}^{
 \caption{不同时刻沿厚度方向的温度场}
 \label{fig:q2-profile}
 \end{figure}
+
+由图\ref{fig:q2-profile}可见，外层直接承受冷风和低温环境作用，温度下降最快；随暴露时间增加，三层内部温度梯度逐步增大，而层间温度保持连续，与模型的界面连续条件相符。
 \FloatBarrier
 
 \subsection{灵敏度分析}
 
-外对流相关式是问题二的主要边界不确定来源。表\ref{tab:q2-results-sens}给出三种关系的计算结果，图\ref{fig:q2-boundary-sensitivity}展示相对变化。
+外对流相关式是问题二的主要边界不确定来源。表\ref{tab:q2-results-sens}给出三种关系的计算结果，并通过图\ref{fig:q2-boundary-sensitivity}比较不同边界关系造成的阈值时间变化。
 
 \begin{table}[!htbp]
 \centering
@@ -205,14 +211,14 @@ Kuwabara经验关系 & 21.95 & 10 & 63.977 & 74.242 \\
 \endgroup
 \end{table}
 
-相对ISO 11079简化关系，PMV对照关系的阈值时间提前约$10.2\%$--$10.8\%$，Kuwabara经验关系提前约$13.6\%$--$14.4\%$，同一扫描速率下最大绝对差异约$28\ \mathrm s$。同时，ISO关系下$t_{15}^{(2)}$在$2$--$10\ \mathrm{K/min}$范围内由$192.03\ \mathrm s$降至$74.04\ \mathrm s$，说明扫描速率假设与外侧换热关系均会显著影响返回时间。
-
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/30_q2/figures/外边界敏感性.png}
 \caption{外对流相关式对阈值时间的敏感性}
 \label{fig:q2-boundary-sensitivity}
 \end{figure}
+
+由图\ref{fig:q2-boundary-sensitivity}及表\ref{tab:q2-results-sens}可见，相对ISO 11079简化关系，PMV对照关系的阈值时间提前约$10.2\%$--$10.8\%$，Kuwabara经验关系提前约$13.6\%$--$14.4\%$，同一扫描速率下最大绝对差异约$28\ \mathrm s$。同时，ISO关系下$t_{15}^{(2)}$在$2$--$10\ \mathrm{K/min}$范围内由$192.03\ \mathrm s$降至$74.04\ \mathrm s$，说明扫描速率假设与外侧换热关系均会显著影响返回时间。
 \FloatBarrier
 
 \subsection{数值收敛与复算检验}
