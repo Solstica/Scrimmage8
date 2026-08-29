@@ -7,27 +7,26 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap, Normalize
+from matplotlib.colors import BoundaryNorm, ListedColormap
+from matplotlib.font_manager import FontProperties
 from matplotlib.lines import Line2D
-from matplotlib.patches import Rectangle
 import numpy as np
 
 
 root = Path(__file__).resolve().parents[1]
 src = root / "results/EXPERIMENT/低速扫描重审"
 fig_dir = root / "figures/诊断"
-data_dir = root / "data/processed/诊断绘图"
 blue, orange = "#236A92", "#C46A35"
-ink, muted, grid = "#233641", "#647680", "#DDE5E8"
+ink, muted, grid = "#000000", "#647680", "#DDE5E8"
 colors = {"15℃": blue, "10℃": orange}
 rate_col = "扫描速率（K/min）"
 plt.rcParams.update({
     "font.family": "Microsoft YaHei", "font.size": 11,
     "axes.unicode_minus": False, "text.color": ink,
-    "axes.labelcolor": ink, "xtick.color": muted, "ytick.color": muted,
+    "axes.labelcolor": "black", "xtick.color": "black", "ytick.color": "black",
     "axes.edgecolor": grid, "axes.titleweight": "bold",
-    "figure.facecolor": "#FAFCFD", "axes.facecolor": "white",
-    "savefig.facecolor": "#FAFCFD", "mathtext.fontset": "dejavusans",
+    "figure.facecolor": "white", "axes.facecolor": "white",
+    "savefig.facecolor": "white", "mathtext.fontset": "dejavusans",
 })
 
 
@@ -36,17 +35,18 @@ def read(name):
         return list(csv.DictReader(f))
 
 
-def save_data(name, rows):
-    with (data_dir / f"{name}.csv").open("w", encoding="utf-8-sig", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
-        writer.writeheader()
-        writer.writerows(rows)
-
-
 def save(fig, name):
-    fig.savefig(fig_dir / f"{name}.png", dpi=300)
+    path = fig_dir / f"{name}.png"
+    try:
+        fig.savefig(path, dpi=300, facecolor="white", transparent=False,
+                    bbox_inches="tight", pad_inches=.02)
+    except PermissionError:
+        # 旧图可能正被 Origin 查看，保留旧文件并另存本次 Python 结果。
+        path = fig_dir / f"{name}（Python重绘）.png"
+        fig.savefig(path, dpi=300, facecolor="white", transparent=False,
+                    bbox_inches="tight", pad_inches=.02)
     plt.close(fig)
-    print(f"已生成：{name}.png")
+    print(f"已生成：{path.name}")
 
 
 def header(fig, num, title, subtitle):
@@ -60,7 +60,6 @@ def draw_trade(rows, best):
     rates = [1.25, 1.5, 1.75, 2.0]
     cols = [rate_col, "新增层数", "15℃时间（s）", "10℃时间（s）", "负重时间（s）"]
     data = [{col: r[col] for col in cols} for r in rows if float(r[rate_col]) in rates]
-    save_data("热安全与负重权衡", data)
     fig, axes = plt.subplots(2, 2, figsize=(13.5, 10.5))
     fig.subplots_adjust(left=.08, right=.965, bottom=.17, top=.735, hspace=.68, wspace=.22)
     header(fig, "01", "增厚延长热安全时间，也缩短负重时间",
@@ -114,62 +113,65 @@ def draw_trade(rows, best):
     save(fig, "热安全与负重权衡")
 
 
-def draw_heatmap(rows, best):
+def draw_heatmap(rows):
     rates = sorted({float(r[rate_col]) for r in rows})
     cols = [rate_col, "新增层数", "15℃有效时间（s）", "10℃有效时间（s）",
             "15℃限制因素", "10℃限制因素"]
     data = [{col: r[col] for col in cols} for r in rows]
-    save_data("有效时间全景", data)
-    cmap = LinearSegmentedColormap.from_list("time", ["#F5F0DF", "#B7D7D4", "#4E999F", "#164D64"])
-    norm = Normalize(0, 800)
-    fig, axes = plt.subplots(1, 2, figsize=(12.8, 10))
-    fig.subplots_adjust(left=.10, right=.87, bottom=.15, top=.76, wspace=.32)
-    header(fig, "02", "哪一层最优，取决于谁先成为限制",
-           "全部 8 个扫描速率 × 4 个层数；双描边标出各速率下的最优方案，统一色阶便于跨阈值比较。")
+    palette = ["#3C9BC9", "#65BDBA", "#B0D6A9", "#FEE199",
+               "#FCDC94", "#FAA26F", "#F97F5F", "#FC757B"]
+    cmap = ListedColormap(palette)
+    # 有效时间均低于 800 s，8 个颜色对应 0—800 s 的 100 s 分档。
+    norm = BoundaryNorm(np.arange(0, 801, 100), cmap.N, clip=True)
+    times_bold = FontProperties(fname="C:/Windows/Fonts/timesbd.ttf", size=22)
+    simsun = FontProperties(fname="C:/Windows/Fonts/simsun.ttc", size=22)
+    fig, axes = plt.subplots(1, 2, figsize=(40 / 2.54, 15 / 2.54))
+    fig.subplots_adjust(left=.095, right=.84, bottom=.18, top=.91, wspace=.20)
     lookup = {(float(r[rate_col]), int(r["新增层数"])): r for r in data}
-    for ax, threshold, letter in zip(axes, ["15℃", "10℃"], "AB"):
+    for ax, threshold, panel_label in zip(axes, ["15℃", "10℃"], ["15℃", "10℃"]):
         values = np.array([[float(lookup[(v, n)][f"{threshold}有效时间（s）"])
                             for n in range(4)] for v in rates])
         im = ax.imshow(values, cmap=cmap, norm=norm, aspect="auto", interpolation="nearest")
-        ax.set_title(f"{letter}   贴身侧 {threshold} 截止", color=colors[threshold],
-                     fontsize=14, loc="left", pad=16)
-        ax.set(xticks=np.arange(4), xticklabels=[0, 1, 2, 3], yticks=np.arange(8),
-               yticklabels=[f"{v:g}" + (" *" if v == .5 else "") for v in rates],
+        ax.set(xticks=np.arange(4), xticklabels=["0", "1", "2", "3"],
+               yticks=np.arange(8), yticklabels=[f"{v:g}" for v in rates],
                xlabel="新增层数 n")
-        ax.set_ylabel(r"扫描速率 $\beta_{\mathrm{DSC}}$（K/min）")
+        ax.set_ylabel("扫描速率（K/min）")
         ax.set_xticks(np.arange(-.5, 4, 1), minor=True)
         ax.set_yticks(np.arange(-.5, 8, 1), minor=True)
-        ax.grid(which="minor", color="white", lw=2)
-        ax.tick_params(which="both", length=0, pad=8)
-        ax.spines[:].set_visible(False)
+        ax.grid(which="minor", color="white", lw=1.4)
+        ax.tick_params(which="major", direction="in", length=8, width=2,
+                       labelsize=22, pad=8)
+        ax.tick_params(which="minor", length=0)
+        for spine in ax.spines.values():
+            spine.set_visible(True)
+            spine.set_linewidth(2)
+            spine.set_color("black")
+        ax.xaxis.label.set_fontproperties(simsun)
+        ax.yaxis.label.set_fontproperties(simsun)
+        for label in ax.get_xticklabels() + ax.get_yticklabels():
+            label.set_fontproperties(times_bold)
+        ax.text(.02, 1.02, panel_label, transform=ax.transAxes,
+                fontproperties=times_bold, color="black", va="bottom")
         for i, v in enumerate(rates):
             for n in range(4):
                 val = values[i, n]
-                color = "white" if val >= 530 else ink
-                active = lookup[(v, n)][f"{threshold}限制因素"]
-                ax.text(n, i - .10, f"{val:.1f}", ha="center", va="center",
-                        fontsize=12, weight="bold", color=color)
-                ax.text(n, i + .21, active, ha="center", va="center", fontsize=9, color=color)
-            n = best[(v, threshold)]
-            for edge, lw in [(ink, 3.8), ("white", 1.6)]:
-                ax.add_patch(Rectangle((n - .425, i - .425), .85, .85,
-                                       fill=False, edgecolor=edge, lw=lw))
-    bar_ax = fig.add_axes([.905, .23, .017, .44])
-    bar = fig.colorbar(im, cax=bar_ax, ticks=[0, 200, 400, 600, 800])
-    bar.ax.tick_params(length=0, labelsize=9)
-    bar.outline.set_visible(False)
-    bar.set_label("有效时间（s）", labelpad=12)
-    fig.text(.10, .085, "单元格：有效时间（s） / 限制因素。最优框由未舍入数值判定；四舍五入仅用于显示。",
-             fontsize=10, color=muted)
-    fig.text(.10, .056, "扫描速率行按类别排列，行距不代表数值间距。* 0.5 K/min 为极端高不确定性诊断。",
-             fontsize=9.5, color=muted)
-    fig.text(.10, .027, "诊断结果 · 低速高潜热工况的数学最优，不等于材料可行性已确认", fontsize=9.5, color=muted)
-    save(fig, "有效时间全景")
+                color = "white" if val >= 500 else "black"
+                ax.text(n, i, f"{val:.1f}", ha="center", va="center",
+                        fontproperties=times_bold, color=color)
+    bar_ax = fig.add_axes([.86, .18, .016, .73])
+    bar = fig.colorbar(im, cax=bar_ax, ticks=np.arange(0, 801, 100))
+    bar.ax.tick_params(direction="in", length=8, width=2, labelsize=22, pad=8)
+    bar.outline.set_linewidth(2)
+    bar.outline.set_color("black")
+    bar.set_label("有效时间（s）", labelpad=10, fontproperties=simsun)
+    for label in bar.ax.get_yticklabels():
+        label.set_fontproperties(times_bold)
+    # Origin 可能占用旧图，Python 重绘保留为独立文件，避免覆盖手工编辑结果。
+    save(fig, "有效时间全景（Python重绘）")
 
 
 def draw_switch(rows):
     cols = ["阈值口径", "区间下界（K/min）", "区间上界（K/min）", "下界最优层数", "上界最优层数"]
-    save_data("双阈值切换区间", [{col: r[col] for col in cols} for r in rows])
     fig, ax = plt.subplots(figsize=(12.8, 7.6))
     fig.subplots_adjust(left=.13, right=.95, bottom=.22, top=.79)
     header(fig, "03", "阈值降低，层数切换向更高扫描速率移动",
@@ -225,9 +227,8 @@ def main():
         width = float(r["区间上界（K/min）"]) - float(r["区间下界（K/min）"])
         assert abs(width - .0078125) < 1e-10
     fig_dir.mkdir(parents=True, exist_ok=True)
-    data_dir.mkdir(parents=True, exist_ok=True)
     draw_trade(rows, best)
-    draw_heatmap(rows, best)
+    draw_heatmap(rows)
     draw_switch(switches)
     print("通过：32 个方案的双阈值有效时间、16 个最优层数和 6 个切换区间校验。")
 

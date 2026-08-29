@@ -1,4 +1,4 @@
-"""生成双阈值最优新增层数状态带状图预览及矢量输出。"""
+"""生成双阈值最优新增层数状态带状图 PNG。"""
 
 import csv
 from pathlib import Path
@@ -15,8 +15,7 @@ import numpy as np
 
 root = Path(__file__).resolve().parents[1]
 src = root / "results/EXPERIMENT/低速扫描重审/切换区间.csv"
-out_png = root / "figures/图3：双阈值最优层数状态带状图（Python预览）.png"
-out_svg = root / "figures/图3：双阈值最优层数状态带状图（Python矢量）.svg"
+out_png = root / "figures/图3：双阈值最优层数状态带状图.png"
 
 times = FontProperties(fname="C:/Windows/Fonts/times.ttf", size=22)
 times_bold = FontProperties(fname="C:/Windows/Fonts/timesbd.ttf", size=22)
@@ -105,11 +104,10 @@ def draw(rows):
     for text in legend.get_texts():
         text.set_color("black")
 
-    fig.savefig(out_png, dpi=300, facecolor="white")
-    fig.savefig(out_svg, format="svg", facecolor="white")
+    fig.savefig(out_png, dpi=300, facecolor="white", transparent=False,
+                bbox_inches="tight", pad_inches=.02)
     plt.close(fig)
     print(f"已生成：{out_png}")
-    print(f"已生成：{out_svg}")
 
 
 if __name__ == "__main__":
