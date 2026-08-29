@@ -190,6 +190,19 @@ def clean_controller(path: Path) -> None:
         prune_worktree_metadata()
 
 
+def open_pdf(pdf: Path) -> None:
+    """在 controller 已回收后，从稳定目录启动系统 PDF 查看器。"""
+    try:
+        if os.name == "nt":
+            os.startfile(str(pdf))  # type: ignore[attr-defined]
+        elif sys.platform == "darwin":
+            subprocess.Popen(["open", str(pdf)], cwd=COMMON_ROOT, env=clean_git_env())
+        else:
+            subprocess.Popen(["xdg-open", str(pdf)], cwd=COMMON_ROOT, env=clean_git_env())
+    except Exception as exc:
+        print("[WARN] 无法自动打开 PDF:", exc)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument(
@@ -236,6 +249,7 @@ def main() -> None:
     run(["git", "worktree", "add", "--detach", str(ctrl), "origin/feature/shared"])
     (ctrl / CTRL_MARKER).write_text("temporary preview controller\n", encoding="utf-8")
 
+    pdf_to_open: Path | None = None
     try:
         script = "preview_fast.py" if a.fast else "preview_merge.py"
         cmd = [
@@ -247,9 +261,10 @@ def main() -> None:
             "feature/paper-shell",
             "--strict",
             "--strict-preflight",
+            # 子进程 cwd 位于临时 controller。禁止它在此处启动 PDF 查看器，
+            # 否则 Windows 查看器可能继承 controller 作为当前目录并锁住目录。
+            "--no-open",
         ]
-        if not a.open:
-            cmd.append("--no-open")
         if a.no_build:
             cmd.append("--no-build")
 
@@ -265,9 +280,12 @@ def main() -> None:
         pdf = preview / "paper" / "main.pdf"
         if pdf.exists():
             print("PDF:", pdf)
+            if a.open:
+                pdf_to_open = pdf
         else:
             print(f"[INFO] 拼装完成，未生成 PDF：{preview}")
     finally:
+        # 先回收 controller，再打开 PDF。这样 PDF 查看器不会继承待删除目录为 cwd。
         clean_controller(ctrl)
         caller_after = worktree_state(caller)
         if caller_after != caller_before:
@@ -277,6 +295,9 @@ def main() -> None:
                 f"after:  branch={caller_after[0]}, HEAD={caller_after[1]}\n"
                 "全文融合必须完全发生在独立临时 worktree 中。"
             )
+
+    if pdf_to_open is not None:
+        open_pdf(pdf_to_open)
 
 
 if __name__ == "__main__":
