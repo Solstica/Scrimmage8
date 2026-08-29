@@ -212,13 +212,5 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 
 所有非零强化场景的二分上下界均满足“下界未达标、上界达标”，倍率区间宽度不超过$6.104\times10^{-5}$，对应提高比例区间小于$0.01$个百分点。该精度用于判定最小可行倍率，不代表材料性能具有同等数量级的物理测量精度。
 
-图\ref{fig:q4-boundary}以$\beta_{\rm DSC}=2,5,10\ \mathrm{K/min}$为例展示二分端点处的实际时间裕量：下界处裕量为负、上界处裕量为正，在已计算采样点上裕量随放热倍率增大而上升，支持最小可行倍率的夹逼判定。右侧局部放大显示端点处的毫秒级裕量，用于检查二分终止条件，不代表物理测量精度。
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\FigureDoubleWidth]{\ProjectRoot/modules/50_q4/figures/达标边界.png}
-\caption{二分搜索端点处相对问题三目标的时间裕量验证}
-\label{fig:q4-boundary}
-\end{figure}
 
 对$\beta_{\rm DSC}=5\ \mathrm{K/min}$、$15\,^{\circ}\mathrm C$场景，将模态数由$M=40$增加至$M=60$复算，最小提高比例由$86.328\%$变为$85.553\%$，相差约$0.78$个百分点。该结果表明模态截断对当前优化结论的影响小于扫描速率假设造成的跨工况差异。
