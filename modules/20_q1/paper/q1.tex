@@ -63,15 +63,17 @@ T_b=37\,^{\circ}\mathrm C.
 
 \subsection{基于等效热容法的三层非稳态导热模型}
 
-\noindent\textbf{1. 控制方程与相变等效热容}\par
+\noindent\textbf{1. 三层非稳态导热方程}\par
 
-织物层和隔热层满足一维非稳态导热方程
+织物层与隔热层满足一维非稳态导热方程
 \begin{equation}
 \rho_i c_i\frac{\partial T_i}{\partial t}=k_i\frac{\partial^2T_i}{\partial x^2},\qquad i=1,3.
 \label{eq:q1-governing-13}
 \end{equation}
 
-功能层以不可逆固化进度$\xi$描述有限潜热释放。设固化开始、结束温度分别为$T_s,T_f$，由校正后放热峰定义
+\noindent\textbf{2. 不可逆固化与等效热容}\par
+
+设固化开始、结束温度为$T_s,T_f$，由校正放热峰定义固化进度
 \begin{equation}
 \xi_{\rm DSC}(T)=
 \begin{cases}
@@ -83,18 +85,18 @@ T_b=37\,^{\circ}\mathrm C.
 \xi(x,t)=\max_{0\le\tau\le t}\xi_{\rm DSC}[T_2(x,\tau)].
 \label{eq:q1-xi-dsc}
 \end{equation}
-历史最大值约束保证固化过程不可逆。记功能层单位质量总固化潜热为$L_{\rm pcm}$，则相变释放满足$Q_{\rm lat}=\rho_2L_{\rm pcm}\,\partial\xi/\partial t$。在单调降温的主要阶段，可将功能层写成等效热容形式
+历史最大值保证固化不可逆。功能层在主要降温阶段写为
 \begin{equation}
 \rho_2c_{2,\rm eff}(T_2)\frac{\partial T_2}{\partial t}=k_2\frac{\partial^2T_2}{\partial x^2},
 \qquad
 c_{2,\rm eff}(T)=c_2+L_{\rm pcm}\frac{p(T)}{\int_{T_f}^{T_s}p(\theta)\,\mathrm d\theta}.
 \label{eq:q1-ceff}
 \end{equation}
-固化完成后等效比热退回材料显热比热$c_2$。附件未给出扫描速率，本文取$\beta_{\rm DSC}=5\ \mathrm{K/min}$为基准，并由$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$得到$L_{\rm pcm}=244.63\ \mathrm{kJ/kg}$；同时设置$2$和$10\ \mathrm{K/min}$两组敏感性工况。
+其中$L_{\rm pcm}=60A_{\rm DSC}/\beta_{\rm DSC}$。取$\beta_{\rm DSC}=5\ \mathrm{K/min}$为基准时，$L_{\rm pcm}=244.63\ \mathrm{kJ/kg}$；另取$2$和$10\ \mathrm{K/min}$作敏感性工况。固化完成后$c_{2,\rm eff}=c_2$。
 
-\noindent\textbf{2. 初始、界面与边界条件}\par
+\noindent\textbf{3. 初始与边界条件}\par
 
-进入低温环境瞬间，三层衣料统一取$T_i(x,0)=37\,^{\circ}\mathrm C$。忽略层间接触热阻，在$x=x_1,x_2$处满足温度与热流连续：
+初始温度取$T_i(x,0)=37\,^{\circ}\mathrm C$。两处层间界面满足温度和热流连续：
 \begin{equation}
 \left\{
 \begin{aligned}
@@ -104,17 +106,17 @@ c_{2,\rm eff}(T)=c_2+L_{\rm pcm}\frac{p(T)}{\int_{T_f}^{T_s}p(\theta)\,\mathrm d
 \right.
 \label{eq:q1-interface}
 \end{equation}
-人体侧取$h_b=3.0\ \mathrm{W/(m^2\cdot K)}$，外侧自然对流系数按附件关系随衣表温度更新：
+人体侧与环境侧边界分别为
 \begin{equation}
 -k_1T_{1,x}(0,t)=h_b[T_b-T_1(0,t)],
 \qquad
--k_3T_{3,x}(L,t)=2.38[T_3(L,t)+40]^{1.25}.
+-k_3T_{3,x}(L,t)=2.38[T_3(L,t)+40]^{1.25},
 \label{eq:q1-boundaries}
 \end{equation}
-定义$T_{\rm in}(t)=T_1(0,t)$，并以其首次达到$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$的时刻作为评价指标。
+其中$h_b=3.0\ \mathrm{W/(m^2\cdot K)}$。定义$T_{\rm in}(t)=T_1(0,t)$，以其首次达到$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$的时刻作为评价量。
 
-\noindent\textbf{3. 模型汇总}\par
-综上，我们建立基于等效热容法的三层非稳态导热模型。
+\noindent\textbf{4. 模型汇总}\par
+综上，三层状态方程、相变等效热容及初边值条件构成基于等效热容法的三层非稳态导热模型。
 \vspace{-0.3\baselineskip}
 {\boldmath
 \begin{equation}
