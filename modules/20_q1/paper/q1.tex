@@ -2,9 +2,7 @@
 
 \subsection{问题的描述与分析}
 
-问题一要求在静止、无风、环境温度$-40\,^{\circ}\mathrm C$条件下描述人体—防护服—环境之间的瞬态传热，并以贴身侧界面温度$T_{\rm in}(t)=T_1(0,t)$首次降至$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$的时刻$t_{15},t_{10}$预测实验者能够坚持的时间。本问的数学对象为由织物层、功能层、隔热层沿厚度方向串联的三层瞬态温度场，需重点处理功能层相变潜热释放带来的非线性：固化过程使功能层表现为随温度变化的等效热容，导热方程呈非线性；同时附件DSC数据未标注扫描速率，由放热峰面积反演单位质量潜热时绝对尺度不确定，只能作为输入参数配合敏感性分析处理。
-
-据此，先由附件DSC数据构造固化进度并得到有效比热，再建立基于等效热容法的三层非稳态导热模型，在人体恒温与服装外表面自然对流边界下，对微小时间段采用拓展分离变量法推进三层温度场并更新界面斜率，直至贴身侧温度首次降至阈值后插值输出$t_{15},t_{10}$，整体流程见图\ref{fig:q1-flow}。
+问题一在静止无风、环境温度 $-40\,^{\circ}\mathrm C$ 条件下，建立含功能层相变非线性的三层传热模型，计算贴身侧温度首次降至 $15^\circ\mathrm C$ 与 $10^\circ\mathrm C$ 的时刻，整体流程见图 \ref{fig:q1-flow}。
 
 \begin{figure}[!htbp]
 \centering
@@ -188,7 +186,7 @@ k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t)
 \rowcolors{2}{gray!10}{white}
 \begin{tabular}{cccc}
 \toprule
-\rowcolor{cyan!40!blue!60}
+\rowcolor{CumcmLightBlue}
 $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ \\
 \midrule
 2 & 611.564 & 520.903 & 558.207 \\
@@ -248,7 +246,7 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 \rowcolors{2}{gray!10}{white}
 \begin{tabular}{ccccc}
 \toprule
-\rowcolor{cyan!40!blue!60}
+\rowcolor{CumcmLightBlue}
 $T_0\,(^{\circ}\mathrm C)$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ & 相对$37\,^{\circ}\mathrm C$变化（$t_{15}/t_{10}$） \\
 \midrule
 27 & 236.644 & 273.894 & $-13.60\%/-11.98\%$ \\
