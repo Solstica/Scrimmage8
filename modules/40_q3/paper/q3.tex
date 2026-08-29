@@ -128,22 +128,19 @@ t_{\rm eff,\theta}(n)=\min\{t_{\theta}(n),t_W(n)\}.
 \caption{基准及敏感性扫描速率下问题三最优方案}
 \label{tab:q3-optimum}
 \begingroup
-\rowcolors{2}{gray!10}{white}
-\begin{tabular}{ccccccccc}
+\begin{tabularx}{\textwidth}{XXXXXXXXX}
 \toprule
-\rowcolor{cyan!50!blue!30}  % 青蓝色表头
-$\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multicolumn{4}{c}{$10\,^{\circ}\mathrm C$阈值}\\
-\rowcolor{cyan!40!blue!60}  % 第二行表头同色
-(K/min) & $n^*$ & $d_3^*$ (mm) & $t_{\rm eff}^*$ (s) & 限制 & $n^*$ & $d_3^*$ (mm) & $t_{\rm eff}^*$ (s) & 限制\\
+\rowcolor{cyan!50!blue!30}
+$\beta_{\rm DSC}$ (K/min) & $n^*_{15}$ & $d_3^*_{15}$ (mm) & $t_{\rm eff,15}^*$ (s) & 限制$_{15}$ & $n^*_{10}$ & $d_3^*_{10}$ (mm) & $t_{\rm eff,10}^*$ (s) & 限制$_{10}$ \\
 \midrule
+\rowcolors{2}{gray!10}{white}
 5 & 3 & 1.2 & 416.04 & 热安全 & 3 & 1.2 & 490.64 & 热安全\\
 2 & 3 & 1.2 & 701.20 & 热安全 & 3 & 1.2 & 774.81 & 热安全\\
 10 & 3 & 1.2 & 321.06 & 热安全 & 3 & 1.2 & 396.27 & 热安全\\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \endgroup
 \end{table}
-
 基准及两组敏感性工况下，热安全约束均先于负重约束达到，最优解位于预算允许的厚度边界。其中$\beta_{\rm DSC}=2\ \mathrm{K/min}$、$n=3$、$10\,^{\circ}\mathrm C$阈值下$t_{10}=774.808\ \mathrm s$，与$t_W=775.994\ \mathrm s$仅差约$1.19\ \mathrm s$，已接近两类约束的交汇区域。
 
 为比较全部离散厚度方案在不同扫描速率下的有效持续时间，图\ref{fig:q3-eff-panorama}以新增层数为横轴、扫描速率为纵轴，并用颜色表示有效持续时间。
