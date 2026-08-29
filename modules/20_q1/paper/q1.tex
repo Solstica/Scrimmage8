@@ -63,7 +63,7 @@ w(T)=\frac{p(T)}{A_{\rm DSC}}.
 L_{\rm pcm}=\frac{60A_{\rm DSC}}{\beta_{\rm DSC}}.
 \label{eq:q1-lpcm-dsc}
 \end{equation}
-取$\beta_{\rm DSC}=5\ \mathrm{K/min}$为基准时，$L_{\rm pcm}=244.63\ \mathrm{kJ/kg}$；另取$2$和$10\ \mathrm{K/min}$作敏感性工况。
+扫描速率取$5\ \mathrm{K/min}$时，$L_{\rm pcm}=244.63\ \mathrm{kJ/kg}$；另取$2$和$10\ \mathrm{K/min}$考察扫描速率变化的影响。
 
 图\ref{fig:q1-dsc-calibration}(a)给出基线校正结果，图\ref{fig:q1-dsc-calibration}(b)给出式\eqref{eq:q1-xi-dsc}对应的固化进度。
 
@@ -202,7 +202,7 @@ k_2T_{2,x}(x_2,t)=k_3T_{3,x}(x_2,t)
 
 \noindent\textbf{1. 求解结果}\par
 
-\textbf{基准工况下，贴身侧温度在$273.91\ \mathrm s$时降至$15\,^{\circ}\mathrm C$，在$311.16\ \mathrm s$时降至$10\,^{\circ}\mathrm C$，对应正常户外工作时间约$4.57\ \mathrm{min}$、危险暴露时间约$5.19\ \mathrm{min}$。}计算取$\Delta t=0.25\ \mathrm s$、$M=40$，基准及两组敏感性结果见表\ref{tab:q1-time-result}。
+\textbf{扫描速率取$5\ \mathrm{K/min}$时，贴身侧温度在$273.91\ \mathrm s$时降至$15\,^{\circ}\mathrm C$，在$311.16\ \mathrm s$时降至$10\,^{\circ}\mathrm C$，对应正常户外工作时间约$4.57\ \mathrm{min}$、危险暴露时间约$5.19\ \mathrm{min}$。}计算取$\Delta t=0.25\ \mathrm s$、$M=40$，$2$、$5$、$10\ \mathrm{K/min}$三种扫描速率下的结果见表\ref{tab:q1-time-result}。
 
 \begin{table}[!htbp]
 \centering
@@ -223,12 +223,12 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 \endgroup
 \end{table}
 
-为观察基准工况下的温度场演化、贴身侧响应和功能层固化过程，绘制图\ref{fig:q1-thermal-solidification}。
+为观察扫描速率取$5\ \mathrm{K/min}$时的温度场演化、贴身侧响应和功能层固化过程，绘制图\ref{fig:q1-thermal-solidification}。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{\ProjectRoot/modules/20_q1/figures/三层防护服传热与固化过程.png}
-\caption{基准工况下三层防护服的温度场、温度响应与固化进度}
+\caption{扫描速率取$5\ \mathrm{K/min}$时三层防护服的温度场、温度响应与固化进度}
 \label{fig:q1-thermal-solidification}
 \end{figure}
 
@@ -267,7 +267,7 @@ $\beta_{\rm DSC}\,(\mathrm{K/min})$ & $L_{\rm pcm}\,(\mathrm{kJ/kg})$ & $t_{15}\
 
 \noindent\textbf{1. DSC扫描速率}\par
 
-将$\beta_{\rm DSC}$由基准$5\ \mathrm{K/min}$改为$2$和$10\ \mathrm{K/min}$后，$L_{\rm pcm}$分别为$611.564$和$122.313\ \mathrm{kJ/kg}$，$t_{15}$分别变化至$520.903$和$191.642\ \mathrm s$，相对基准变化$+90.2\%$和$-30.0\%$。因此扫描速率缺失是阈值时间的主要输入不确定来源，基准结果需与两组敏感性工况同时报告。
+将$\beta_{\rm DSC}$从$5\ \mathrm{K/min}$改为$2$和$10\ \mathrm{K/min}$后，$L_{\rm pcm}$分别为$611.564$和$122.313\ \mathrm{kJ/kg}$，$t_{15}$分别变化至$520.903$和$191.642\ \mathrm s$，相对$5\ \mathrm{K/min}$结果变化$+90.2\%$和$-30.0\%$。因此扫描速率取值会显著影响可工作时间，需要同时考察$2$、$5$和$10\ \mathrm{K/min}$三种取值。
 
 \noindent\textbf{2. 衣料初始温度}\par
 
@@ -297,4 +297,4 @@ $T_0\,(^{\circ}\mathrm C)$ & $t_{15}\,(\mathrm{s})$ & $t_{10}\,(\mathrm{s})$ & �
 
 \noindent\textbf{3. 数值稳定性检验}\par
 
-时间步减半与模态数增至$60$后，阈值时间变化均不超过$0.3\%$；独立隐式有限体积法复算三组工况，与模态法的阈值时间偏差为$0.81\%$--$0.99\%$。这些数值离散影响明显小于DSC扫描速率造成的跨工况差异，故不会改变上述主要结论。
+时间步减半与模态数增至$60$后，阈值时间变化均不超过$0.3\%$；独立隐式有限体积法复算三组扫描速率，与模态法的阈值时间偏差为$0.81\%$--$0.99\%$。这些数值离散影响明显小于不同扫描速率下的结果差异，故不会改变上述主要结论。
