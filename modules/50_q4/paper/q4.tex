@@ -35,7 +35,7 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T),
 \end{equation}
 由此，$\alpha$直接进入功能层PDE的有效热容系数；相变温区及固化进度分布保持不变，仅总潜热和有效比热幅值随$\alpha$改变。
 
-图\ref{fig:q4-material}展示温度、放热倍率与有效比热之间的关系。各倍率下峰温保持在原DSC放热峰附近，而有效比热峰值随$\alpha$增大而提高。
+图\ref{fig:q4-material}展示温度、放热倍率与有效比热之间的关系。主图为温度—倍率—有效比热热图，下方叠加$\alpha=1$、$\alpha=1.863$、$\alpha=2.090$三个真实求解倍率的温度切片，右侧给出峰温$T=20.622\,^{\circ}\mathrm C$处峰值有效比热随倍率的变化。各倍率下峰温保持在原DSC放热峰附近，而有效比热峰值随$\alpha$增大而提高，说明同比例强化只放大相变温区内的本构响应幅值，不改变温区位置。
 
 \begin{figure}[!htbp]
 \centering
@@ -96,8 +96,9 @@ t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 
 
 
-\noindent\textbf{4. 模型汇总}\par
 综上，我们建立以最小放热强化率为目标的相变材料热传导参数反问题模型。
+
+\noindent\textbf{4. 模型汇总}\par
 \begin{equation}
 \min_{\alpha\ge1}\quad \alpha-1
 \label{eq:q4-summary-obj}
@@ -166,7 +167,9 @@ $\beta_{\rm DSC}$\ (K/min) & 阈值($\,^{\circ}\mathrm C$) & $\alpha^*$ & $r_{\m
 
 \noindent\textbf{1. 低扫描速率扩展诊断}\par
 
-将扫描速率扩展至$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75\ \mathrm{K/min}$。其中$0.5$和$1\ \mathrm{K/min}$时原材料已达到问题三同场景目标；$1.25\ \mathrm{K/min}$附近两种阈值的活动约束开始分化，自$1.5\ \mathrm{K/min}$起均由热安全约束控制。图\ref{fig:q4-dual}给出基准、敏感性及扩展诊断场景下的强化需求。
+将扫描速率扩展至$\beta_{\rm DSC}=0.5,1,1.25,1.5,1.75\ \mathrm{K/min}$。其中$0.5$和$1\ \mathrm{K/min}$时原材料已达到问题三同场景目标；$1.25\ \mathrm{K/min}$附近两种阈值的活动约束开始分化，自$1.5\ \mathrm{K/min}$起均由热安全约束控制。
+
+图\ref{fig:q4-dual}给出基准、敏感性及扩展诊断场景下的强化需求。图中横轴为离散扫描速率、纵轴为温度阈值，色标表示最小提高比例；低速场景色块保持浅色，随扫描速率增大色块逐渐加深，与活动约束的切换顺序一致。
 
 \begin{figure}[!htbp]
 \centering
