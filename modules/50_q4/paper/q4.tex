@@ -14,23 +14,22 @@
 
 \subsection{相变材料热传导参数反问题模型}
 
-\noindent\textbf{1. 待反演参数与材料本构关系}\par
+\noindent\textbf{1. 待反演参数}\par
 
-问题四不再改变服装几何结构，而把功能层放热倍率$\alpha$作为待反演参数。相变材料改性研究通常将储热性能作为关键热学指标\cite{xiao2026microcapsule}，PCM可穿戴设备也已成为个人热管理的重要应用方向\cite{soo2026pcmwearables}。沿用问题一的校正放热峰$p(T)$和不可逆固化进度$\xi_{\rm DSC}(T)$，定义归一化相变权重
+以功能层放热倍率$\alpha\ge1$为待反演参数，提高比例为$r=\alpha-1$。沿用问题一的校正放热峰$p(T)$，定义归一化相变权重
 \begin{equation}
 w(T)=\frac{p(T)}{\displaystyle\int_{T_f}^{T_s}p(\vartheta)\,\mathrm d\vartheta},
 \qquad \int_{T_f}^{T_s}w(T)\,\mathrm dT=1.
 \label{eq:q4-phase-weight}
 \end{equation}
-题目要求各温度下的放热能力按统一比例提高，因此强化后的放热曲线、总潜热与有效比热满足
+各温度下放热能力同比例提高后，有
 \begin{equation}
 p_\alpha(T)=\alpha p(T),\qquad
 L_{\rm pcm}^{(\alpha)}=\alpha L_{\rm pcm},\qquad
-c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T),
-\qquad \alpha\ge1.
+c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T).
 \label{eq:q4-scale-relations}
 \end{equation}
-由此，$\alpha$直接进入功能层PDE的有效热容系数；相变温区及固化进度分布保持不变，仅总潜热和有效比热幅值随$\alpha$改变。
+因此$\alpha$只改变总潜热和有效比热幅值，不改变相变温区及固化进度分布。储热性能也是相变材料改性与可穿戴热管理中的关键指标\cite{xiao2026microcapsule,soo2026pcmwearables}。
 
 为观察放热倍率对相变本构的影响，图\ref{fig:q4-material}给出温度—倍率—有效比热关系，并叠加$\alpha=1$、$\alpha=1.863$、$\alpha=2.090$三个代表性倍率的温度切片及峰值响应。
 
@@ -44,33 +43,33 @@ c_{2,\rm eff}^{(\alpha)}(T)=c_2+\alpha L_{\rm pcm}w(T),
 由图\ref{fig:q4-material}可见，各倍率下有效比热峰均保持在原DSC放热峰$20.622\,^{\circ}\mathrm C$附近，而峰值随$\alpha$增大近似同比例提高。由此可见，本文的强化方式主要放大相变温区内的储热响应幅值，而不改变相变发生的温度位置，符合题目“各温度下同比例提高放热能力”的设定。
 \FloatBarrier
 
-\noindent\textbf{2. 参数到热响应的PDE正演映射}\par
+\noindent\textbf{2. PDE正演映射}\par
 
-给定$\alpha$后，环境条件、初始条件、层间连续条件与两侧边界均沿用问题一，三层保持原始厚度。温度场$T_i^{(\alpha)}(x,t)$由
+给定$\alpha$后，三层厚度、初始条件、界面连续条件及两侧边界均沿用问题一，温度场满足
 \begin{equation}
 \left\{
 \begin{aligned}
 \rho_1c_1T_{1,t}^{(\alpha)}&=k_1T_{1,xx}^{(\alpha)},\\
 \rho_2c_{2,\rm eff}^{(\alpha)}(T_2^{(\alpha)})T_{2,t}^{(\alpha)}&=k_2T_{2,xx}^{(\alpha)},\\
-\rho_3c_3T_{3,t}^{(\alpha)}&=k_3T_{3,xx}^{(\alpha)},
+\rho_3c_3T_{3,t}^{(\alpha)}&=k_3T_{3,xx}^{(\alpha)}.
 \end{aligned}
 \right.
 \label{eq:q4-governing}
 \end{equation}
-控制，两侧边界为
+两侧边界为
 \begin{equation}
 -k_1T_{1,x}^{(\alpha)}(0,t)=3.0[37-T_1^{(\alpha)}(0,t)],\qquad
 -k_3T_{3,x}^{(\alpha)}(L,t)=2.38[T_3^{(\alpha)}(L,t)+40]^{1.25}.
 \label{eq:q4-boundaries}
 \end{equation}
-定义贴身侧温度$T_{\rm in}^{(\alpha)}(t)=T_1^{(\alpha)}(0,t)$，则阈值时间和有效持续时间分别为
+定义
 \begin{equation}
-t_{T,\theta}^{(4)}(\alpha)=\inf\{t>0:T_{\rm in}^{(\alpha)}(t)\le\theta\},
+t_{T,\theta}^{(4)}(\alpha)=\inf\{t>0:T_1^{(\alpha)}(0,t)\le\theta\},
 \qquad
 t_{\rm eff,\theta}^{(4)}(\alpha)=\min\{t_{T,\theta}^{(4)}(\alpha),t_W^{(4)}\}.
 \label{eq:q4-effective-time}
 \end{equation}
-因此形成正演映射
+由此得到参数到热响应的正演映射
 \begin{equation}
 \alpha\ \longrightarrow\ c_{2,\rm eff}^{(\alpha)}(T)
 \ \longrightarrow\ T_i^{(\alpha)}(x,t)
@@ -78,24 +77,24 @@ t_{\rm eff,\theta}^{(4)}(\alpha)=\min\{t_{T,\theta}^{(4)}(\alpha),t_W^{(4)}\}.
 \label{eq:q4-forward-map}
 \end{equation}
 
-\noindent\textbf{3. 目标热响应与反问题目标函数}\par
+\noindent\textbf{3. 反问题目标与约束}\par
 
-问题三同一$(\beta_{\rm DSC},\theta)$场景得到的最优有效持续时间$t_{3,\theta}^*(\beta_{\rm DSC})$作为目标热响应。问题四已知目标响应、未知材料参数$\alpha$，需要由PDE正演映射反求能够达到目标的最小$\alpha$，因此构成热传导参数反问题。其优化目标为
+以问题三同一$(\beta_{\rm DSC},\theta)$场景的最优有效持续时间$t_{3,\theta}^*$为目标响应，反求进入PDE系数的最小放热倍率：
 \begin{equation}
 \min_{\alpha\ge1}\quad \alpha-1,
 \label{eq:q4-obj}
 \end{equation}
-并要求
+满足
 \begin{equation}
 t_{\rm eff,\theta}^{(4)}(\alpha;\beta_{\rm DSC})
 \ge t_{3,\theta}^*(\beta_{\rm DSC}),
 \qquad \theta\in\{15,10\}.
 \label{eq:q4-time-constraint}
 \end{equation}
-原始厚度不变，因此$t_W^{(4)}$与$\alpha$无关；真正随$\alpha$变化的是由PDE状态方程确定的热安全时间$t_{T,\theta}^{(4)}(\alpha)$。
+原始厚度不变，故$t_W^{(4)}$与$\alpha$无关，反演由热安全时间$t_{T,\theta}^{(4)}(\alpha)$驱动。
 
 \noindent\textbf{4. 模型汇总}\par
-综上，我们建立以最小放热强化率为目标的相变材料热传导参数反问题模型。
+综上，问题四构成以目标持续时间反演材料放热倍率的热传导参数反问题：
 \vspace{-0.3\baselineskip}
 \begin{equation}
 \min_{\alpha\ge1}\quad \alpha-1
