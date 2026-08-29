@@ -4,14 +4,6 @@
 
 问题一要求在静止、无风、环境温度$-40\,^{\circ}\mathrm C$条件下描述人体--防护服--环境之间的瞬态传热，并预测实验者能够在室外坚持的时间。三层衣料厚度均为毫米量级，远小于人体表面尺度，因此忽略衣料面内温差，将三层衣料等效为沿厚度方向串联的等面积平板。取$x=0$为人体侧，$x=L$为环境侧，三层由内向外依次为织物层、功能层和隔热层。
 
-人体—防护服—环境的传热结构与坐标系见图\ref{fig:q1-schematic}，热流沿厚度方向由恒温人体依次穿过织物层、功能层与隔热层，流向$-40\,^{\circ}\mathrm C$环境，贴身侧界面温度$T_{\rm in}=T_1(0,t)$为后续评价量。
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.70\textwidth]{\ProjectRoot/modules/20_q1/figures/示意图1.jpg}
-\caption{人体—三层防护服—环境传热结构与坐标系示意}
-\label{fig:q1-schematic}
-\end{figure}
 
 附件明确规定测试时假设人体温度保持$37\,^{\circ}\mathrm C$，因此本问将人体视为恒温热源。题目给出的$15\,^{\circ}\mathrm C$和$10\,^{\circ}\mathrm C$阈值用于评价人体受冷程度；在人体本体保持$37\,^{\circ}\mathrm C$的试验假设下，以内层织物贴近人体一侧的温度$T_{\rm in}(t)=T_1(0,t)$作为人体表面所处接触界面的等效评价温度。人体--织物之间的空气对流作用于该界面，$15\,^{\circ}\mathrm C$与$10\,^{\circ}\mathrm C$阈值直接施加于该界面温度$T_{\rm in}(t)$上。
 
@@ -29,6 +21,15 @@
 \noindent\textbf{1. 几何与材料参数}\par
 
 令三层厚度分别为$d_1,d_2,d_3$，定义层间位置$x_1=d_1$、$x_2=d_1+d_2$及总厚度$L=d_1+d_2+d_3$。附件给出的初始厚度为$d_1=0.7\ \mathrm{mm}$、$d_2=0.4\ \mathrm{mm}$、$d_3=0.3\ \mathrm{mm}$。三层的密度、比热容和导热系数分别记为$\rho_i,c_i,k_i$，均按附件常数取值。
+
+人体—防护服—环境的传热结构与坐标系见图\ref{fig:q1-schematic}，热流沿厚度方向由恒温人体依次穿过织物层、功能层与隔热层，流向$-40\,^{\circ}\mathrm C$环境，贴身侧界面温度$T_{\rm in}=T_1(0,t)$为后续评价量。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.70\textwidth]{\ProjectRoot/modules/20_q1/figures/示意图1.jpg}
+\caption{人体—三层防护服—环境传热结构与坐标系示意}
+\label{fig:q1-schematic}
+\end{figure}
 
 人体有效表面积按附件Stevenson公式$A_b=0.0061h+0.0128w-0.1529$计算，代入身高$h=170\ \mathrm{cm}$、体重$w=60\ \mathrm{kg}$得$A_b=1.6521\ \mathrm{m^2}$。本问取防护服有效传热面积$A=A_b$。人体温度按附件测试条件固定为
 \begin{equation}
