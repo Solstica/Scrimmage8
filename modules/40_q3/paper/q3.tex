@@ -130,23 +130,19 @@ t_W(n)=20[40-m_c(n)].
 
 \subsection{求解结果与分析}
 
-\textbf{基准工况下最优方案为新增三层外涂层，即$n^*=3$，使最外隔热层厚度增至$1.2\ \mathrm{mm}$、防护服总厚度增至$2.3\ \mathrm{mm}$；两种阈值下的最优有效持续时间分别为$416.04\ \mathrm s$和$490.64\ \mathrm s$。}在$2$和$10\ \mathrm{K/min}$两组敏感性工况下，最优层数仍保持$n^*=3$，见表\ref{tab:q3-optimum}。
+\textbf{扫描速率取$5\ \mathrm{K/min}$时，最优方案为新增三层外涂层，即$n^*=3$，使最外隔热层厚度增至$1.2\ \mathrm{mm}$、防护服总厚度增至$2.3\ \mathrm{mm}$；两种阈值下的最优有效持续时间分别为$416.04\ \mathrm s$和$490.64\ \mathrm s$。}扫描速率分别取$2$和$10\ \mathrm{K/min}$时，最优层数仍保持$n^*=3$，见表\ref{tab:q3-optimum}。
 
 \begin{table}[!htbp]
 \centering
-\caption{基准及敏感性扫描速率下问题三最优方案}
+\caption{不同DSC扫描速率下问题三最优方案}
 \label{tab:q3-optimum}
 \begingroup
 \begin{tabularx}{\textwidth}{XXXXXXXXX}
 \toprule
 \rowcolor{cyan!50!blue!30}
-<<<<<<< HEAD
-$\beta_{\rm DSC}$ (K/min) & $n^*_{15}$ & $d_3^*_{15}$ (mm) & $t_{\rm eff,15}^*$ (s) & 限制$_{15}$ & $n^*_{10}$ & $d_3^*_{10}$ (mm) & $t_{\rm eff,10}^*$ (s) & 限制$_{10}$ \\
-=======
 $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multicolumn{4}{c}{$10\,^{\circ}\mathrm C$阈值}\\
 \rowcolor{cyan!40!blue!60}
 (K/min) & $n^*$ & $d_3^*$ (mm) & $t_{\rm eff}^*$ (s) & 限制 & $n^*$ & $d_3^*$ (mm) & $t_{\rm eff}^*$ (s) & 限制\\
->>>>>>> 2bdd0c50fbf3fa3eb19d9aa3a35c731694a43527
 \midrule
 \rowcolors{2}{gray!10}{white}
 5 & 3 & 1.2 & 416.04 & 热安全 & 3 & 1.2 & 490.64 & 热安全\\
@@ -156,7 +152,8 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \end{tabularx}
 \endgroup
 \end{table}
-基准及两组敏感性工况下，热安全约束均先于负重约束达到，最优解位于预算允许的厚度边界。其中$\beta_{\rm DSC}=2\ \mathrm{K/min}$、$n=3$、$10\,^{\circ}\mathrm C$阈值下$t_{10}=774.808\ \mathrm s$，与$t_W=775.994\ \mathrm s$仅差约$1.19\ \mathrm s$，已接近两类约束的交汇区域。
+
+在$2$、$5$、$10\ \mathrm{K/min}$三种扫描速率下，热安全约束均先于负重约束达到，最优解位于预算允许的厚度边界。其中$\beta_{\rm DSC}=2\ \mathrm{K/min}$、$n=3$、$10\,^{\circ}\mathrm C$阈值下$t_{10}=774.808\ \mathrm s$，与$t_W=775.994\ \mathrm s$仅差约$1.19\ \mathrm s$，已接近两类约束的交汇区域。
 
 为比较全部离散厚度方案在不同扫描速率下的有效持续时间，图\ref{fig:q3-eff-panorama}以新增层数为横轴、扫描速率为纵轴，并用颜色表示有效持续时间。
 
@@ -167,7 +164,7 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 \label{fig:q3-eff-panorama}
 \end{figure}
 
-由图\ref{fig:q3-eff-panorama}可见，在$2,5,10\ \mathrm{K/min}$三组工况下，新增层数增加均使有效持续时间提高，且$n=3$对应各行中的最大值；随扫描速率降低，整体有效持续时间同步增加，但最优层数保持不变。
+由图\ref{fig:q3-eff-panorama}可见，在$2,5,10\ \mathrm{K/min}$三种扫描速率下，新增层数增加均使有效持续时间提高，且$n=3$对应各行中的最大值；随扫描速率降低，整体有效持续时间同步增加，但最优层数保持不变。
 \FloatBarrier
 
 为解释$n=3$为何成为当前离散域内的最优方案，图\ref{fig:q3-tradeoff}进一步比较热安全时间与负重允许时间随新增层数的变化。
@@ -181,20 +178,20 @@ $\beta_{\rm DSC}$ & \multicolumn{4}{c}{$15\,^{\circ}\mathrm C$阈值} & \multico
 
 由图\ref{fig:q3-tradeoff}可见，隔热层增厚使热安全时间持续上升，而服装增重使负重允许时间缓慢下降；在$n=0\sim3$的预算可行域内，热安全约束仍先于负重约束达到，因此增厚带来的热防护收益占主导，最优方案落在预算允许的最大层数$n=3$。
 
-两种评价阈值在基准及两组敏感性工况下给出相同的最优层数，但对应有效持续时间不同，说明评价标准变化主要影响性能指标而未改变当前最优结构。
+在$2$、$5$、$10\ \mathrm{K/min}$三种扫描速率下，两种温度阈值给出相同的最优层数，但对应有效持续时间不同，说明评价温度的变化主要影响可站立时间而未改变当前最优厚度。
 
 \subsection{灵敏度分析}
 
-为考察更宽参数范围内的约束竞争，将扫描速率扩展至$\beta_{\rm DSC}=0.5,1.0,1.25,1.5,1.75\ \mathrm{K/min}$。随着扫描速率降低、反演潜热增大，热安全时间逐渐接近负重时间，最优新增层数开始发生切换。图\ref{fig:q3-layer-state}给出两种阈值下最优层数的分段变化。
+为进一步考察低扫描速率下热安全与负重限制的竞争关系，将$\beta_{\rm DSC}$取为$0.5,1.0,1.25,1.5,1.75\ \mathrm{K/min}$。随着扫描速率降低、反演潜热增大，热安全时间逐渐接近负重时间，最优新增层数开始发生切换。图\ref{fig:q3-layer-state}给出两种阈值下最优层数随扫描速率的分段变化。
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.44\textwidth]{\ProjectRoot/modules/40_q3/figures/图3：双阈值最优层数状态带状图.png}
-\caption{两种阈值下最优新增层数随扫描速率的状态带与切换区间}
+\caption{两种阈值下最优新增层数随扫描速率的变化与切换区间}
 \label{fig:q3-layer-state}
 \end{figure}
 
 由图\ref{fig:q3-layer-state}可见，$15\,^{\circ}\mathrm C$阈值下$0\to1$、$1\to2$、$2\to3$的切换位置约为$1.22,1.36,1.54\ \mathrm{K/min}$，$10\,^{\circ}\mathrm C$阈值下约为$1.29,1.48,1.72\ \mathrm{K/min}$。这说明在高潜热区域，继续增厚带来的热安全收益逐渐受到负重损失制约，最优结构不再固定在预算上界。
 \FloatBarrier
 
-六处层数切换位置经半时间步长复核后切换方向均保持不变，因此扩展诊断用于说明约束竞争与结构切换，不改变基准工况下$n^*=3$的正式结论。
+六处层数切换位置经半时间步长复核后切换方向均保持不变。该补充分析用于说明低扫描速率下的约束竞争与厚度切换；当扫描速率取$5\ \mathrm{K/min}$时，最优方案仍为$n^*=3$。
