@@ -18,7 +18,15 @@ AUX_SUFFIXES = (
     ".aux", ".bbl", ".blg", ".fdb_latexmk", ".fls", ".log", ".out",
     ".synctex.gz", ".toc", ".xdv", ".nav", ".snm", ".vrb",
 )
-SUPPORT_EXTS = {".tex", ".sty", ".cls", ".bst", ".bib", ".cfg", ".def", ".clo"}
+# Files under paper/ that are part of the compilable paper shell even when they
+# are not reached through \input/\includegraphics. Local font files belong here:
+# fontspec commonly refers to them through Path=/BoldFont= or \IfFileExists,
+# which is not a normal TeX file command and therefore is not discovered by the
+# dependency regexes below.
+SUPPORT_EXTS = {
+    ".tex", ".sty", ".cls", ".bst", ".bib", ".cfg", ".def", ".clo",
+    ".otf", ".ttf", ".ttc",
+}
 DIRECT_FILE_COMMANDS = ("lstinputlisting", "VerbatimInput", "includepdf")
 TEXT_COMMAND_RE = re.compile(r"\\(?:input|include)\s*\{([^{}]+)\}")
 GRAPHICS_RE = re.compile(r"\\includegraphics(?:\s*\[[^\]]*\])?\s*\{([^{}]+)\}")
