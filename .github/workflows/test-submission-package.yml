@@ -86,7 +86,10 @@ jobs:
             texlive-latex-extra \
             texlive-science \
             fonts-noto-cjk \
+            fonts-texgyre \
+            fonts-texgyre-math \
             poppler-utils
+          fc-cache -f
 
       - name: Build real submission package
         shell: bash
