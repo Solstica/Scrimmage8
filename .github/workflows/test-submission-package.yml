@@ -1,0 +1,117 @@
+name: Test submission package on Scrimmage8
+
+on:
+  push:
+    branches:
+      - test/submission-package-scrimmage8
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submission-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Scrimmage8
+        uses: actions/checkout@v4
+
+      - name: Fetch current builder from ScrimmageCUCCM
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/Solstica/ScrimmageCUCCM/main/scripts/build_submission.py -o scripts/build_submission.py
+          mkdir -p config
+          curl -fsSL https://raw.githubusercontent.com/Solstica/ScrimmageCUCCM/main/config/submission.json -o config/submission.json
+          python3 -m py_compile scripts/build_submission.py
+
+      - name: Dependency scan only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_submission.py --dry-run | tee submission-dry-run.log
+
+      - name: Install XeLaTeX toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            latexmk \
+            texlive-xetex \
+            texlive-lang-chinese \
+            texlive-latex-extra \
+            texlive-science \
+            fonts-noto-cjk \
+            poppler-utils
+
+      - name: Build real submission package
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_submission.py | tee submission-build.log
+
+      - name: Validate package contents
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f submission.zip
+          test -f submission/final.pdf
+          unzip -Z1 submission.zip | tee submission-manifest.txt
+
+          if grep -E '^(docs/|work/|output/|data/raw/|\.github/|\.git/)|(^|/)results/' submission-manifest.txt; then
+            echo '[FAIL] excluded repository material leaked into submission.zip'
+            exit 1
+          fi
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, zipfile
+
+          root = Path('.')
+          z = root / 'submission.zip'
+          size_mib = z.stat().st_size / (1024 * 1024)
+          print(f'[test] submission.zip = {size_mib:.2f} MiB')
+          if size_mib > 20.0:
+              raise SystemExit('[FAIL] submission.zip exceeds 20 MiB')
+
+          settings = root / 'submission/paper/settings.tex'
+          main = root / 'submission/paper/main.tex'
+          toc_closed = False
+          if settings.exists():
+              text = settings.read_text(encoding='utf-8', errors='ignore')
+              toc_closed = bool(re.search(r'\\showtocfalse\b', text)) and not bool(re.search(r'\\showtoctrue\b', text))
+          if not toc_closed and main.exists():
+              text = main.read_text(encoding='utf-8', errors='ignore')
+              active = [line for line in text.splitlines() if re.match(r'^\s*\\tableofcontents\s*(?:%.*)?$', line)]
+              toc_closed = not active
+          if not toc_closed:
+              raise SystemExit('[FAIL] table of contents is still active in staging copy')
+
+          names = set(zipfile.ZipFile(z).namelist())
+          required = {'paper/main.tex', 'final.pdf', 'README.txt'}
+          missing = required - names
+          if missing:
+              raise SystemExit(f'[FAIL] required package files missing: {sorted(missing)}')
+          if not any(name.startswith('modules/') and '/code/' in name for name in names):
+              raise SystemExit('[FAIL] no module code was packaged')
+          print('[PASS] package structure, TOC state, code inclusion and size checks passed')
+          PY
+
+          pdfinfo submission/final.pdf | tee submission-pdfinfo.txt
+
+      - name: Upload test artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scrimmage8-submission-package-test
+          if-no-files-found: warn
+          retention-days: 7
+          path: |
+            submission.zip
+            submission/final.pdf
+            submission-dry-run.log
+            submission-build.log
+            submission-manifest.txt
+            submission-pdfinfo.txt
