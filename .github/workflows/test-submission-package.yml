@@ -26,19 +26,44 @@ jobs:
           git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
           python3 -m py_compile scripts/build_submission.py
 
-      - name: Assemble real final-paper snapshot
+      - name: Assemble canonical final-paper snapshot
         shell: bash
         run: |
           set -euo pipefail
           PREVIEW="$RUNNER_TEMP/scrimmage8-final-preview"
-          python3 scripts/preview_fast.py \
-            --preview-dir "$PREVIEW" \
-            --strict \
-            --strict-preflight \
-            --no-build \
-            --no-open
+          git worktree add --detach "$PREVIEW" origin/feature/paper-shell
+          python3 - "$PREVIEW" <<'PY'
+          import json, subprocess, sys
+          from pathlib import Path
+
+          root = Path.cwd()
+          preview = Path(sys.argv[1])
+          cfg = json.loads((root / 'config/project.json').read_text(encoding='utf-8'))
+          modules = sorted(
+              [m for m in cfg['modules'] if m.get('active', True) and m['key'] != 'paper-shell'],
+              key=lambda m: m['merge_order'],
+          )
+          for m in modules:
+              ref = f"origin/{m['branch']}"
+              paths = []
+              for key in ('path', 'task'):
+                  if m.get(key):
+                      paths.append(m[key])
+              paths.extend(m.get('extra_paths', []))
+              for path in dict.fromkeys(paths):
+                  probe = subprocess.run(
+                      ['git', 'cat-file', '-e', f'{ref}:{path}'], cwd=root,
+                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                  )
+                  if probe.returncode != 0:
+                      print(f'[compose][WARN] {ref} has no {path}; skip')
+                      continue
+                  subprocess.run(['git', 'checkout', ref, '--', path], cwd=preview, check=True)
+              print(f"[compose] {m['key']}: {ref}")
+          PY
           echo "PREVIEW_ROOT=$PREVIEW" >> "$GITHUB_ENV"
           test -f "$PREVIEW/paper/main.tex"
+          test -f "$PREVIEW/modules/80_appendix/paper/appendix.tex"
 
       - name: Dependency scan on assembled snapshot
         shell: bash
