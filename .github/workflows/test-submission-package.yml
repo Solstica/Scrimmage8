@@ -12,24 +12,42 @@ permissions:
 jobs:
   submission-package:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
-      - name: Checkout Scrimmage8
+      - name: Checkout Scrimmage8 test harness
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Verify vendored builder snapshot
+      - name: Fetch all responsibility branches
         shell: bash
         run: |
           set -euo pipefail
-          test -f scripts/build_submission.py
-          test -f config/submission.json
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
           python3 -m py_compile scripts/build_submission.py
 
-      - name: Dependency scan only
+      - name: Assemble real final-paper snapshot
         shell: bash
         run: |
           set -euo pipefail
-          python3 scripts/build_submission.py --dry-run | tee submission-dry-run.log
+          PREVIEW="$RUNNER_TEMP/scrimmage8-final-preview"
+          python3 scripts/preview_fast.py \
+            --preview-dir "$PREVIEW" \
+            --strict \
+            --strict-preflight \
+            --no-build \
+            --no-open
+          echo "PREVIEW_ROOT=$PREVIEW" >> "$GITHUB_ENV"
+          test -f "$PREVIEW/paper/main.tex"
+
+      - name: Dependency scan on assembled snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_submission.py \
+            --project "$PREVIEW_ROOT" \
+            --config "$GITHUB_WORKSPACE/config/submission.json" \
+            --dry-run | tee submission-dry-run.log
 
       - name: Install XeLaTeX toolchain
         shell: bash
@@ -49,15 +67,19 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 scripts/build_submission.py | tee submission-build.log
+          python3 scripts/build_submission.py \
+            --project "$PREVIEW_ROOT" \
+            --config "$GITHUB_WORKSPACE/config/submission.json" | tee submission-build.log
 
       - name: Validate package contents
         shell: bash
         run: |
           set -euo pipefail
-          test -f submission.zip
-          test -f submission/final.pdf
-          unzip -Z1 submission.zip | tee submission-manifest.txt
+          ZIP="$PREVIEW_ROOT/submission.zip"
+          STAGING="$PREVIEW_ROOT/submission"
+          test -f "$ZIP"
+          test -f "$STAGING/final.pdf"
+          unzip -Z1 "$ZIP" | tee submission-manifest.txt
 
           if grep -E '^(docs/|work/|output/|data/raw/|\.github/|\.git/)|(^|/)results/' submission-manifest.txt; then
             echo '[FAIL] excluded repository material leaked into submission.zip'
@@ -65,18 +87,19 @@ jobs:
           fi
 
           python3 - <<'PY'
+          import os, re, zipfile
           from pathlib import Path
-          import re, zipfile
 
-          root = Path('.')
-          z = root / 'submission.zip'
+          preview = Path(os.environ['PREVIEW_ROOT'])
+          z = preview / 'submission.zip'
+          staging = preview / 'submission'
           size_mib = z.stat().st_size / (1024 * 1024)
           print(f'[test] submission.zip = {size_mib:.2f} MiB')
           if size_mib > 20.0:
               raise SystemExit('[FAIL] submission.zip exceeds 20 MiB')
 
-          settings = root / 'submission/paper/settings.tex'
-          main = root / 'submission/paper/main.tex'
+          settings = staging / 'paper/settings.tex'
+          main = staging / 'paper/main.tex'
           toc_closed = False
           if settings.exists():
               text = settings.read_text(encoding='utf-8', errors='ignore')
@@ -93,12 +116,19 @@ jobs:
           missing = required - names
           if missing:
               raise SystemExit(f'[FAIL] required package files missing: {sorted(missing)}')
-          if not any(name.startswith('modules/') and '/code/' in name for name in names):
+          code_files = sorted(name for name in names if name.startswith('modules/') and '/code/' in name and not name.endswith('/.gitkeep'))
+          if not code_files:
               raise SystemExit('[FAIL] no module code was packaged')
+          print(f'[test] packaged module code files = {len(code_files)}')
           print('[PASS] package structure, TOC state, code inclusion and size checks passed')
           PY
 
-          pdfinfo submission/final.pdf | tee submission-pdfinfo.txt
+          pdfinfo "$STAGING/final.pdf" | tee submission-pdfinfo.txt
+
+          mkdir -p test-output
+          cp "$ZIP" test-output/submission.zip
+          cp "$STAGING/final.pdf" test-output/final.pdf
+          cp submission-dry-run.log submission-build.log submission-manifest.txt submission-pdfinfo.txt test-output/
 
       - name: Upload test artifact
         if: always()
@@ -107,10 +137,4 @@ jobs:
           name: scrimmage8-submission-package-test
           if-no-files-found: warn
           retention-days: 7
-          path: |
-            submission.zip
-            submission/final.pdf
-            submission-dry-run.log
-            submission-build.log
-            submission-manifest.txt
-            submission-pdfinfo.txt
+          path: test-output/
