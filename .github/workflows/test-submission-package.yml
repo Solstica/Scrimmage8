@@ -17,13 +17,12 @@ jobs:
       - name: Checkout Scrimmage8
         uses: actions/checkout@v4
 
-      - name: Fetch current builder from ScrimmageCUCCM
+      - name: Verify vendored builder snapshot
         shell: bash
         run: |
           set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/Solstica/ScrimmageCUCCM/main/scripts/build_submission.py -o scripts/build_submission.py
-          mkdir -p config
-          curl -fsSL https://raw.githubusercontent.com/Solstica/ScrimmageCUCCM/main/config/submission.json -o config/submission.json
+          test -f scripts/build_submission.py
+          test -f config/submission.json
           python3 -m py_compile scripts/build_submission.py
 
       - name: Dependency scan only
