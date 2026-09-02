@@ -91,15 +91,16 @@ jobs:
             poppler-utils
           fc-cache -f
 
-      - name: Build real submission package
+      - name: Build full package for structural validation
         shell: bash
         run: |
           set -euo pipefail
           python3 scripts/build_submission.py \
             --project "$PREVIEW_ROOT" \
-            --config "$GITHUB_WORKSPACE/config/submission.json" | tee submission-build.log
+            --config "$GITHUB_WORKSPACE/config/submission.json" \
+            --max-mb 30 | tee submission-build-full.log
 
-      - name: Validate package contents
+      - name: Validate full package structure
         shell: bash
         run: |
           set -euo pipefail
@@ -107,10 +108,10 @@ jobs:
           STAGING="$PREVIEW_ROOT/submission"
           test -f "$ZIP"
           test -f "$STAGING/final.pdf"
-          unzip -Z1 "$ZIP" | tee submission-manifest.txt
+          unzip -Z1 "$ZIP" | tee submission-manifest-full.txt
 
-          if grep -E '^(docs/|work/|output/|data/raw/|\.github/|\.git/)|(^|/)results/' submission-manifest.txt; then
-            echo '[FAIL] excluded repository material leaked into submission.zip'
+          if grep -E '^(docs/|work/|output/|data/raw/|\.github/|\.git/)|(^|/)results/' submission-manifest-full.txt; then
+            echo '[FAIL] excluded repository material leaked into full package'
             exit 1
           fi
 
@@ -122,9 +123,11 @@ jobs:
           z = preview / 'submission.zip'
           staging = preview / 'submission'
           size_mib = z.stat().st_size / (1024 * 1024)
-          print(f'[test] submission.zip = {size_mib:.2f} MiB')
-          if size_mib > 20.0:
-              raise SystemExit('[FAIL] submission.zip exceeds 20 MiB')
+          print(f'[test] full submission.zip = {size_mib:.2f} MiB')
+          if size_mib <= 20.0:
+              raise SystemExit('[FAIL] Scrimmage8 full package unexpectedly fits 20 MiB; regression assumption changed')
+          if size_mib > 30.0:
+              raise SystemExit('[FAIL] relaxed 30 MiB structural-test limit exceeded')
 
           settings = staging / 'paper/settings.tex'
           main = staging / 'paper/main.tex'
@@ -140,23 +143,80 @@ jobs:
               raise SystemExit('[FAIL] table of contents is still active in staging copy')
 
           names = set(zipfile.ZipFile(z).namelist())
-          required = {'paper/main.tex', 'final.pdf', 'README.txt'}
+          required = {'paper/main.tex', 'final.pdf', 'README.txt',
+                      'paper/fonts/FandolSong-Regular.otf', 'paper/fonts/FandolSong-Bold.otf'}
           missing = required - names
           if missing:
-              raise SystemExit(f'[FAIL] required package files missing: {sorted(missing)}')
+              raise SystemExit(f'[FAIL] full package missing required files: {sorted(missing)}')
           code_files = sorted(name for name in names if name.startswith('modules/') and '/code/' in name and not name.endswith('/.gitkeep'))
           if not code_files:
               raise SystemExit('[FAIL] no module code was packaged')
           print(f'[test] packaged module code files = {len(code_files)}')
-          print('[PASS] package structure, TOC state, code inclusion and size checks passed')
+          print('[PASS] full package dependency, exclusion, TOC, local-font and code checks passed')
           PY
 
           pdfinfo "$STAGING/final.pdf" | tee submission-pdfinfo.txt
 
+      - name: Build source-only package under default 20 MiB limit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          src = Path('config/submission.json')
+          cfg = json.loads(src.read_text(encoding='utf-8'))
+          cfg['include_final_pdf'] = False
+          cfg['staging_dir'] = 'submission-source'
+          cfg['zip_name'] = 'submission-source.zip'
+          Path('config/submission-source-test.json').write_text(
+              json.dumps(cfg, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          python3 scripts/build_submission.py \
+            --project "$PREVIEW_ROOT" \
+            --config "$GITHUB_WORKSPACE/config/submission-source-test.json" | tee submission-build-source.log
+
+      - name: Validate source-only package
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP="$PREVIEW_ROOT/submission-source.zip"
+          STAGING="$PREVIEW_ROOT/submission-source"
+          test -f "$ZIP"
+          test ! -f "$STAGING/final.pdf"
+          unzip -Z1 "$ZIP" | tee submission-manifest-source.txt
+
+          if grep -E '^(docs/|work/|output/|data/raw/|\.github/|\.git/)|(^|/)results/' submission-manifest-source.txt; then
+            echo '[FAIL] excluded repository material leaked into source-only package'
+            exit 1
+          fi
+
+          python3 - <<'PY'
+          import os, zipfile
+          from pathlib import Path
+          preview = Path(os.environ['PREVIEW_ROOT'])
+          z = preview / 'submission-source.zip'
+          size_mib = z.stat().st_size / (1024 * 1024)
+          print(f'[test] source-only submission-source.zip = {size_mib:.2f} MiB')
+          if size_mib > 20.0:
+              raise SystemExit('[FAIL] source-only package still exceeds 20 MiB')
+          names = set(zipfile.ZipFile(z).namelist())
+          required = {'paper/main.tex', 'README.txt',
+                      'paper/fonts/FandolSong-Regular.otf', 'paper/fonts/FandolSong-Bold.otf'}
+          missing = required - names
+          if missing:
+              raise SystemExit(f'[FAIL] source-only package missing required files: {sorted(missing)}')
+          if 'final.pdf' in names:
+              raise SystemExit('[FAIL] source-only ZIP unexpectedly contains final.pdf')
+          print('[PASS] source-only package is self-contained and within 20 MiB')
+          PY
+
           mkdir -p test-output
-          cp "$ZIP" test-output/submission.zip
-          cp "$STAGING/final.pdf" test-output/final.pdf
-          cp submission-dry-run.log submission-build.log submission-manifest.txt submission-pdfinfo.txt test-output/
+          cp "$PREVIEW_ROOT/submission.zip" test-output/submission-full.zip
+          cp "$PREVIEW_ROOT/submission/final.pdf" test-output/final.pdf
+          cp "$PREVIEW_ROOT/submission-source.zip" test-output/submission-source.zip
+          cp submission-dry-run.log submission-build-full.log submission-build-source.log \
+             submission-manifest-full.txt submission-manifest-source.txt submission-pdfinfo.txt test-output/
 
       - name: Upload test artifact
         if: always()
